@@ -34,4 +34,8 @@ class EmotionDaoMock {
             image = sickPhoto
         )
     )
+
+    fun getEmotions(): List<EmotionMock> = emotions
+    fun getEmotion(name: String): EmotionMock = emotions.first { emotion -> emotion.name == name }
+    fun getEmotion(id: Int): EmotionMock? = emotions.find { emotion -> emotion.id == id }
 }
