@@ -92,7 +92,9 @@ fun Header(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         ImageLogo(
-            modifier = Modifier.size(width = 200.dp, height = 150.dp),
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .size(width = 200.dp, height = 150.dp),
             image = painterResource(id = R.drawable.logo)
         )
         TextTile(
@@ -149,7 +151,7 @@ fun MainContent(
         verticalArrangement = Arrangement.Center
     ) {
         Header()
-        Spacer(modifier = Modifier.size(32.dp))
+        Spacer(modifier = Modifier.size(16.dp))
         Content(
             onLoginClick = onLoginClick
         )
