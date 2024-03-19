@@ -9,7 +9,7 @@ data class ActivityEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int,
-    @ColumnInfo(name = "imagen", typeAffinity = ColumnInfo.BLOB)
+    @ColumnInfo(name = "image", typeAffinity = ColumnInfo.BLOB)
     val image: String,
     @ColumnInfo(name = "name")
     val name: String,
