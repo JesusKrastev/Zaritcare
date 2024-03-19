@@ -13,7 +13,7 @@ interface RecordDao {
     suspend fun insert(record: RecordEntity)
     @Update(onConflict = OnConflictStrategy.ABORT)
     suspend fun update(record: RecordEntity)
-    @Query("SELECT COUNT(*) FROM activities")
+    @Query("SELECT COUNT(*) FROM records")
     suspend fun count(): Int
     @Delete
     suspend fun delete(record: RecordEntity)
