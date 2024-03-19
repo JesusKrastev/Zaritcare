@@ -1,4 +1,4 @@
-package com.zaritcare.data.room
+package com.zaritcare.data.room.activity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,4 +1,4 @@
-package com.zaritcare.data.room
+package com.zaritcare.data.room.question
 
 import androidx.room.Dao
 import androidx.room.Delete

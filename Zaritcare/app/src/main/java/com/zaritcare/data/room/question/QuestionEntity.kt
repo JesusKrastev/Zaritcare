@@ -1,18 +1,18 @@
-package com.zaritcare.data.room
+package com.zaritcare.data.room.question
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "answers")
-data class AnswerEntity(
+@Entity(tableName = "questions")
+data class QuestionEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "question")
-    val question: Int,
+    val question: String,
     @ColumnInfo(name = "answer")
     val answer: String,
-    @ColumnInfo(name = "user")
-    val user: Int
+    @ColumnInfo(name = "category")
+    val category: String
 )
