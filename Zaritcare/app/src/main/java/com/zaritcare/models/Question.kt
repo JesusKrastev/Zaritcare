@@ -1,9 +1,9 @@
-package com.zaritcare.data.mocks.question
+package com.zaritcare.models
 
-data class QuestionMock(
+data class Question(
     val id: Int,
     val question: String,
-    val category: Category
+    val category: List<Category>
 ) {
     enum class Category {
         WellBeing, Zarit

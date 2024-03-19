@@ -11,62 +11,62 @@ class QuestionDaoMock {
         QuestionMock(
             id = 1,
             question = "¿Cómo te sientes hoy?",
-            category = QuestionMock.Categories.WellBeing.name
+            category = QuestionMock.Category.WellBeing
         ),
         QuestionMock(
             id = 2,
             question = "Fatiga",
-            category = QuestionMock.Categories.WellBeing.name
+            category = QuestionMock.Category.WellBeing
         ),
         QuestionMock(
             id = 3,
             question = "Fatiga",
-            category = QuestionMock.Categories.WellBeing.name
+            category = QuestionMock.Category.WellBeing
         ),
         QuestionMock(
             id = 4,
             question = "Insomnio",
-            category = QuestionMock.Categories.WellBeing.name
+            category = QuestionMock.Category.WellBeing
         ),
         QuestionMock(
             id = 5,
             question = "Dolor de cabeza",
-            category = QuestionMock.Categories.WellBeing.name
+            category = QuestionMock.Category.WellBeing
         ),
         QuestionMock(
             id = 6,
             question = "Depresión",
-            category = QuestionMock.Categories.WellBeing.name
+            category = QuestionMock.Category.WellBeing
         ),
         QuestionMock(
             id = 7,
             question = "¿Sientes que tu familiar dependiente te está controlando demasiado?",
-            category = QuestionMock.Categories.Zarit.name
+            category = QuestionMock.Category.Zarit
         ),
         QuestionMock(
             id = 8,
             question = "¿Sientes que tu vida social ha sido restringida debido a tu situación de cuidador?",
-            category = QuestionMock.Categories.Zarit.name
+            category = QuestionMock.Category.Zarit
         ),
         QuestionMock(
             id = 9,
             question = "¿Te sientes frustado/a por la falta de apoyo de otras personas en el cuidado de tu familiar?",
-            category = QuestionMock.Categories.Zarit.name
+            category = QuestionMock.Category.Zarit
         ),
         QuestionMock(
             id = 10,
             question = "¿Te sientes tenso/a entre tú y tu familiar dependiente?",
-            category = QuestionMock.Categories.Zarit.name
+            category = QuestionMock.Category.Zarit
         ),
         QuestionMock(
             id = 11,
             question = "¿Te sientes culpable por no poder hacer más por tu familiar?",
-            category = QuestionMock.Categories.Zarit.name
+            category = QuestionMock.Category.Zarit
         ),
         QuestionMock(
             id = 12,
             question = "¿Sientes que tu salud ha sufrido debido a tu situación de cuidador?",
-            category = QuestionMock.Categories.Zarit.name
+            category = QuestionMock.Category.Zarit
         )
     )
 
