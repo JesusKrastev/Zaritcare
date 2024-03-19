@@ -6,6 +6,6 @@ data class QuestionMock(
     val category: Category
 ) {
     enum class Category {
-        WellBeing, Zarit
+        WELLBEING, ZARIT, ERROR
     }
 }
