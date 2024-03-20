@@ -200,7 +200,7 @@ fun StartButton(
             contentColor = MaterialTheme.colorScheme.onPrimary
         )
     ) {
-        DefaultText("Empezar")
+        Text("Empezar")
     }
 }
 
