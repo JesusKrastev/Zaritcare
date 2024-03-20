@@ -10,9 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
 import com.zaritcare.ui.features.login.LoginScreen
 import com.zaritcare.ui.features.register.RegisterScreen
 import com.zaritcare.ui.features.splashscreen.SplashScreen
+import com.zaritcare.ui.navigation.ZaritcareNavHost
 import com.zaritcare.ui.theme.ZaritcareTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SplashScreen()
+                    ZaritcareNavHost()
                 }
             }
         }
