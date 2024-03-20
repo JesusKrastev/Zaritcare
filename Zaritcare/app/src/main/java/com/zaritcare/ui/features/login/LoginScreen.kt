@@ -1,21 +1,16 @@
 package com.zaritcare.ui.features.login
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.zaritcare.R
-import com.zaritcare.ui.composables.DefaultText
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
 
@@ -111,7 +105,8 @@ fun Header(
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
-    onLoginClick: () -> Unit
+    onClickLogin: () -> Unit,
+    onClickRegister: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -119,10 +114,10 @@ fun Content(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         LoginButton(
-            onClick = onLoginClick
+            onClick = onClickLogin
         )
         TextBody(
-            modifier = Modifier.clickable {  },
+            modifier = Modifier.clickable { onClickRegister() },
             text = buildAnnotatedString {
                 append("¿No tienes una cuenta? ")
                 withStyle(
@@ -141,7 +136,8 @@ fun Content(
 @Composable
 fun MainContent(
     modifier: Modifier = Modifier,
-    onLoginClick: () -> Unit
+    onClickLogin: () -> Unit,
+    onClickRegister: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -153,20 +149,23 @@ fun MainContent(
         Header()
         Spacer(modifier = Modifier.size(16.dp))
         Content(
-            onLoginClick = onLoginClick
+            onClickLogin = onClickLogin,
+            onClickRegister = onClickRegister
         )
     }
 }
 
 @Composable
 fun LoginScreen(
-    onLoginClick: () -> Unit
+    onClickLogin: () -> Unit,
+    onClickRegister: () -> Unit
 ) {
     Scaffold(
         content = { paddingValues ->
             MainContent(
                 modifier = Modifier.padding(paddingValues),
-                onLoginClick = onLoginClick
+                onClickLogin = onClickLogin,
+                onClickRegister = onClickRegister
             )
         }
     )

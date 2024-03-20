@@ -105,7 +105,8 @@ fun Header(
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
-    onRegisterClick: () -> Unit
+    onClickRegister: () -> Unit,
+    onClickLogin: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -113,10 +114,10 @@ fun Content(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         RegisterButton(
-            onClick = onRegisterClick
+            onClick = onClickRegister
         )
         TextBody(
-            modifier = Modifier.clickable {  },
+            modifier = Modifier.clickable { onClickLogin() },
             text = buildAnnotatedString {
                 append("¿Ya tienes una cuenta? ")
                 withStyle(
@@ -135,7 +136,8 @@ fun Content(
 @Composable
 fun MainContent(
     modifier: Modifier = Modifier,
-    onRegisterClick: () -> Unit
+    onClickRegister: () -> Unit,
+    onClickLogin: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -147,20 +149,25 @@ fun MainContent(
         Header()
         Spacer(modifier = Modifier.size(16.dp))
         Content(
-            onRegisterClick = onRegisterClick
+            onClickRegister = onClickRegister,
+            onClickLogin = onClickLogin
         )
     }
 }
 
 @Composable
 fun RegisterScreen(
-    onRegisterClick: () -> Unit
+    modifier: Modifier = Modifier,
+    onClickRegister: () -> Unit,
+    onClickLogin: () -> Unit
 ) {
     Scaffold(
+        modifier = modifier,
         content = { paddingValues ->
             MainContent(
                 modifier = Modifier.padding(paddingValues),
-                onRegisterClick = onRegisterClick
+                onClickRegister = onClickRegister,
+                onClickLogin = onClickLogin
             )
         }
     )

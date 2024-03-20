@@ -20,10 +20,13 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -35,9 +38,10 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.zaritcare.R
+import com.zaritcare.ui.composables.DefaultText
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
-import com.zaritcare.ui.views.ScreenInfoUiState
+import com.zaritcare.ui.features.splashscreen.ScreenInfoUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -166,10 +170,12 @@ fun Navigation(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        BackButton(
-            modifier = Modifier.size(48.dp),
-            onClick = onBackClick
-        )
+        if(pagerState.currentPage > 0) {
+            BackButton(
+                modifier = Modifier.size(48.dp),
+                onClick = onBackClick
+            )
+        }
         IndicatorPage(
             modifier = Modifier.padding(16.dp),
             pagerState = pagerState
@@ -181,10 +187,51 @@ fun Navigation(
     }
 }
 
+@Composable
+fun StartButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Button(
+        modifier = modifier.fillMaxWidth(),
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
+        )
+    ) {
+        DefaultText("Empezar")
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun Footer(
+    modifier: Modifier = Modifier,
+    pagerState: PagerState,
+    onAdvancedClick: () -> Unit,
+    onBackClick: () -> Unit,
+    onClickStart: () -> Unit
+) {
+    if(pagerState.currentPage == pagerState.pageCount - 1) {
+        StartButton(
+            modifier = modifier.padding(16.dp),
+            onClick = onClickStart
+        )
+    } else {
+        Navigation(
+            pagerState = pagerState,
+            onAdvancedClick = onAdvancedClick,
+            onBackClick = onBackClick
+        )
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SplashScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClickStart: () -> Unit
 ) {
     val listScreens: List<ScreenInfoUiState> = listOf(
         ScreenInfoUiState(
@@ -217,7 +264,7 @@ fun SplashScreen(
             pagerState = pagerState,
             listScreens = listScreens
         )
-        Navigation(
+        Footer(
             pagerState = pagerState,
             onAdvancedClick = {
                 scope.launch {
@@ -232,7 +279,8 @@ fun SplashScreen(
                         pagerState.animateScrollToPage(pagerState.currentPage - 1)
                     }
                 }
-            }
+            },
+            onClickStart = onClickStart
         )
     }
 }
