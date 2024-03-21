@@ -31,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -165,23 +166,27 @@ fun Navigation(
     onAdvancedClick: () -> Unit,
     onBackClick: () -> Unit
 ) {
-    Row(
-        modifier = modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+    Box(
+        modifier = modifier.fillMaxWidth()
     ) {
         if(pagerState.currentPage > 0) {
             BackButton(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.CenterStart),
                 onClick = onBackClick
             )
         }
         IndicatorPage(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.Center),
             pagerState = pagerState
         )
         AdvancedButton(
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier
+                .size(48.dp)
+                .align(Alignment.CenterEnd),
             onClick = onAdvancedClick
         )
     }
