@@ -24,6 +24,9 @@ class QuestionRepository @Inject constructor(
     suspend fun get() = withContext(Dispatchers.IO) {
         dao.get().map { it.toQuestion() }
     }
+    suspend fun getByCategory(category: String) = withContext(Dispatchers.IO) {
+        dao.getByCategory(category).map { it.toQuestion() }
+    }
     suspend fun get(id: Int) = withContext(Dispatchers.IO) {
         dao.get(id).toQuestion()
     }
