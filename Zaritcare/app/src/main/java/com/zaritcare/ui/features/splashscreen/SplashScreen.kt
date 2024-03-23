@@ -31,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -39,10 +38,8 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.zaritcare.R
-import com.zaritcare.ui.composables.DefaultText
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
-import com.zaritcare.ui.features.splashscreen.ScreenInfoUiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -70,7 +67,7 @@ fun Information(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun Content(
+fun Body(
     modifier: Modifier = Modifier,
     pagerState: PagerState,
     listScreens: List<ScreenInfoUiState>
@@ -234,6 +231,36 @@ fun Footer(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
+fun Content(
+    modifier: Modifier = Modifier,
+    listScreens: List<ScreenInfoUiState>,
+    pagerState: PagerState,
+    onAdvancedClick: () -> Unit,
+    onBackClick: () -> Unit,
+    onClickStart: () -> Unit
+) {
+    Column {
+        Column(
+            modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Body(
+                modifier = Modifier.weight(1f),
+                pagerState = pagerState,
+                listScreens = listScreens
+            )
+            Footer(
+                pagerState = pagerState,
+                onAdvancedClick = onAdvancedClick,
+                onBackClick = onBackClick,
+                onClickStart = onClickStart
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
 fun SplashScreen(
     modifier: Modifier = Modifier,
     onClickStart: () -> Unit
@@ -265,12 +292,9 @@ fun SplashScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Content(
-            modifier = Modifier.weight(1f),
+            listScreens = listScreens,
             pagerState = pagerState,
-            listScreens = listScreens
-        )
-        Footer(
-            pagerState = pagerState,
+            onClickStart = onClickStart,
             onAdvancedClick = {
                 scope.launch {
                     if (pagerState.currentPage < pagerState.pageCount - 1) {
@@ -285,7 +309,6 @@ fun SplashScreen(
                     }
                 }
             },
-            onClickStart = onClickStart
         )
     }
 }
