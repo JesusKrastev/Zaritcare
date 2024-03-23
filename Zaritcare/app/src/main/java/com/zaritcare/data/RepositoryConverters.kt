@@ -16,7 +16,6 @@ import com.zaritcare.models.Answer
 import com.zaritcare.models.Category
 import com.zaritcare.models.Emotion
 import com.zaritcare.models.Question
-import com.zaritcare.models.Record
 
 fun ActivityMock.toActivity() = Activity(
     id = id,
