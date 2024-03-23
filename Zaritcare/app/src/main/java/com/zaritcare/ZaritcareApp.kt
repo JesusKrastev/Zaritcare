@@ -5,8 +5,10 @@ import com.zaritcare.data.mocks.activity.ActivityDaoMock
 import com.zaritcare.data.mocks.emotion.EmotionDaoMock
 import com.zaritcare.data.mocks.question.QuestionDaoMock
 import com.zaritcare.data.room.activity.ActivityDao
+import com.zaritcare.data.room.category.CategoryDao
 import com.zaritcare.data.room.emotion.EmotionDao
 import com.zaritcare.data.room.question.QuestionDao
+import com.zaritcare.data.room.question.QuestionEntity
 import com.zaritcare.data.toActivity
 import com.zaritcare.data.toActivityEntity
 import com.zaritcare.data.toEmotion
@@ -29,6 +31,8 @@ class ZaritcareApp: Application() {
     lateinit var questionDaoMock: QuestionDaoMock
     @Inject
     lateinit var questionDaoEntity: QuestionDao
+    @Inject
+    lateinit var categoryDao: CategoryDao
 
     override fun onCreate() {
         super.onCreate()
@@ -45,7 +49,7 @@ class ZaritcareApp: Application() {
             }
             if (questionDaoMock.count() == 0){
                 questionDaoMock.get().forEach { question ->
-                    questionDaoEntity.insert(question.toQuestion().toQuestionEntity())
+                    questionDaoEntity.insert(question.toQuestion(categoryDao).toQuestionEntity(categoryDao))
                 }
             }
         }
