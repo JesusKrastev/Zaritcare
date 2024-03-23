@@ -1,5 +1,8 @@
 package com.zaritcare.data
 
+import com.zaritcare.data.mocks.activity.ActivityMock
+import com.zaritcare.data.mocks.emotion.EmotionMock
+import com.zaritcare.data.mocks.question.QuestionMock
 import com.zaritcare.data.room.activity.ActivityEntity
 import com.zaritcare.data.room.advice.AdviceEntity
 import com.zaritcare.data.room.answer.AnswerEntity
@@ -12,6 +15,16 @@ import com.zaritcare.models.Answer
 import com.zaritcare.models.Emotion
 import com.zaritcare.models.Question
 import com.zaritcare.models.Record
+
+fun ActivityMock.toActivity() = Activity(
+    id = id,
+    image = image,
+    name = name,
+    description = description,
+    authorQuote = authorQuote,
+    quote = quote,
+    action = action
+)
 
 fun ActivityEntity.toActivity() = Activity(
     id = id,
@@ -54,6 +67,12 @@ fun AnswerEntity.toAnswer() = Answer(
     user = user
 )
 
+fun EmotionMock.toEmotion() = Emotion(
+    id = id,
+    image = image,
+    name = name
+)
+
 fun EmotionEntity.toEmotion() = Emotion(
     id = id,
     image = image,
@@ -64,6 +83,12 @@ fun Emotion.toEmotionEntity() = EmotionEntity(
     id = id,
     image = image,
     name = name
+)
+
+fun QuestionMock.toQuestion() = Question(
+    id = id,
+    question = question,
+    category = category.name
 )
 
 fun QuestionEntity.toQuestion() = Question(
