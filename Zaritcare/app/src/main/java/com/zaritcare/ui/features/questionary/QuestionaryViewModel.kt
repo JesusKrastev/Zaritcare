@@ -12,9 +12,11 @@ import com.zaritcare.data.EmotionRepository
 import com.zaritcare.data.QuestionRepository
 import com.zaritcare.ui.features.questionary.wellbeingform.EmotionUiState
 import com.zaritcare.ui.features.questionary.wellbeingform.toEmotionUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class QuestionaryViewModel @Inject constructor(
     private val questionRepository: QuestionRepository,
     private val emotionRepository: EmotionRepository,
