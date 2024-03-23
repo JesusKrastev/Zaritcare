@@ -39,7 +39,7 @@ fun ZaritcareNavBar(
         ItemIconButtonWithText(
             icon = Icons.Filled.ContentPaste,
             description = "reports",
-            title = "Formularios",
+            title = "Cuestionario",
             onClick = onNavigateToForms
         ),
         ItemIconButtonWithText(
