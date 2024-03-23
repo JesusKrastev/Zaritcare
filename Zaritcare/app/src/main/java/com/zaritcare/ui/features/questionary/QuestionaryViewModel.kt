@@ -23,13 +23,11 @@ class QuestionaryViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository
 ): ViewModel() {
     var questionsState: List<QuestionUiState> by mutableStateOf(emptyList())
-    var questionsByCategoryState: List<QuestionUiState> by mutableStateOf(emptyList())
     var emotionsState: List<EmotionUiState> by mutableStateOf(emptyList())
     var categoriesState: List<CategoryUiState> by mutableStateOf(emptyList())
     var selectedTab by mutableIntStateOf(0)
 
     suspend fun getQuestions() = questionRepository.get().map { question -> question.toQuestionUiState() }
-    suspend fun getQuestionsByCategory(category: String) = questionRepository.get().map { question -> question.toQuestionUiState() }.filter { it.category == category }
     suspend fun getEmotions() = emotionRepository.get().map { emotion -> emotion.toEmotionUiState() }
     suspend fun getCategories() = categoryRepository.get().map { category -> category.toCategoryUiState() }
 
