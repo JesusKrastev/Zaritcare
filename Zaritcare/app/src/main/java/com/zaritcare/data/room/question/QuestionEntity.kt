@@ -12,5 +12,7 @@ data class QuestionEntity(
     @ColumnInfo(name = "question")
     val question: String,
     @ColumnInfo(name = "category")
-    val category: String
+    val category: Int,
+    @ColumnInfo(name = "type")
+    val type: String
 )

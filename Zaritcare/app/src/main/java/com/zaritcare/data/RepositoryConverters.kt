@@ -6,12 +6,15 @@ import com.zaritcare.data.mocks.question.QuestionMock
 import com.zaritcare.data.room.activity.ActivityEntity
 import com.zaritcare.data.room.advice.AdviceEntity
 import com.zaritcare.data.room.answer.AnswerEntity
+import com.zaritcare.data.room.category.CategoryDao
+import com.zaritcare.data.room.category.CategoryEntity
 import com.zaritcare.data.room.emotion.EmotionEntity
 import com.zaritcare.data.room.question.QuestionEntity
 import com.zaritcare.data.room.record.RecordEntity
 import com.zaritcare.models.Activity
 import com.zaritcare.models.Advice
 import com.zaritcare.models.Answer
+import com.zaritcare.models.Category
 import com.zaritcare.models.Emotion
 import com.zaritcare.models.Question
 import com.zaritcare.models.Record
@@ -85,24 +88,6 @@ fun Emotion.toEmotionEntity() = EmotionEntity(
     name = name
 )
 
-fun QuestionMock.toQuestion() = Question(
-    id = id,
-    question = question,
-    category = category.name
-)
-
-fun QuestionEntity.toQuestion() = Question(
-    id = id,
-    question = question,
-    category = category
-)
-
-fun Question.toQuestionEntity() = QuestionEntity(
-    id = id,
-    question = question,
-    category = category
-)
-
 fun RecordEntity.toRecord() = Record(
     id = id,
     activity = activity,
@@ -115,4 +100,45 @@ fun Record.toRecordEntity() = RecordEntity(
     activity = activity,
     answer = answer,
     realizationDate = realizationDate
+)
+
+fun CategoryEntity.toCategory() = Category(
+    id = id,
+    name = name
+)
+
+fun Category.toCategoryEntity() = CategoryEntity(
+    id = id,
+    name = name
+)
+
+fun Question.QuestionType.toQuestionTypeMock() = when(this) {
+    Question.QuestionType.EMOTION -> QuestionMock.QuestionType.EMOTION
+    Question.QuestionType.RANGE -> QuestionMock.QuestionType.RANGE
+}
+
+fun QuestionMock.QuestionType.toQuestionType() = when(this) {
+    QuestionMock.QuestionType.EMOTION -> Question.QuestionType.EMOTION
+    QuestionMock.QuestionType.RANGE -> Question.QuestionType.RANGE
+}
+
+suspend fun QuestionEntity.toQuestion(categoryDao: CategoryDao) = Question(
+    id = id,
+    question = question,
+    category = categoryDao.get(category).name,
+    type = Question.QuestionType.valueOf(type.uppercase())
+)
+
+suspend fun Question.toQuestionEntity(categoryDao: CategoryDao) = QuestionEntity(
+    id = id,
+    question = question,
+    category = categoryDao.get(category).id,
+    type = type.name
+)
+
+suspend fun QuestionMock.toQuestion(categoryDao: CategoryDao) = Question(
+    id = id,
+    question = question,
+    category = categoryDao.get(id).name,
+    type = type.toQuestionType()
 )

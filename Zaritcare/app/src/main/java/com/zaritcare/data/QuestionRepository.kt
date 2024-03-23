@@ -1,5 +1,6 @@
 package com.zaritcare.data
 
+import com.zaritcare.data.room.category.CategoryDao
 import com.zaritcare.data.room.question.QuestionDao
 import com.zaritcare.models.Question
 import kotlinx.coroutines.Dispatchers
@@ -7,27 +8,34 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class QuestionRepository @Inject constructor(
-    private val dao: QuestionDao
+    private val questionDao: QuestionDao,
+    private val categoryDao: CategoryDao
 ) {
     suspend fun insert(question: Question) = withContext(Dispatchers.IO) {
-        dao.insert(question.toQuestionEntity())
+        questionDao.insert(question.toQuestionEntity(categoryDao))
     }
+
     suspend fun update(question: Question) = withContext(Dispatchers.IO) {
-        dao.update(question.toQuestionEntity())
+        questionDao.update(question.toQuestionEntity(categoryDao))
     }
+
     suspend fun count() = withContext(Dispatchers.IO) {
-        dao.count()
+        questionDao.count()
     }
+
     suspend fun delete(question: Question) = withContext(Dispatchers.IO) {
-        dao.delete(question.toQuestionEntity())
+        questionDao.delete(question.toQuestionEntity(categoryDao))
     }
+
     suspend fun get() = withContext(Dispatchers.IO) {
-        dao.get().map { it.toQuestion() }
+        questionDao.get().map { it.toQuestion(categoryDao) }
     }
+
     suspend fun getByCategory(category: String) = withContext(Dispatchers.IO) {
-        dao.getByCategory(category).map { it.toQuestion() }
+        questionDao.getByCategory(category).map { it.toQuestion(categoryDao) }
     }
+
     suspend fun get(id: Int) = withContext(Dispatchers.IO) {
-        dao.get(id).toQuestion()
+        questionDao.get(id).toQuestion(categoryDao)
     }
 }

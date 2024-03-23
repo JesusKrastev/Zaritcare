@@ -5,6 +5,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.zaritcare.data.room.question.QuestionEntity
+import com.zaritcare.models.Question
+import com.zaritcare.models.QuestionType
 import javax.inject.Inject
 
 class QuestionDaoMock @Inject constructor() {
@@ -12,62 +14,63 @@ class QuestionDaoMock @Inject constructor() {
         QuestionMock(
             id = 1,
             question = "¿Cómo te sientes hoy?",
-            category = QuestionMock.Category.WELLBEING
+            category = 1,
+            type =  Question.QuestionType.EMOTION
         ),
         QuestionMock(
             id = 2,
             question = "Fatiga",
-            category = QuestionMock.Category.WELLBEING
+            category = 1
         ),
         QuestionMock(
             id = 3,
             question = "Fatiga",
-            category = QuestionMock.Category.WELLBEING
+            category = 1
         ),
         QuestionMock(
             id = 4,
             question = "Insomnio",
-            category = QuestionMock.Category.WELLBEING
+            category = 1
         ),
         QuestionMock(
             id = 5,
             question = "Dolor de cabeza",
-            category = QuestionMock.Category.WELLBEING
+            category = 1
         ),
         QuestionMock(
             id = 6,
             question = "Depresión",
-            category = QuestionMock.Category.WELLBEING
+            category = 1
         ),
         QuestionMock(
             id = 7,
             question = "¿Sientes que tu familiar dependiente te está controlando demasiado?",
-            category = QuestionMock.Category.ZARIT
+            category = 2
         ),
         QuestionMock(
             id = 8,
             question = "¿Sientes que tu vida social ha sido restringida debido a tu situación de cuidador?",
-            category = QuestionMock.Category.ZARIT
+            category = 2
         ),
         QuestionMock(
             id = 9,
             question = "¿Te sientes frustado/a por la falta de apoyo de otras personas en el cuidado de tu familiar?",
-            category = QuestionMock.Category.ZARIT
+            category = 2
         ),
         QuestionMock(
             id = 10,
             question = "¿Te sientes tenso/a entre tú y tu familiar dependiente?",
-            category = QuestionMock.Category.ZARIT
+            category = 2
         ),
         QuestionMock(
             id = 11,
             question = "¿Te sientes culpable por no poder hacer más por tu familiar?",
-            category = QuestionMock.Category.ZARIT
+            category = 2
         ),
         QuestionMock(
             id = 12,
             question = "¿Sientes que tu salud ha sufrido debido a tu situación de cuidador?",
-            category = QuestionMock.Category.ZARIT
+            category = 2
         )
     )
 
@@ -79,6 +82,5 @@ class QuestionDaoMock @Inject constructor() {
     fun count() = questions.size
     fun delete(question: QuestionMock) = questions.remove(question)
     fun get(): List<QuestionMock> = questions
-    fun getByCategory(category: String): List<QuestionMock> = questions.filter { question -> question.category.name == category }
     fun get(id: Int): QuestionMock? = questions.find { it.id == id }
 }
