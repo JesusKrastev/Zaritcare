@@ -121,6 +121,7 @@ fun QuestionaryScreen(
     onNavigateToSettings: () -> Unit
 ) {
     val pagerState: PagerState = rememberPagerState(pageCount = { categories.size })
+    val questionsByCategory: List<QuestionUiState> = questions.filter { it.category == categories[selectedIndex].name }
 
     Scaffold(
         modifier = modifier,
@@ -138,7 +139,7 @@ fun QuestionaryScreen(
                     pagerState = pagerState,
                     emotions = emotions,
                     onChangeAnswer = { onQuestionaryEvent(QuestionaryEvent.OnChangeAnswer(it)) },
-                    questions = questions,
+                    questions = questionsByCategory,
                     onClickSave = { onQuestionaryEvent(QuestionaryEvent.OnClickSave({})) }
                 )
             }

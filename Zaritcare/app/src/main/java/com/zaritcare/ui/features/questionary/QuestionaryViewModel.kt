@@ -21,19 +21,21 @@ class QuestionaryViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository
 ): ViewModel() {
     var questionsState: List<QuestionUiState> by mutableStateOf(emptyList())
+    var questionsByCategoryState: List<QuestionUiState> by mutableStateOf(emptyList())
     var emotionsState: List<EmotionUiState> by mutableStateOf(emptyList())
-    var selectedEmotion: EmotionUiState? by mutableStateOf(null)
     var categoriesState: List<CategoryUiState> by mutableStateOf(emptyList())
     var selectedTab by mutableIntStateOf(0)
 
     suspend fun getQuestions() = questionRepository.get().map { question -> question.toQuestionUiState() }
+    suspend fun getQuestionsByCategory(category: String) = questionRepository.get().map { question -> question.toQuestionUiState() }.filter { it.category == category }
     suspend fun getEmotions() = emotionRepository.get().map { emotion -> emotion.toEmotionUiState() }
     suspend fun getCategories() = categoryRepository.get().map { category -> category.toCategoryUiState() }
 
     fun loadQuestions() {
         viewModelScope.launch {
             try {
-                questionsState = getQuestions()
+                val emotions: List<EmotionUiState> = getEmotions()
+                questionsState = getQuestions().map { it.copy(answer = if(it.type == QuestionUiState.QuestionUiType.EMOTION) emotions.first().name else "0") }
             } catch (e: Exception) {
                 Log.d("QuestionaryViewModel", "Error loading questions", e)
             }
@@ -44,7 +46,6 @@ class QuestionaryViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 emotionsState = getEmotions()
-                selectedEmotion = emotionsState.first()
             } catch (e: Exception) {
                 Log.d("QuestionaryViewModel", "Error loading emotions", e)
             }
@@ -59,6 +60,12 @@ class QuestionaryViewModel @Inject constructor(
                 Log.d("QuestionaryViewModel", "Error loading categories", e)
             }
         }
+    }
+
+    init {
+        loadQuestions()
+        loadEmotions()
+        loadCategories()
     }
 
     fun onQuestionaryEvent(event: QuestionaryEvent) {
