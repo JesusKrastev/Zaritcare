@@ -10,7 +10,6 @@ import com.zaritcare.data.room.category.CategoryDao
 import com.zaritcare.data.room.category.CategoryEntity
 import com.zaritcare.data.room.emotion.EmotionEntity
 import com.zaritcare.data.room.question.QuestionEntity
-import com.zaritcare.data.room.record.RecordEntity
 import com.zaritcare.models.Activity
 import com.zaritcare.models.Advice
 import com.zaritcare.models.Answer
@@ -86,20 +85,6 @@ fun Emotion.toEmotionEntity() = EmotionEntity(
     id = id,
     image = image,
     name = name
-)
-
-fun RecordEntity.toRecord() = Record(
-    id = id,
-    activity = activity,
-    answer = answer,
-    realizationDate = realizationDate
-)
-
-fun Record.toRecordEntity() = RecordEntity(
-    id = id,
-    activity = activity,
-    answer = answer,
-    realizationDate = realizationDate
 )
 
 fun CategoryEntity.toCategory() = Category(

@@ -5,10 +5,9 @@ import com.zaritcare.data.room.ZaritcareDb
 import com.zaritcare.data.room.activity.ActivityDao
 import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.answer.AnswerDao
+import com.zaritcare.data.room.category.CategoryDao
 import com.zaritcare.data.room.emotion.EmotionDao
 import com.zaritcare.data.room.question.QuestionDao
-import com.zaritcare.data.room.record.RecordDao
-import com.zaritcare.models.Advice
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +23,11 @@ class AppModule {
     fun provideActivityDao(
         db: ZaritcareDb
     ) : ActivityDao = db.activityDao()
+    @Provides
+    @Singleton
+    fun provideCategoryDao(
+        db: ZaritcareDb
+    ) : CategoryDao = db.categoryDao()
 
     @Provides
     @Singleton
@@ -48,12 +52,6 @@ class AppModule {
     fun provideQuestionDao(
         db: ZaritcareDb
     ) : QuestionDao = db.questionDao()
-
-    @Provides
-    @Singleton
-    fun provideRecordDao(
-        db: ZaritcareDb
-    ) : RecordDao = db.recordDao()
 
     @Provides
     @Singleton

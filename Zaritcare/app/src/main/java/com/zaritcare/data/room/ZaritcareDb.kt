@@ -11,15 +11,15 @@ import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.advice.AdviceEntity
 import com.zaritcare.data.room.answer.AnswerDao
 import com.zaritcare.data.room.answer.AnswerEntity
+import com.zaritcare.data.room.category.CategoryDao
+import com.zaritcare.data.room.category.CategoryEntity
 import com.zaritcare.data.room.emotion.EmotionDao
 import com.zaritcare.data.room.emotion.EmotionEntity
 import com.zaritcare.data.room.question.QuestionDao
 import com.zaritcare.data.room.question.QuestionEntity
-import com.zaritcare.data.room.record.RecordDao
-import com.zaritcare.data.room.record.RecordEntity
 
 @Database(
-    entities = [ActivityEntity::class, AdviceEntity::class, AnswerEntity::class, EmotionEntity::class, QuestionEntity::class, RecordEntity::class],
+    entities = [ActivityEntity::class, AdviceEntity::class, AnswerEntity::class, EmotionEntity::class, QuestionEntity::class, CategoryEntity::class],
     exportSchema = false,
     version = 1
 )
@@ -30,7 +30,8 @@ abstract class ZaritcareDb: RoomDatabase() {
     abstract fun answerDao(): AnswerDao
     abstract fun emotionDao(): EmotionDao
     abstract fun questionDao(): QuestionDao
-    abstract fun recordDao(): RecordDao
+    abstract fun categoryDao(): CategoryDao
+
     companion object {
         fun getDatabase(context: Context) = Room.databaseBuilder(
             context,
