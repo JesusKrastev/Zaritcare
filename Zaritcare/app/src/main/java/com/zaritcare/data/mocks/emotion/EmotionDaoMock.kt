@@ -37,7 +37,8 @@ class EmotionDaoMock @Inject constructor() {
         )
     )
 
-    fun getEmotions(): List<EmotionMock> = emotions
-    fun getEmotion(name: String): EmotionMock = emotions.first { emotion -> emotion.name == name }
-    fun getEmotion(id: Int): EmotionMock? = emotions.find { emotion -> emotion.id == id }
+    fun get(): List<EmotionMock> = emotions
+    fun count() = emotions.size
+    fun get(name: String): EmotionMock = emotions.first { emotion -> emotion.name == name }
+    fun get(id: Int): EmotionMock? = emotions.find { emotion -> emotion.id == id }
 }

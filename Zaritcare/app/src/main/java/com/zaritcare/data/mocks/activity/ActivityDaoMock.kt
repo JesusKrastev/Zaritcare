@@ -42,6 +42,7 @@ class ActivityDaoMock @Inject constructor() {
     fun get(): MutableList<ActivityMock> = activities
     fun get(id: Int): ActivityMock? = activities.find { activity -> activity.id == id }
     fun insert(activity: ActivityMock) = activities.add(activity)
+    fun count() = activities.size
     fun update(newActivity: ActivityMock) {
         val index: Int = activities.indexOfFirst { activity -> activity.id == newActivity.id }
         if (index != -1) activities[index] = newActivity
