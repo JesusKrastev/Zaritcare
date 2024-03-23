@@ -79,5 +79,6 @@ class QuestionDaoMock @Inject constructor() {
     fun count() = questions.size
     fun delete(question: QuestionMock) = questions.remove(question)
     fun get(): List<QuestionMock> = questions
+    fun getByCategory(category: String): List<QuestionMock> = questions.filter { question -> question.category.name == category }
     fun get(id: Int): QuestionMock? = questions.find { it.id == id }
 }
