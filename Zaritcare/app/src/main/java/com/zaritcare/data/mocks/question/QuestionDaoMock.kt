@@ -1,11 +1,5 @@
 package com.zaritcare.data.mocks.question
 
-import androidx.room.Delete
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Update
-import com.zaritcare.data.room.question.QuestionEntity
-import com.zaritcare.models.Question
 import javax.inject.Inject
 
 class QuestionDaoMock @Inject constructor() {
