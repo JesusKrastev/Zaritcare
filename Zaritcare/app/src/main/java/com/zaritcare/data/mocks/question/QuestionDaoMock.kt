@@ -6,7 +6,6 @@ import androidx.room.Query
 import androidx.room.Update
 import com.zaritcare.data.room.question.QuestionEntity
 import com.zaritcare.models.Question
-import com.zaritcare.models.QuestionType
 import javax.inject.Inject
 
 class QuestionDaoMock @Inject constructor() {
@@ -15,7 +14,7 @@ class QuestionDaoMock @Inject constructor() {
             id = 1,
             question = "¿Cómo te sientes hoy?",
             category = 1,
-            type =  Question.QuestionType.EMOTION
+            type =  QuestionMock.QuestionType.EMOTION
         ),
         QuestionMock(
             id = 2,
