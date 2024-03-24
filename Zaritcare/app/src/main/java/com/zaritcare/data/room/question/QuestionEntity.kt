@@ -14,5 +14,9 @@ data class QuestionEntity(
     @ColumnInfo(name = "category")
     val category: Int,
     @ColumnInfo(name = "type")
-    val type: String
+    val type: String,
+    @ColumnInfo(name = "minimum_value_indicator")
+    val minimumValueIndicator: String,
+    @ColumnInfo(name = "maximum_value_indicator")
+    val maximumValueIndicator: String,
 )
