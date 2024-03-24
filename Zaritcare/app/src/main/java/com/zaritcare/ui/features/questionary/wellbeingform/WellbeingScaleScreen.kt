@@ -61,9 +61,11 @@ fun Emotion(
 
 @Composable
 fun QuestionText(
+    modifier: Modifier = Modifier,
     question: String
 ) {
     Text(
+        modifier = modifier,
         color = MaterialTheme.colorScheme.onBackground,
         text = question,
         fontWeight = FontWeight.Bold
@@ -82,10 +84,12 @@ fun EmotionQuestion(
         modifier = modifier
     ) {
         QuestionText(
+            modifier = Modifier.padding(bottom = 16.dp),
             question = question
         )
         LazyRow(
-            modifier = modifier
+            modifier = modifier,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(emotions) { emotion ->
                 Emotion(
