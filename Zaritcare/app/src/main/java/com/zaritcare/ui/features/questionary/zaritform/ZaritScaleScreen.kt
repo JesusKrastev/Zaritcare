@@ -18,7 +18,7 @@ fun Form(
     onChangeAnswer: (QuestionUiState) -> Unit
 )  {
     Column(
-        modifier = modifier.verticalScroll(rememberScrollState()),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         questions.forEach { question ->

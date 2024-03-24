@@ -149,9 +149,7 @@ fun WellbeingScaleScreen(
     emotions: List<EmotionUiState>
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+        modifier = modifier.fillMaxSize()
     ) {
         Form(
             onChangeAnswer = onChangeAnswer,
