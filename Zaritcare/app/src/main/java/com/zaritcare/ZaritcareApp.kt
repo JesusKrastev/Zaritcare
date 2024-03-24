@@ -4,16 +4,20 @@ import android.app.Application
 import android.util.Log
 import com.zaritcare.data.QuestionRepository
 import com.zaritcare.data.mocks.activity.ActivityDaoMock
+import com.zaritcare.data.mocks.advice.AdviceDaoMock
 import com.zaritcare.data.mocks.category.CategoryDaoMock
 import com.zaritcare.data.mocks.emotion.EmotionDaoMock
 import com.zaritcare.data.mocks.question.QuestionDaoMock
 import com.zaritcare.data.room.activity.ActivityDao
+import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.category.CategoryDao
 import com.zaritcare.data.room.emotion.EmotionDao
 import com.zaritcare.data.room.question.QuestionDao
 import com.zaritcare.data.room.question.QuestionEntity
 import com.zaritcare.data.toActivity
 import com.zaritcare.data.toActivityEntity
+import com.zaritcare.data.toAdvice
+import com.zaritcare.data.toAdviceEntity
 import com.zaritcare.data.toCategory
 import com.zaritcare.data.toCategoryEntity
 import com.zaritcare.data.toEmotion
@@ -42,6 +46,10 @@ class ZaritcareApp: Application() {
     lateinit var categoryDaoMock: CategoryDaoMock
     @Inject
     lateinit var categoryDaoEntity: CategoryDao
+    @Inject
+    lateinit var adviceDaoMock: AdviceDaoMock
+    @Inject
+    lateinit var adviceDaoEntity: AdviceDao
 
     override fun onCreate() {
         super.onCreate()
@@ -64,6 +72,11 @@ class ZaritcareApp: Application() {
             if (questionDaoEntity.count() == 0){
                 questionDaoMock.get().forEach { question ->
                     questionDaoEntity.insert(question.toQuestion(categoryDaoEntity).toQuestionEntity(categoryDaoEntity))
+                }
+            }
+            if (adviceDaoEntity.count() == 0){
+                adviceDaoMock.get().forEach { advice ->
+                    adviceDaoEntity.insert(advice.toAdvice().toAdviceEntity())
                 }
             }
         }

@@ -50,6 +50,12 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun provideAdviceDao(
+        db: ZaritcareDb
+    ) : AdviceDao = db.adviceDao()
+
+    @Provides
+    @Singleton
     fun provideEmotionDao(
         db: ZaritcareDb
     ) : EmotionDao = db.emotionDao()

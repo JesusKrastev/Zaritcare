@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.zaritcare.data.room.activity.ActivityDao
 import com.zaritcare.data.room.activity.ActivityEntity
+import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.advice.AdviceEntity
 import com.zaritcare.data.room.answer.AnswerDao
 import com.zaritcare.data.room.answer.AnswerEntity
@@ -29,6 +30,7 @@ abstract class ZaritcareDb: RoomDatabase() {
     abstract fun emotionDao(): EmotionDao
     abstract fun questionDao(): QuestionDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun adviceDao(): AdviceDao
 
     companion object {
         fun getDatabase(context: Context) = Room.databaseBuilder(

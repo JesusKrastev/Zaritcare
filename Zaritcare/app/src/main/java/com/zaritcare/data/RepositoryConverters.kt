@@ -1,6 +1,7 @@
 package com.zaritcare.data
 
 import com.zaritcare.data.mocks.activity.ActivityMock
+import com.zaritcare.data.mocks.advice.AdviceMock
 import com.zaritcare.data.mocks.category.CategoryMock
 import com.zaritcare.data.mocks.emotion.EmotionMock
 import com.zaritcare.data.mocks.question.QuestionMock
@@ -46,6 +47,13 @@ fun Activity.toActivityEntity() = ActivityEntity(
     authorQuote = authorQuote,
     quote = quote,
     action = action
+)
+
+fun AdviceMock.toAdvice() = Advice(
+    id = id,
+    image = image,
+    title = title,
+    description = description
 )
 
 fun AdviceEntity.toAdvice() = Advice(
