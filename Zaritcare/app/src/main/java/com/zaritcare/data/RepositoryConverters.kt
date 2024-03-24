@@ -1,6 +1,7 @@
 package com.zaritcare.data
 
 import com.zaritcare.data.mocks.activity.ActivityMock
+import com.zaritcare.data.mocks.category.CategoryMock
 import com.zaritcare.data.mocks.emotion.EmotionMock
 import com.zaritcare.data.mocks.question.QuestionMock
 import com.zaritcare.data.room.activity.ActivityEntity
@@ -86,6 +87,11 @@ fun Emotion.toEmotionEntity() = EmotionEntity(
     name = name
 )
 
+fun CategoryMock.toCategory() = Category(
+    id = id,
+    name = name
+)
+
 fun CategoryEntity.toCategory() = Category(
     id = id,
     name = name
@@ -123,6 +129,6 @@ suspend fun Question.toQuestionEntity(categoryDao: CategoryDao) = QuestionEntity
 suspend fun QuestionMock.toQuestion(categoryDao: CategoryDao) = Question(
     id = id,
     question = question,
-    category = categoryDao.get(id).name,
+    category = categoryDao.get(category).name,
     type = type.toQuestionType()
 )
