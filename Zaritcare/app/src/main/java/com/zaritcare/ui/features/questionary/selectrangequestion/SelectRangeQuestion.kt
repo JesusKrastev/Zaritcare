@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionary.selectrangequestion
+package com.zaritcare.ui.features.questionaryform.selectrangequestion
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import com.zaritcare.ui.navigation.ZaritcareNavHost
 import com.zaritcare.ui.theme.ZaritcareTheme
 
 @Composable

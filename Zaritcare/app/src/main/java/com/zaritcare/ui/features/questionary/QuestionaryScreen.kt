@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionary
+package com.zaritcare.ui.features.questionaryform
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.zaritcare.ui.composables.TextSwitch
@@ -21,9 +21,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.features.components.ZaritcareNavBar
-import com.zaritcare.ui.features.questionary.wellbeingform.EmotionUiState
-import com.zaritcare.ui.features.questionary.wellbeingform.WellbeingScaleScreen
-import com.zaritcare.ui.features.questionary.zaritform.ZaritScaleScreen
+import com.zaritcare.ui.features.questionaryform.wellbeingform.EmotionUiState
+import com.zaritcare.ui.features.questionaryform.wellbeingform.WellbeingScaleScreen
+import com.zaritcare.ui.features.questionaryform.zaritform.ZaritScaleScreen
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
