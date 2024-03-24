@@ -10,6 +10,7 @@ import com.zaritcare.ui.features.components.ZaritcareNavBar
 import com.zaritcare.ui.navigation.ZaritcareNavHost
 import com.zaritcare.ui.navigation.navigateToResults
 import com.zaritcare.ui.navigation.navigateToSettings
+import com.zaritcare.ui.navigation.navigateToTips
 
 @Composable
 fun MainScreen(
@@ -29,7 +30,7 @@ fun MainScreen(
             ZaritcareNavBar(
                 onNavigateToForms = { navController.navigateToResults()},
                 onNavigateToActivities = {  },
-                onNavigateToTips = { },
+                onNavigateToTips = { navController.navigateToTips() },
                 onNavigateToSettings = { navController.navigateToSettings() }
             )
         },
