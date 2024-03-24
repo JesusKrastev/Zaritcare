@@ -25,28 +25,23 @@ import com.zaritcare.ui.features.questionary.wellbeingform.EmotionUiState
 import com.zaritcare.ui.features.questionary.wellbeingform.WellbeingScaleScreen
 import com.zaritcare.ui.features.questionary.zaritform.ZaritScaleScreen
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ListQuestions(
-    pagerState: PagerState,
+    selectedIndex: Int,
     questions: List<QuestionUiState>,
     onChangeAnswer: (QuestionUiState) -> Unit,
     emotions: List<EmotionUiState>
 ) {
-    HorizontalPager(
-        state = pagerState
-    ) { page ->
-        when (page) {
-            0 -> WellbeingScaleScreen(
-                questions = questions,
-                onChangeAnswer = onChangeAnswer,
-                emotions = emotions
-            )
-            1 -> ZaritScaleScreen(
-                questions = questions,
-                onChangeAnswer = onChangeAnswer
-            )
-        }
+    when (selectedIndex) {
+        0 -> WellbeingScaleScreen(
+            questions = questions,
+            onChangeAnswer = onChangeAnswer,
+            emotions = emotions
+        )
+        1 -> ZaritScaleScreen(
+            questions = questions,
+            onChangeAnswer = onChangeAnswer
+        )
     }
 }
 
@@ -75,7 +70,6 @@ fun SaveButton(
 fun Content(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
-    pagerState: PagerState,
     questions: List<QuestionUiState>,
     onChangeAnswer: (QuestionUiState) -> Unit,
     emotions: List<EmotionUiState>,
@@ -84,7 +78,7 @@ fun Content(
     categories: List<CategoryUiState>,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -94,7 +88,7 @@ fun Content(
             onSelectionChange = onSelectionChange
         )
         ListQuestions(
-            pagerState = pagerState,
+            selectedIndex = selectedIndex,
             questions = questions,
             onChangeAnswer = onChangeAnswer,
             emotions = emotions
@@ -120,7 +114,6 @@ fun QuestionaryScreen(
     onNavigateToTips: () -> Unit,
     onNavigateToSettings: () -> Unit
 ) {
-    val pagerState: PagerState = rememberPagerState(pageCount = { categories.size })
     val questionsByCategory: List<QuestionUiState> = questions.filter { it.category == categories[selectedIndex].name }
 
     Scaffold(
@@ -136,7 +129,6 @@ fun QuestionaryScreen(
                     selectedIndex = selectedIndex,
                     onSelectionChange = { onQuestionaryEvent(QuestionaryEvent.OnSelectionChange(it))  },
                     categories = categories,
-                    pagerState = pagerState,
                     emotions = emotions,
                     onChangeAnswer = { onQuestionaryEvent(QuestionaryEvent.OnChangeAnswer(it)) },
                     questions = questionsByCategory,
