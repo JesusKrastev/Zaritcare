@@ -17,51 +17,46 @@ class QuestionDaoMock @Inject constructor() {
         ),
         QuestionMock(
             id = 3,
-            question = "Fatiga",
-            category = 1
-        ),
-        QuestionMock(
-            id = 4,
             question = "Insomnio",
             category = 1
         ),
         QuestionMock(
-            id = 5,
+            id = 4,
             question = "Dolor de cabeza",
             category = 1
         ),
         QuestionMock(
-            id = 6,
+            id = 5,
             question = "Depresión",
             category = 1
         ),
         QuestionMock(
-            id = 7,
+            id = 6,
             question = "¿Sientes que tu familiar dependiente te está controlando demasiado?",
             category = 2
         ),
         QuestionMock(
-            id = 8,
+            id = 7,
             question = "¿Sientes que tu vida social ha sido restringida debido a tu situación de cuidador?",
             category = 2
         ),
         QuestionMock(
-            id = 9,
+            id = 8,
             question = "¿Te sientes frustado/a por la falta de apoyo de otras personas en el cuidado de tu familiar?",
             category = 2
         ),
         QuestionMock(
-            id = 10,
+            id = 9,
             question = "¿Te sientes tenso/a entre tú y tu familiar dependiente?",
             category = 2
         ),
         QuestionMock(
-            id = 11,
+            id = 10,
             question = "¿Te sientes culpable por no poder hacer más por tu familiar?",
             category = 2
         ),
         QuestionMock(
-            id = 12,
+            id = 11,
             question = "¿Sientes que tu salud ha sufrido debido a tu situación de cuidador?",
             category = 2
         )
