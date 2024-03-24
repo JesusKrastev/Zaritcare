@@ -12,27 +12,27 @@ class EmotionDaoMock @Inject constructor() {
     private val emotions = mutableListOf<EmotionMock>(
         EmotionMock(
             id = 1,
-            name = "Smile",
+            name = "Feliz",
             image = smilePhoto
         ),
         EmotionMock(
             id = 2,
-            name = "Sad",
+            name = "Triste",
             image = sadPhoto
         ),
         EmotionMock(
             id = 3,
-            name = "Upset",
+            name = "Decepcionado",
             image = upsetPhoto
         ),
         EmotionMock(
             id = 4,
-            name = "Angry",
+            name = "Enfadado",
             image = angryPhoto
         ),
         EmotionMock(
             id = 5,
-            name = "Sick",
+            name = "Enfermo",
             image = sickPhoto
         )
     )
