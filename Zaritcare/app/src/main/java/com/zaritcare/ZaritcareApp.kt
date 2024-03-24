@@ -1,6 +1,8 @@
 package com.zaritcare
 
 import android.app.Application
+import android.util.Log
+import com.zaritcare.data.QuestionRepository
 import com.zaritcare.data.mocks.activity.ActivityDaoMock
 import com.zaritcare.data.mocks.emotion.EmotionDaoMock
 import com.zaritcare.data.mocks.question.QuestionDaoMock
@@ -15,9 +17,11 @@ import com.zaritcare.data.toEmotion
 import com.zaritcare.data.toEmotionEntity
 import com.zaritcare.data.toQuestion
 import com.zaritcare.data.toQuestionEntity
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
+@HiltAndroidApp
 class ZaritcareApp: Application() {
     @Inject
     lateinit var activityDaoMock: ActivityDaoMock
@@ -33,6 +37,8 @@ class ZaritcareApp: Application() {
     lateinit var questionDaoEntity: QuestionDao
     @Inject
     lateinit var categoryDao: CategoryDao
+    @Inject
+    lateinit var questionRepository: QuestionRepository
 
     override fun onCreate() {
         super.onCreate()

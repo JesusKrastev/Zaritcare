@@ -72,6 +72,7 @@ private fun TabContent(
     modifier: Modifier = Modifier,
     indicatorOffset: Dp,
     selectedColor: Color,
+    textSelectedColor: Color,
     content: @Composable () -> Unit
 ) {
     Row(
@@ -80,7 +81,7 @@ private fun TabContent(
             drawRoundRect(
                 topLeft = Offset(x = indicatorOffset.toPx() + padding, padding),
                 size = Size(size.width / 2 - padding * 2, size.height - padding * 2),
-                color = Color.Black,
+                color = textSelectedColor,
                 cornerRadius = CornerRadius(x = 8.dp.toPx(), y = 8.dp.toPx()),
             )
             drawWithLayer {
@@ -130,6 +131,7 @@ fun TextSwitch(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
     selectedColor: Color = MaterialTheme.colorScheme.primary,
+    textSelectedColor: Color = MaterialTheme.colorScheme.onPrimary,
     items: List<String>,
     onSelectionChange: (Int) -> Unit
 ) {
@@ -157,7 +159,8 @@ fun TextSwitch(
             TabContent(
                 modifier = Modifier.fillMaxWidth(),
                 indicatorOffset = indicatorOffset,
-                selectedColor = selectedColor
+                selectedColor = selectedColor,
+                textSelectedColor = textSelectedColor
             ) {
                 items.forEachIndexed { index, text ->
                     TabItem(
@@ -175,7 +178,7 @@ fun TextSwitch(
 @Preview
 @Composable
 private fun TextSwitchTest() {
-    val items = remember { listOf("", "Woman") }
+    val items = remember { listOf("Bienestar", "Zarit") }
     var selectedIndex by remember { mutableIntStateOf(0) }
 
     ZaritcareTheme(

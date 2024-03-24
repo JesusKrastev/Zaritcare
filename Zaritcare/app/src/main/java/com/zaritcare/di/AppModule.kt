@@ -1,6 +1,9 @@
 package com.zaritcare.di
 
 import android.content.Context
+import com.zaritcare.data.CategoryRepository
+import com.zaritcare.data.EmotionRepository
+import com.zaritcare.data.QuestionRepository
 import com.zaritcare.data.room.ZaritcareDb
 import com.zaritcare.data.room.activity.ActivityDao
 import com.zaritcare.data.room.advice.AdviceDao
@@ -31,12 +34,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideAdviceDao(
-        db: ZaritcareDb
-    ) : AdviceDao = db.adviceDao()
-
-    @Provides
-    @Singleton
     fun provideAnswerDao(
         db: ZaritcareDb
     ) : AnswerDao = db.answerDao()
@@ -58,4 +55,24 @@ class AppModule {
     fun provideAgendaDatabase(
         @ApplicationContext context: Context
     ) : ZaritcareDb = ZaritcareDb.getDatabase(context)
+
+    @Provides
+    @Singleton
+    fun provideQuestionRepository(
+        questionDao: QuestionDao,
+        categoryDao: CategoryDao
+    ) : QuestionRepository = QuestionRepository(questionDao, categoryDao)
+
+    @Provides
+    @Singleton
+    fun provideEmotionRepository(
+        emotionDao: EmotionDao
+    ) : EmotionRepository = EmotionRepository(emotionDao)
+
+    @Provides
+    @Singleton
+    fun provideCategoryRepository(
+        categoryDao: CategoryDao
+    ) : CategoryRepository = CategoryRepository(categoryDao)
+
 }

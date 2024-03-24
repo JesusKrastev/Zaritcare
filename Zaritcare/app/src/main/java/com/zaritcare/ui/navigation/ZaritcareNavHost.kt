@@ -10,7 +10,7 @@ import com.zaritcare.ui.features.questionary.QuestionaryViewModel
 @Composable
 fun ZaritcareNavHost() {
     val navController: NavHostController = rememberNavController()
-    val questionaryVm = hiltViewModel<QuestionaryViewModel>()
+      val questionaryVm= hiltViewModel<QuestionaryViewModel>()
 
     NavHost(
         navController = navController,

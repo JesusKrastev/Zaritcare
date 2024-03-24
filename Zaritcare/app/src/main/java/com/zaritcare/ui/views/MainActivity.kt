@@ -16,7 +16,9 @@ import com.zaritcare.ui.features.register.RegisterScreen
 import com.zaritcare.ui.features.splashscreen.SplashScreen
 import com.zaritcare.ui.navigation.ZaritcareNavHost
 import com.zaritcare.ui.theme.ZaritcareTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
