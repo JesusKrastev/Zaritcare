@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionaryform.zaritform
+package com.zaritcare.ui.features.questionary.zaritform
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.zaritcare.ui.features.questionaryform.QuestionUiState
-import com.zaritcare.ui.features.questionaryform.selectrangequestion.SelectRangeQuestion
+import com.zaritcare.ui.features.questionary.QuestionUiState
+import com.zaritcare.ui.features.questionary.selectrangequestion.SelectRangeQuestion
 
 @Composable
 fun Form(

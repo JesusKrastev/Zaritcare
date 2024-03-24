@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionaryform
+package com.zaritcare.ui.features.questionary
 
 import com.zaritcare.models.Question
 

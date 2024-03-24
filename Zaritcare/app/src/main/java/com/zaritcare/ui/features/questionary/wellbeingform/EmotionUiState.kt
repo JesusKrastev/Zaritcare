@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionaryform.wellbeingform
+package com.zaritcare.ui.features.questionary.wellbeingform
 
 import androidx.compose.ui.graphics.ImageBitmap
 import com.zaritcare.data.room.emotion.EmotionEntity

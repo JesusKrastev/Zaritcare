@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionaryform
+package com.zaritcare.ui.features.questionary
 
 sealed interface QuestionaryEvent {
     data class OnSelectionChange(val index: Int): QuestionaryEvent
