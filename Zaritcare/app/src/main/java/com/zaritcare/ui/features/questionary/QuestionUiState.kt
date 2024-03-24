@@ -27,5 +27,7 @@ fun Question.toQuestionUiState(): QuestionUiState =
         type = when (type) {
             Question.QuestionType.EMOTION -> QuestionUiState.QuestionUiType.EMOTION
             Question.QuestionType.RANGE -> QuestionUiState.QuestionUiType.RANGE
-        }
+        },
+        minimumValueIndicator = minimumValueIndicator,
+        maximumValueIndicator = maximumValueIndicator
     )
