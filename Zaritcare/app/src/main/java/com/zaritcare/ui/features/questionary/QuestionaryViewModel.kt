@@ -37,12 +37,6 @@ class QuestionaryViewModel @Inject constructor(
             try {
                 val emotions: List<EmotionUiState> = getEmotions()
                 questionsState = getQuestions().map { it.copy(answer = if(it.type == QuestionUiState.QuestionUiType.EMOTION) emotions.first().name else "0") }
-//                getQuestions().collect { questions ->
-//                    questionsState = questions.map { question ->
-//                        val questionState = question.toQuestionUiState()
-//                        questionState.copy(answer = if(questionState.type == QuestionUiState.QuestionUiType.EMOTION) emotions.first().name else "0")
-//                    }
-//                }
             } catch (e: Exception) {
                 Log.d("QuestionaryViewModel", "Error loading questions", e)
             }
