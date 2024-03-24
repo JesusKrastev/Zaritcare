@@ -116,19 +116,25 @@ suspend fun QuestionEntity.toQuestion(categoryDao: CategoryDao) = Question(
     id = id,
     question = question,
     category = categoryDao.get(category).name,
-    type = Question.QuestionType.valueOf(type.uppercase())
+    type = Question.QuestionType.valueOf(type.uppercase()),
+    minimumValueIndicator = minimumValueIndicator,
+    maximumValueIndicator = maximumValueIndicator
 )
 
 suspend fun Question.toQuestionEntity(categoryDao: CategoryDao) = QuestionEntity(
     id = id,
     question = question,
     category = categoryDao.get(category).id,
-    type = type.name
+    type = type.name,
+    minimumValueIndicator = minimumValueIndicator,
+    maximumValueIndicator = maximumValueIndicator
 )
 
 suspend fun QuestionMock.toQuestion(categoryDao: CategoryDao) = Question(
     id = id,
     question = question,
     category = categoryDao.get(category).name,
-    type = type.toQuestionType()
+    type = type.toQuestionType(),
+    minimumValueIndicator = minimumValueIndicator,
+    maximumValueIndicator = maximumValueIndicator
 )
