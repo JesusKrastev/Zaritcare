@@ -36,9 +36,10 @@ fun Question(
 fun RangeSlider(
     range: ClosedFloatingPointRange<Float>,
     steps: Int,
+    initialValue: Float,
     onValueChange: (Float) -> Unit
 ) {
-    var sliderPosition: Float by remember { mutableFloatStateOf(0f) }
+    var sliderPosition: Float by remember { mutableFloatStateOf(initialValue) }
 
     Slider(
         value = sliderPosition,
@@ -79,6 +80,7 @@ fun SelectRangeQuestion(
     modifier: Modifier = Modifier,
     textMinimumSelection: String,
     textMaximumSelection: String,
+    initialValue: Float,
     question: String,
     range:  ClosedFloatingPointRange<Float>,
     steps: Int,
@@ -91,6 +93,7 @@ fun SelectRangeQuestion(
             question = question
         )
         RangeSlider(
+            initialValue = initialValue,
             steps = steps,
             onValueChange = onValueChange,
             range = range
@@ -119,7 +122,8 @@ fun SelectRangeQuestionPreview(
                 question = "How much do you like this feature?",
                 range = 0f..10f,
                 steps = 9,
-                onValueChange = {}
+                onValueChange = {},
+                initialValue = 0f
             )
         }
     }

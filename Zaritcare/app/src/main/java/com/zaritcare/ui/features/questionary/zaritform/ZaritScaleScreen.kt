@@ -30,7 +30,8 @@ fun Form(
                     onChangeAnswer(question.copy(answer = value.toString()))
                 },
                 textMinimumSelection = question.minimumValueIndicator,
-                textMaximumSelection = question.maximumValueIndicator
+                textMaximumSelection = question.maximumValueIndicator,
+                initialValue = question.answer.toFloat()
             )
         }
     }

@@ -128,6 +128,7 @@ fun Form(
                 SelectRangeQuestion(
                     question = question.question,
                     range = question.range,
+                    initialValue = question.answer.toFloat(),
                     steps = question.steps,
                     onValueChange = { value ->
                         onChangeAnswer(question.copy(answer = value.toString()))
@@ -183,7 +184,8 @@ fun SelectionRangeQuestionTest() {
                     range = range,
                     steps = steps,
                     textMinimumSelection = "Not happy",
-                    textMaximumSelection = "Very happy"
+                    textMaximumSelection = "Very happy",
+                    initialValue = 0f
                 )
             }
         }
