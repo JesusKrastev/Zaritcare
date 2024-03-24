@@ -1,6 +1,7 @@
 package com.zaritcare.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -9,12 +10,15 @@ import com.kinoyamboladmin.ui.features.settings.SettingsViewModel
 import com.zaritcare.ui.features.questionary.QuestionaryViewModel
 
 @Composable
-fun ZaritcareNavHost() {
-    val navController: NavHostController = rememberNavController()
-    val questionaryVm = hiltViewModel<QuestionaryViewModel>()
-    val settingsVm = hiltViewModel<SettingsViewModel>()
+fun ZaritcareNavHost(
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
+    val questionaryVm: QuestionaryViewModel = hiltViewModel<QuestionaryViewModel>()
+    val settingsVm: SettingsViewModel = hiltViewModel<SettingsViewModel>()
 
     NavHost(
+        modifier = modifier,
         navController = navController,
         startDestination = LoginGraphRoute
     ) {
@@ -40,48 +44,14 @@ fun ZaritcareNavHost() {
             }
         )
         questionaryScreen(
-            vm = questionaryVm,
-            onNavigateToForms = {
-                navController.navigateToResults()
-            },
-            onNavigateToActivities = {
-
-            },
-            onNavigateToTips = {
-
-            },
-            onNavigateToSettings = {
-                navController.navigateToSettings()
-            }
+            vm = questionaryVm
         )
         resultsScreen(
             onNavigateToQuestionary = {
                 navController.navigateToQuestionary()
-            },
-            onNavigateToForms = {
-
-            },
-            onNavigateToActivities = {
-
-            },
-            onNavigateToTips = {
-
-            },
-            onNavigateToSettings = {
-                navController.navigateToSettings()
             }
         )
         settingsScreen(
-            onNavigateToForms = {
-                navController.navigateToResults()
-            },
-            onNavigateToActivities = {
-
-            },
-            onNavigateToTips = {
-
-            },
-            onNavigateToSettings = { },
             vm = settingsVm
         )
     }

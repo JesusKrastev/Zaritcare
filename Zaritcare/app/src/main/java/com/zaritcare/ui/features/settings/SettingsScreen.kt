@@ -188,35 +188,14 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     themes: List<String>,
     settingsUiState: SettingsUiState,
-    onSettingsEvent: (SettingsEvent) -> Unit,
-    onNavigateToForms: () -> Unit,
-    onNavigateToActivities: () -> Unit,
-    onNavigateToTips: () -> Unit,
-    onNavigateToSettings: () -> Unit
+    onSettingsEvent: (SettingsEvent) -> Unit
 ) {
-    Scaffold(
+    MainContent(
         modifier = modifier,
-        topBar = {
-
-        },
-        content = { paddingValues ->
-            MainContent(
-                modifier = Modifier.padding(paddingValues = paddingValues),
-                themes = themes,
-                settingsUiState = settingsUiState,
-                onChangeTheme = { onSettingsEvent(SettingsEvent.OnChangeTheme(it)) },
-                onClickPrivacyPolicies = { onSettingsEvent(SettingsEvent.OnClickPrivacyPolicies) },
-                onClickTermsAndConditions = { onSettingsEvent(SettingsEvent.OnClickTermsAndConditions) }
-            )
-        },
-        bottomBar = {
-            ZaritcareNavBar(
-                selectedPage = 3,
-                onNavigateToForms = onNavigateToForms,
-                onNavigateToActivities = onNavigateToActivities,
-                onNavigateToTips = onNavigateToTips,
-                onNavigateToSettings = onNavigateToSettings
-            )
-        },
+        themes = themes,
+        settingsUiState = settingsUiState,
+        onChangeTheme = { onSettingsEvent(SettingsEvent.OnChangeTheme(it)) },
+        onClickPrivacyPolicies = { onSettingsEvent(SettingsEvent.OnClickPrivacyPolicies) },
+        onClickTermsAndConditions = { onSettingsEvent(SettingsEvent.OnClickTermsAndConditions) }
     )
 }

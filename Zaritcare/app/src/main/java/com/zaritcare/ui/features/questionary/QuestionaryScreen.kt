@@ -143,42 +143,22 @@ fun QuestionaryScreen(
     onQuestionaryEvent: (QuestionaryEvent) -> Unit,
     questions: List<QuestionUiState>,
     emotions: List<EmotionUiState>,
-    categories: List<CategoryUiState>,
-    onNavigateToForms: () -> Unit,
-    onNavigateToActivities: () -> Unit,
-    onNavigateToTips: () -> Unit,
-    onNavigateToSettings: () -> Unit
+    categories: List<CategoryUiState>
 ) {
     val questionsByCategory: List<QuestionUiState> = questions.filter { it.category == categories[selectedIndex].name }
 
-    Scaffold(
-        modifier = modifier,
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues = paddingValues),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Content(
-                    selectedIndex = selectedIndex,
-                    onSelectionChange = { onQuestionaryEvent(QuestionaryEvent.OnSelectionChange(it))  },
-                    categories = categories,
-                    emotions = emotions,
-                    onChangeAnswer = { onQuestionaryEvent(QuestionaryEvent.OnChangeAnswer(it)) },
-                    questions = questionsByCategory,
-                    onClickSave = { onQuestionaryEvent(QuestionaryEvent.OnClickSave({})) }
-                )
-            }
-        },
-        bottomBar = {
-            ZaritcareNavBar(
-                selectedPage = 0,
-                onNavigateToForms = onNavigateToForms,
-                onNavigateToActivities = onNavigateToActivities,
-                onNavigateToTips = onNavigateToTips,
-                onNavigateToSettings = onNavigateToSettings
-            )
-        }
-    )
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Content(
+            selectedIndex = selectedIndex,
+            onSelectionChange = { onQuestionaryEvent(QuestionaryEvent.OnSelectionChange(it))  },
+            categories = categories,
+            emotions = emotions,
+            onChangeAnswer = { onQuestionaryEvent(QuestionaryEvent.OnChangeAnswer(it)) },
+            questions = questionsByCategory,
+            onClickSave = { onQuestionaryEvent(QuestionaryEvent.OnClickSave({})) }
+        )
+    }
 }

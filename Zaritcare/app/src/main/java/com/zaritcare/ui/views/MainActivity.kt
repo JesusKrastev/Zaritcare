@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import com.zaritcare.data.SettingsRepository
+import com.zaritcare.ui.features.MainScreen
 import com.zaritcare.ui.features.login.LoginScreen
 import com.zaritcare.ui.features.register.RegisterScreen
 import com.zaritcare.ui.features.splashscreen.SplashScreen
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background
                         ) {
-                            ZaritcareNavHost()
+                            MainScreen()
                         }
                     }
                 }

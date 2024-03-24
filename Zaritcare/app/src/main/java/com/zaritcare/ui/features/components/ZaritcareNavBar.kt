@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
 fun ZaritcareNavBar(
-    selectedPage: Int,
     onNavigateToForms: () -> Unit,
     onNavigateToActivities: () -> Unit,
     onNavigateToTips: () -> Unit,
@@ -35,6 +34,7 @@ fun ZaritcareNavBar(
         val onClick: () -> Unit
     )
 
+    var selectedPage by remember { mutableIntStateOf(0) }
     val listItemsIconButtonsWithText:List<ItemIconButtonWithText> = listOf<ItemIconButtonWithText>(
         ItemIconButtonWithText(
             icon = Icons.Filled.ContentPaste,
@@ -61,7 +61,6 @@ fun ZaritcareNavBar(
             onClick = onNavigateToSettings
         )
     )
-    var selectedItem: Int by remember { mutableIntStateOf(selectedPage) }
 
     NavigationBar {
         listItemsIconButtonsWithText.forEachIndexed { index, button ->
@@ -81,10 +80,10 @@ fun ZaritcareNavBar(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
                     selectedTextColor = MaterialTheme.colorScheme.primary
                 ),
-                selected = selectedItem == index,
+                selected = selectedPage == index,
                 onClick = {
                     button.onClick()
-                    selectedItem = index
+                    selectedPage = index
                 }
             )
         }

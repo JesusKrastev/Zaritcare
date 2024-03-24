@@ -14,11 +14,7 @@ fun NavController.navigateToSettings(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.settingsScreen(
-    vm : SettingsViewModel,
-    onNavigateToForms: () -> Unit,
-    onNavigateToActivities: () -> Unit,
-    onNavigateToTips: () -> Unit,
-    onNavigateToSettings: () -> Unit
+    vm : SettingsViewModel
 ) {
     composable(
         route = SettingsGraphRoute,
@@ -27,10 +23,6 @@ fun NavGraphBuilder.settingsScreen(
         SettingsScreen(
             themes = vm.themes,
             settingsUiState = vm.userSettingsState!!,
-            onNavigateToForms = onNavigateToForms,
-            onNavigateToActivities = onNavigateToActivities,
-            onNavigateToTips = onNavigateToTips,
-            onNavigateToSettings = onNavigateToSettings,
             onSettingsEvent = vm::onSettingsEvent
         )
     }

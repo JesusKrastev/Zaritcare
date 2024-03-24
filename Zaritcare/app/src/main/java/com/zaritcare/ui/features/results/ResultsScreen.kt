@@ -80,48 +80,24 @@ fun WithoutResults(
 @Composable
 fun ResultsScreen(
     modifier: Modifier = Modifier,
-    onClickStart: () -> Unit,
-    onNavigateToForms: () -> Unit,
-    onNavigateToActivities: () -> Unit,
-    onNavigateToTips: () -> Unit,
-    onNavigateToSettings: () -> Unit
+    onClickStart: () -> Unit
 ) {
-    Scaffold(
-        modifier = modifier,
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues = paddingValues),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                WithoutResults(
-                    modifier = Modifier.padding(16.dp),
-                    onClickStart = onClickStart
-                )
-            }
-        },
-        bottomBar = {
-            ZaritcareNavBar(
-                selectedPage = 0,
-                onNavigateToForms = onNavigateToForms,
-                onNavigateToActivities = onNavigateToActivities,
-                onNavigateToTips = onNavigateToTips,
-                onNavigateToSettings = onNavigateToSettings
-            )
-        }
-    )
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        WithoutResults(
+            modifier = Modifier.padding(16.dp),
+            onClickStart = onClickStart
+        )
+    }
 }
 
 @Preview
 @Composable
 fun ResultsFormScreenPreview() {
     ResultsScreen(
-        onClickStart = {},
-        onNavigateToForms = {},
-        onNavigateToActivities = {},
-        onNavigateToTips = {},
-        onNavigateToSettings = {}
+        onClickStart = {}
     )
 }

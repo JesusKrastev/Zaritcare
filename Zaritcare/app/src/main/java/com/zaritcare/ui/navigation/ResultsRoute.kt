@@ -13,22 +13,14 @@ fun NavController.navigateToResults(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.resultsScreen(
-    onNavigateToQuestionary: () -> Unit,
-    onNavigateToForms: () -> Unit,
-    onNavigateToActivities: () -> Unit,
-    onNavigateToTips: () -> Unit,
-    onNavigateToSettings: () -> Unit
+    onNavigateToQuestionary: () -> Unit
 ) {
     composable(
         route = ResultsGraphRoute,
         arguments = emptyList()
     ) {
         ResultsScreen(
-            onClickStart = onNavigateToQuestionary,
-            onNavigateToForms = onNavigateToForms,
-            onNavigateToActivities = onNavigateToActivities,
-            onNavigateToTips = onNavigateToTips,
-            onNavigateToSettings = onNavigateToSettings
+            onClickStart = onNavigateToQuestionary
         )
     }
 }
