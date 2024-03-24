@@ -65,7 +65,6 @@ fun SaveButton(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
@@ -100,7 +99,6 @@ fun Content(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun QuestionaryScreen(
     modifier: Modifier = Modifier,
