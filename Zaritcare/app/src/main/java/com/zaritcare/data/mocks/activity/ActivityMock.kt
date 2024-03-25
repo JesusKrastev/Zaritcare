@@ -11,5 +11,6 @@ data class ActivityMock(
     val quoteImage: String?,
     val authorQuote: String?,
     val quote: String?,
+    val action: String,
     val actions: List<Action>
 )

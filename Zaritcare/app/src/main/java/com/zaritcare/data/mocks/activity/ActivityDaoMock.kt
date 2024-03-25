@@ -26,7 +26,8 @@ class ActivityDaoMock @Inject constructor() {
             description = "Libera el estrés presionado el globo hasta hacerlo estallar.",
             authorQuote = "Hans Selye",
             quote = "No es el estrés lo que nos mata, sino cómo reaccionamos ante él.",
-            actions = listOf(Action.ESTALLAR_GLOBO)
+            actions = listOf(Action.ESTALLAR_GLOBO),
+            action = "Libera el estrés presionando el globo hasta hacerlo estallar."
         ),
         ActivityMock(
             id = 2,
@@ -37,7 +38,8 @@ class ActivityDaoMock @Inject constructor() {
             description = "La meditación es una practica que reduce la ansiedad, el estrés, y los síntomas de la depresión. Te ayudan a sentirte tranquilo y en paz.",
             authorQuote = "Charlie Chaplin",
             quote = "Nada es permanente en este mundo, ni siquiera nuestros problemas.",
-            actions = listOf(Action.CONTADOR, Action.MUSICA)
+            actions = listOf(Action.CONTADOR, Action.MUSICA),
+            action = "Concéntrate en tu respiración. Inhala y exhala. Sigue tu respiración durante varios minutos."
         ),
         ActivityMock(
             id = 3,
@@ -48,7 +50,8 @@ class ActivityDaoMock @Inject constructor() {
             description = "Caminar aumenta la resistencia, disminuye la depresión, el estrés, el insomnio y muchos otros problemas emocionales.",
             authorQuote = "Buda",
             quote = "Mantener nuestro cuerpo con buena salud es un deber. De lo contrario no seremos capaces de mantener nuestras mentes fuertes y claras.",
-            actions = listOf(Action.CONTADOR)
+            actions = listOf(Action.CONTADOR),
+            action = "Sal de casa y camina."
         ),
         ActivityMock(
             id = 4,
@@ -59,7 +62,8 @@ class ActivityDaoMock @Inject constructor() {
             description = "El cuerpo esta compuesto entre el 50% y 70% de agua. Beber suficiente agua nos aumenta la energía de nuestro cuerpo, eliminamos toxinas y desechos, mejoramos la fatiga y el cansancio, adelgazamos e incluso ¡nuestra piel se ve más tersa y elástica.",
             authorQuote = null,
             quote = null,
-            actions = emptyList()
+            actions = emptyList(),
+            action = "Bebe agua."
         )
     )
 

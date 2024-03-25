@@ -25,5 +25,7 @@ data class ActivityEntity(
     @ColumnInfo(name = "quote")
     val quote: String?,
     @ColumnInfo(name = "actions")
-    val actions: List<Action>
+    val actions: List<Action>,
+    @ColumnInfo(name = "action")
+    val action: String
 )

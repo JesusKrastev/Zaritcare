@@ -24,7 +24,8 @@ fun ActivityMock.toActivity() = Activity(
     authorQuote = authorQuote,
     quoteImage = quoteImage,
     quote = quote,
-    actions = actions
+    actions = actions,
+    action = action
 )
 
 fun ActivityEntity.toActivity() = Activity(
@@ -36,7 +37,8 @@ fun ActivityEntity.toActivity() = Activity(
     authorQuote = authorQuote,
     quoteImage = quoteImage,
     quote = quote,
-    actions = actions
+    actions = actions,
+    action = action
 )
 
 fun Activity.toActivityEntity() = ActivityEntity(
@@ -48,7 +50,8 @@ fun Activity.toActivityEntity() = ActivityEntity(
     authorQuote = authorQuote,
     quoteImage = quoteImage,
     quote = quote,
-    actions = actions
+    actions = actions,
+    action = action
 )
 
 fun AdviceMock.toAdvice() = Advice(

@@ -9,5 +9,6 @@ data class Activity(
     val quoteImage: String?,
     val authorQuote: String?,
     val quote: String?,
-    val actions: List<Action>
+    val actions: List<Action>,
+    val action: String
 )
