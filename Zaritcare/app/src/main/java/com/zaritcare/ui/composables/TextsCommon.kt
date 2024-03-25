@@ -6,19 +6,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun TextTile(
     title: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
+    style: TextStyle = MaterialTheme.typography.titleLarge,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = title,
         color = color,
         fontWeight = FontWeight.Bold,
-        style = MaterialTheme.typography.titleLarge,
+        style = style,
         modifier = modifier
     )
 }
@@ -27,11 +29,12 @@ fun TextTile(
 fun TextBody(
     text: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.bodyLarge,
+        style = style,
         color = color,
         modifier = modifier
     )
