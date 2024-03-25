@@ -24,8 +24,8 @@ class ActivityDaoMock @Inject constructor() {
             quoteImage = quoteImageBurstBalloon,
             title = "Reventar un globo",
             description = "Libera el estrés presionado el globo hasta hacerlo estallar.",
-            authorQuote = "No es el estrés lo que nos mata, sino cómo reaccionamos ante él.",
-            quote = "Hans Selye",
+            authorQuote = "Hans Selye",
+            quote = "No es el estrés lo que nos mata, sino cómo reaccionamos ante él.",
             actions = listOf(Action.ESTALLAR_GLOBO)
         ),
         ActivityMock(
@@ -35,8 +35,8 @@ class ActivityDaoMock @Inject constructor() {
             quoteImage = quoteImageMeditation,
             title = "Meditación",
             description = "La meditación es una practica que reduce la ansiedad, el estrés, y los síntomas de la depresión. Te ayudan a sentirte tranquilo y en paz.",
-            authorQuote = "Nada es permanente en este mundo, ni siquiera nuestros problemas.",
-            quote = "Charlie Chaplin",
+            authorQuote = "Charlie Chaplin",
+            quote = "Nada es permanente en este mundo, ni siquiera nuestros problemas.",
             actions = listOf(Action.CONTADOR, Action.MUSICA)
         ),
         ActivityMock(
@@ -46,8 +46,8 @@ class ActivityDaoMock @Inject constructor() {
             quoteImage = quoteImageExcercise,
             title = "Realizar ejercicio",
             description = "Caminar aumenta la resistencia, disminuye la depresión, el estrés, el insomnio y muchos otros problemas emocionales.",
-            authorQuote = "Mantener nuestro cuerpo con buena salud es un deber. De lo contrario no seremos capaces de mantener nuestras mentes fuertes y claras.",
-            quote = "Buda",
+            authorQuote = "Buda",
+            quote = "Mantener nuestro cuerpo con buena salud es un deber. De lo contrario no seremos capaces de mantener nuestras mentes fuertes y claras.",
             actions = listOf(Action.CONTADOR)
         ),
         ActivityMock(
