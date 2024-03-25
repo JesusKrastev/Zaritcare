@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaritcare.data.SettingsRepository
 import com.zaritcare.models.SettingsValues
@@ -17,12 +18,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    application: Application,
     private val settingsRepository: SettingsRepository
-): AndroidViewModel(application) {
+): ViewModel() {
     var themes by mutableStateOf(SettingsValues.themes)
     var userSettingsState: SettingsUiState? by mutableStateOf(SettingsUiState())
-    private val context: Context = getApplication<Application>().applicationContext
 
     private fun loadUserSettings() {
         viewModelScope.launch {
