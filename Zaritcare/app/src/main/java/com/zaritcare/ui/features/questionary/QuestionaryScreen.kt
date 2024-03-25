@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.composables.CollapsingLayout
 import com.zaritcare.ui.features.components.ZaritcareNavBar
@@ -121,7 +122,7 @@ fun Content(
             ) {
                 TextSwitch(
                     selectedIndex = selectedIndex,
-                    items = categories,
+                    items = categories.map { it.lowercase().replaceFirstChar { it.uppercase() } },
                     onSelectionChange = onSelectionChange
                 )
                 Form(
