@@ -26,6 +26,6 @@ class ActivityRepository @Inject constructor(
         dao.get().map { it.toActivity() }
     }
     suspend fun get(id: Int) = withContext(Dispatchers.IO) {
-        dao.get(id).toActivity()
+        dao.get(id)?.toActivity()
     }
 }
