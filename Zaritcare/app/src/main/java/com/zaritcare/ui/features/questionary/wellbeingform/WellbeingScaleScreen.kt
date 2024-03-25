@@ -1,6 +1,5 @@
 package com.zaritcare.ui.features.questionary.wellbeingform
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -117,7 +116,6 @@ fun Form(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         questions.forEach { question ->
-            Log.d("WellbeingScaleScreen", "Question: ${question.type.name}")
             if(question.type == Type.EMOTION) {
                 EmotionQuestion(
                     emotions = emotions,
