@@ -17,32 +17,38 @@ import com.zaritcare.models.Question
 
 fun ActivityMock.toActivity() = Activity(
     id = id,
-    image = image,
-    name = title,
+    frontPage = frontPage,
+    banner = banner,
+    title = title,
     description = description,
     authorQuote = authorQuote,
+    quoteImage = quoteImage,
     quote = quote,
-    action = action
+    actions = actions
 )
 
 fun ActivityEntity.toActivity() = Activity(
     id = id,
-    image = image,
-    name = name,
+    frontPage = frontPage,
+    banner = banner,
+    title = title,
     description = description,
     authorQuote = authorQuote,
+    quoteImage = quoteImage,
     quote = quote,
-    action = action
+    actions = actions
 )
 
 fun Activity.toActivityEntity() = ActivityEntity(
     id = id,
-    image = image,
-    name = name,
+    frontPage = frontPage,
+    banner = banner,
+    title = title,
     description = description,
     authorQuote = authorQuote,
+    quoteImage = quoteImage,
     quote = quote,
-    action = action
+    actions = actions
 )
 
 fun AdviceMock.toAdvice() = Advice(

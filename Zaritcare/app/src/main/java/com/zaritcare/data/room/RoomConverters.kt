@@ -2,6 +2,7 @@ package com.zaritcare.data.room
 
 import androidx.room.TypeConverter
 import com.zaritcare.data.mocks.question.QuestionMock
+import com.zaritcare.models.Action
 import com.zaritcare.utilities.images.Images
 import java.time.LocalDate
 
@@ -14,4 +15,8 @@ class RoomConverters {
     fun fromDate(date: LocalDate): Long = date.toEpochDay()
     @TypeConverter
     fun toDate(date: Long): LocalDate = LocalDate.ofEpochDay(date)
+    @TypeConverter
+    fun actionsFromString(value: String): List<Action> = value.split(",").map { Action.valueOf(it) }
+    @TypeConverter
+    fun actionsToString(actions: List<Action>): String = actions.joinToString(",")
 }

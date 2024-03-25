@@ -2,10 +2,12 @@ package com.zaritcare.models
 
 data class Activity(
     val id: Int,
-    val image: String,
-    val name: String,
+    val frontPage: String,
+    val banner: String,
+    val title: String,
     val description: String,
+    val quoteImage: String?,
     val authorQuote: String?,
     val quote: String?,
-    val action: String
+    val actions: List<Action>
 )
