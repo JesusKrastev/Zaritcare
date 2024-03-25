@@ -27,7 +27,7 @@ class ActivityDaoMock @Inject constructor() {
             authorQuote = "Hans Selye",
             quote = "No es el estrés lo que nos mata, sino cómo reaccionamos ante él.",
             actions = listOf(Action.ESTALLAR_GLOBO),
-            action = "Libera el estrés presionando el globo hasta hacerlo estallar."
+            action = "Revienta el globo."
         ),
         ActivityMock(
             id = 2,
