@@ -3,13 +3,11 @@ package com.zaritcare.ui.features.questionary.zaritform
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.features.questionary.QuestionUiState
-import com.zaritcare.ui.features.questionary.selectrangequestion.SelectRangeQuestion
+import com.zaritcare.ui.features.questionary.components.SelectRangeQuestion
 
 @Composable
 fun Form(
