@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.zaritcare.R
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
-import com.zaritcare.ui.features.components.ZaritcareNavBar
 
 @Composable
 fun EmptyResultsMessage(
