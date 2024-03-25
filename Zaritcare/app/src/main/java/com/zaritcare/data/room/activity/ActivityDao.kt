@@ -20,5 +20,5 @@ interface ActivityDao {
     @Query("SELECT * FROM activities")
     suspend fun get(): List<ActivityEntity>
     @Query("SELECT * FROM activities WHERE id = :id")
-    suspend fun get(id: Int): ActivityEntity
+    suspend fun get(id: Int): ActivityEntity?
 }
