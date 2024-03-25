@@ -12,7 +12,7 @@ data class QuestionEntity(
     @ColumnInfo(name = "question")
     val question: String,
     @ColumnInfo(name = "category")
-    val category: Int,
+    val category: String,
     @ColumnInfo(name = "type")
     val type: String,
     @ColumnInfo(name = "minimum_value_indicator")

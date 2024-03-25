@@ -1,5 +1,6 @@
 package com.zaritcare.ui.features.questionary.wellbeingform
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -9,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +22,7 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.zaritcare.models.Type
 import com.zaritcare.ui.features.questionary.QuestionUiState
 import com.zaritcare.ui.features.questionary.selectrangequestion.SelectRangeQuestion
 import com.zaritcare.ui.theme.ZaritcareTheme
@@ -117,7 +117,8 @@ fun Form(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         questions.forEach { question ->
-            if(question.type == QuestionUiState.QuestionUiType.EMOTION) {
+            Log.d("WellbeingScaleScreen", "Question: ${question.type.name}")
+            if(question.type == Type.EMOTION) {
                 EmotionQuestion(
                     emotions = emotions,
                     selectedEmotion = question.answer,

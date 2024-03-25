@@ -1,6 +1,6 @@
 package com.zaritcare.models
 
-data class Category(
-    val id: Int,
-    val name: String
-)
+enum class Category {
+    BIENESTAR,
+    ZARIT
+}

@@ -13,7 +13,8 @@ class ActivityDaoMock @Inject constructor() {
         ActivityMock(
             id = 1,
             image = photoBurstBalloon,
-            name = "Reventar un globo",
+            frontPage = "",
+            title = "Reventar un globo",
             description = "Libera el estrés presionado el globo hasta hacerlo estallar.",
             authorQuote = "No es el estrés lo que nos mata, sino cómo reaccionamos ante él.",
             quote = "Hans Selye",
@@ -21,8 +22,9 @@ class ActivityDaoMock @Inject constructor() {
         ),
         ActivityMock(
             id = 2,
+            frontPage = "",
             image = photoMeditation,
-            name = "Meditación",
+            title = "Meditación",
             description = "La meditación es una practica que reduce la ansiedad, el estrés, y los síntomas de la depresión. Te ayudan a sentirte tranquilo y en paz.",
             authorQuote = "Nada es permanente en este mundo, ni siquiera nuestros problemas.",
             quote = "Charlie Chaplin",
@@ -30,8 +32,9 @@ class ActivityDaoMock @Inject constructor() {
         ),
         ActivityMock(
             id = 3,
+            frontPage = "",
             image = photoExercise,
-            name = "Realizar ejercicio",
+            title = "Realizar ejercicio",
             description = "Caminar aumenta la resistencia, disminuye la depresión, el estrés, el insomnio y muchos otros problemas emocionales.",
             authorQuote = "Mantener nuestro cuerpo con buena salud es un deber. De lo contrario no seremos capaces de mantener nuestras mentes fuertes y claras.",
             quote = "Buda",

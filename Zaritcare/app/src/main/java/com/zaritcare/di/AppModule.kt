@@ -4,14 +4,11 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.zaritcare.data.CategoryRepository
 import com.zaritcare.data.EmotionRepository
-import com.zaritcare.data.QuestionRepository
 import com.zaritcare.data.room.ZaritcareDb
 import com.zaritcare.data.room.activity.ActivityDao
 import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.answer.AnswerDao
-import com.zaritcare.data.room.category.CategoryDao
 import com.zaritcare.data.room.emotion.EmotionDao
 import com.zaritcare.data.room.question.QuestionDao
 import dagger.Module
@@ -36,11 +33,6 @@ class AppModule {
     fun provideActivityDao(
         db: ZaritcareDb
     ) : ActivityDao = db.activityDao()
-    @Provides
-    @Singleton
-    fun provideCategoryDao(
-        db: ZaritcareDb
-    ) : CategoryDao = db.categoryDao()
 
     @Provides
     @Singleton
@@ -74,21 +66,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideQuestionRepository(
-        questionDao: QuestionDao,
-        categoryDao: CategoryDao
-    ) : QuestionRepository = QuestionRepository(questionDao, categoryDao)
-
-    @Provides
-    @Singleton
     fun provideEmotionRepository(
         emotionDao: EmotionDao
     ) : EmotionRepository = EmotionRepository(emotionDao)
-
-    @Provides
-    @Singleton
-    fun provideCategoryRepository(
-        categoryDao: CategoryDao
-    ) : CategoryRepository = CategoryRepository(categoryDao)
 
 }

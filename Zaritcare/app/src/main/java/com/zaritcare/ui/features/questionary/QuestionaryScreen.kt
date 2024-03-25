@@ -108,7 +108,7 @@ fun Content(
     emotions: List<EmotionUiState>,
     onClickSave: () -> Unit,
     onSelectionChange: (Int) -> Unit,
-    categories: List<CategoryUiState>,
+    categories: List<String>,
 ) {
     CollapsingLayout(
         modifier = modifier.fillMaxWidth(),
@@ -121,7 +121,7 @@ fun Content(
             ) {
                 TextSwitch(
                     selectedIndex = selectedIndex,
-                    items = categories.map { it.name },
+                    items = categories,
                     onSelectionChange = onSelectionChange
                 )
                 Form(
@@ -143,7 +143,7 @@ fun QuestionaryScreen(
     onQuestionaryEvent: (QuestionaryEvent) -> Unit,
     questions: List<QuestionUiState>,
     emotions: List<EmotionUiState>,
-    categories: List<CategoryUiState>
+    categories: List<String>
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
