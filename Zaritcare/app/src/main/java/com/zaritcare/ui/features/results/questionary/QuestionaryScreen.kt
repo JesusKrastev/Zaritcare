@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionary
+package com.zaritcare.ui.features.results.questionary
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import com.zaritcare.ui.composables.TextSwitch
@@ -30,9 +30,9 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.composables.CollapsingLayout
 import com.zaritcare.ui.features.components.ZaritcareNavBar
-import com.zaritcare.ui.features.questionary.wellbeingform.EmotionUiState
-import com.zaritcare.ui.features.questionary.wellbeingform.WellbeingScaleScreen
-import com.zaritcare.ui.features.questionary.zaritform.ZaritScaleScreen
+import com.zaritcare.ui.features.results.questionary.wellbeingform.EmotionUiState
+import com.zaritcare.ui.features.results.questionary.wellbeingform.WellbeingScaleScreen
+import com.zaritcare.ui.features.results.questionary.zaritform.ZaritScaleScreen
 
 @Composable
 fun ListQuestions(

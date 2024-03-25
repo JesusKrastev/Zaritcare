@@ -10,7 +10,7 @@ import com.kinoyamboladmin.ui.features.settings.SettingsViewModel
 import com.zaritcare.ui.features.activities.ActivitiesViewModel
 import com.zaritcare.ui.features.activities.activity.ActivityViewModel
 import com.zaritcare.ui.features.activities.introactivity.IntroActivityViewModel
-import com.zaritcare.ui.features.questionary.QuestionaryViewModel
+import com.zaritcare.ui.features.results.questionary.QuestionaryViewModel
 import com.zaritcare.ui.features.tips.TipsViewModel
 
 @Composable

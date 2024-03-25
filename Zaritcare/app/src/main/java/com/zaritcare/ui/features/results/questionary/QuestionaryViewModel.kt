@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionary
+package com.zaritcare.ui.features.results.questionary
 
 import android.util.Log
 import androidx.compose.runtime.derivedStateOf
@@ -12,8 +12,8 @@ import com.zaritcare.data.EmotionRepository
 import com.zaritcare.data.QuestionRepository
 import com.zaritcare.models.Category
 import com.zaritcare.models.Type
-import com.zaritcare.ui.features.questionary.wellbeingform.EmotionUiState
-import com.zaritcare.ui.features.questionary.wellbeingform.toEmotionUiState
+import com.zaritcare.ui.features.results.questionary.wellbeingform.EmotionUiState
+import com.zaritcare.ui.features.results.questionary.wellbeingform.toEmotionUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

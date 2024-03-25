@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionary.wellbeingform
+package com.zaritcare.ui.features.results.questionary.wellbeingform
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -22,8 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zaritcare.models.Type
-import com.zaritcare.ui.features.questionary.QuestionUiState
-import com.zaritcare.ui.features.questionary.components.SelectRangeQuestion
+import com.zaritcare.ui.features.results.questionary.QuestionUiState
+import com.zaritcare.ui.features.results.questionary.components.SelectRangeQuestion
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.images.Images
 

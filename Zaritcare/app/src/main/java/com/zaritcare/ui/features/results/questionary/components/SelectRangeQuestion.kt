@@ -1,4 +1,4 @@
-package com.zaritcare.ui.features.questionary.components
+package com.zaritcare.ui.features.results.questionary.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

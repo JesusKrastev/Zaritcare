@@ -4,8 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import com.zaritcare.ui.features.questionary.QuestionaryScreen
-import com.zaritcare.ui.features.questionary.QuestionaryViewModel
+import com.zaritcare.ui.features.results.questionary.QuestionaryScreen
+import com.zaritcare.ui.features.results.questionary.QuestionaryViewModel
 
 const val QuestionaryGraphRoute = "questionary"
 
