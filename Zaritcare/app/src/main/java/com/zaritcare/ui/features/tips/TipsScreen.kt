@@ -2,7 +2,6 @@ package com.zaritcare.ui.features.tips
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,9 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.composables.GradientBrush
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
-import com.zaritcare.ui.features.MainScreen
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.images.Images
 
