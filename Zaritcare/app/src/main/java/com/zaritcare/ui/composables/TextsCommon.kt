@@ -14,6 +14,7 @@ fun TextTile(
     title: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
     style: TextStyle = MaterialTheme.typography.titleLarge,
+    fontWeight: FontWeight = FontWeight.Normal,
     modifier: Modifier = Modifier
 ) {
     Text(
@@ -29,6 +30,7 @@ fun TextTile(
 fun TextBody(
     text: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
+    fontWeight: FontWeight = FontWeight.Normal,
     style: TextStyle = MaterialTheme.typography.bodyLarge,
     modifier: Modifier = Modifier
 ) {
@@ -36,6 +38,7 @@ fun TextBody(
         text = text,
         style = style,
         color = color,
+        fontWeight = fontWeight,
         modifier = modifier
     )
 }
@@ -43,13 +46,16 @@ fun TextBody(
 @Composable
 fun TextBody(
     text: AnnotatedString,
+    fontWeight: FontWeight = FontWeight.Normal,
+    style: TextStyle = MaterialTheme.typography.bodyLarge,
     color: Color = MaterialTheme.colorScheme.onBackground,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.bodyLarge,
+        style = style,
         color = color,
+        fontWeight = fontWeight,
         modifier = modifier
     )
 }
@@ -58,13 +64,15 @@ fun TextBody(
 fun TextLabel(
     text: String,
     color: Color = MaterialTheme.colorScheme.onBackground,
+    fontWeight: FontWeight = FontWeight.Bold,
+    style: TextStyle = MaterialTheme.typography.labelLarge,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         color = color,
-        style = MaterialTheme.typography.labelLarge,
-        fontWeight = FontWeight.Bold,
+        style = style,
+        fontWeight = fontWeight,
         modifier = modifier
     )
 }
