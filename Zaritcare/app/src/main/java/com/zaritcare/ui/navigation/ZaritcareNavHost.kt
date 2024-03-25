@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.kinoyamboladmin.ui.features.settings.SettingsViewModel
+import com.zaritcare.ui.features.activities.ActivitiesViewModel
 import com.zaritcare.ui.features.questionary.QuestionaryViewModel
 import com.zaritcare.ui.features.tips.TipsViewModel
 
@@ -18,6 +19,7 @@ fun ZaritcareNavHost(
     val questionaryVm: QuestionaryViewModel = hiltViewModel<QuestionaryViewModel>()
     val settingsVm: SettingsViewModel = hiltViewModel<SettingsViewModel>()
     val tipsVm: TipsViewModel = hiltViewModel<TipsViewModel>()
+    val activitiesVm: ActivitiesViewModel = hiltViewModel<ActivitiesViewModel>()
 
     NavHost(
         modifier = modifier,
@@ -58,6 +60,12 @@ fun ZaritcareNavHost(
         )
         tipsScreen(
             vm = tipsVm
+        )
+        activitiesScreen(
+            vm = activitiesVm,
+            onNavigateToActivity = {
+
+            }
         )
     }
 }

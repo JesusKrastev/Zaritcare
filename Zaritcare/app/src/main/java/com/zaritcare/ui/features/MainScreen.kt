@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.zaritcare.ui.features.components.ZaritcareNavBar
 import com.zaritcare.ui.navigation.ZaritcareNavHost
+import com.zaritcare.ui.navigation.navigateToActivities
 import com.zaritcare.ui.navigation.navigateToResults
 import com.zaritcare.ui.navigation.navigateToSettings
 import com.zaritcare.ui.navigation.navigateToTips
@@ -29,7 +30,7 @@ fun MainScreen(
         bottomBar = {
             ZaritcareNavBar(
                 onNavigateToForms = { navController.navigateToResults()},
-                onNavigateToActivities = {  },
+                onNavigateToActivities = { navController.navigateToActivities() },
                 onNavigateToTips = { navController.navigateToTips() },
                 onNavigateToSettings = { navController.navigateToSettings() }
             )
