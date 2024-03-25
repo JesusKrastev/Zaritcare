@@ -145,8 +145,6 @@ fun QuestionaryScreen(
     emotions: List<EmotionUiState>,
     categories: List<CategoryUiState>
 ) {
-    val questionsByCategory: List<QuestionUiState> = questions.filter { it.category == categories[selectedIndex].name }
-
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -157,7 +155,7 @@ fun QuestionaryScreen(
             categories = categories,
             emotions = emotions,
             onChangeAnswer = { onQuestionaryEvent(QuestionaryEvent.OnChangeAnswer(it)) },
-            questions = questionsByCategory,
+            questions = questions,
             onClickSave = { onQuestionaryEvent(QuestionaryEvent.OnClickSave({})) }
         )
     }

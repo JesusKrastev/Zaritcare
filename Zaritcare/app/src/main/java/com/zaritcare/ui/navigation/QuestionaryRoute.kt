@@ -23,7 +23,7 @@ fun NavGraphBuilder.questionaryScreen(
         QuestionaryScreen(
             selectedIndex = vm.selectedTab,
             onQuestionaryEvent = vm::onQuestionaryEvent,
-            questions = vm.questionsState,
+            questions = vm.questionsByCategoryState,
             emotions = vm.emotionsState,
             categories = vm.categoriesState
         )

@@ -1,6 +1,7 @@
 package com.zaritcare.ui.features.questionary
 
 import android.util.Log
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -23,9 +24,10 @@ class QuestionaryViewModel @Inject constructor(
     private val emotionRepository: EmotionRepository,
     private val categoryRepository: CategoryRepository
 ): ViewModel() {
-    var questionsState: List<QuestionUiState> by mutableStateOf(emptyList())
+    private var questionsState: List<QuestionUiState> by mutableStateOf(emptyList())
     var emotionsState: List<EmotionUiState> by mutableStateOf(emptyList())
     var categoriesState: List<CategoryUiState> by mutableStateOf(emptyList())
+    val questionsByCategoryState: List<QuestionUiState> by derivedStateOf { questionsState.filter { it.category == categoriesState[selectedTab].name } }
     var selectedTab by mutableIntStateOf(0)
 
     suspend fun getQuestions() = questionRepository.get().map { question -> question.toQuestionUiState() }
