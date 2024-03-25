@@ -1,5 +1,6 @@
 package com.zaritcare.data.room
 
+import android.util.Log
 import androidx.room.TypeConverter
 import com.zaritcare.data.mocks.question.QuestionMock
 import com.zaritcare.models.Action
@@ -16,7 +17,7 @@ class RoomConverters {
     @TypeConverter
     fun toDate(date: Long): LocalDate = LocalDate.ofEpochDay(date)
     @TypeConverter
-    fun actionsFromString(value: String): List<Action> = value.split(",").map { Action.valueOf(it) }
+    fun actionsFromString(value: String): List<Action> = if(value.isNotEmpty()) value.split(",").map { Action.valueOf(it) } else emptyList()
     @TypeConverter
     fun actionsToString(actions: List<Action>): String = actions.joinToString(",")
 }
