@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zaritcare.models.Type
 import com.zaritcare.ui.features.questionary.QuestionUiState
-import com.zaritcare.ui.features.questionary.selectrangequestion.SelectRangeQuestion
+import com.zaritcare.ui.features.questionary.components.SelectRangeQuestion
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.images.Images
 
