@@ -16,6 +16,7 @@ fun NavController.navigateToActivities(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.activitiesScreen(
     vm: ActivitiesViewModel,
+    onNavigateToIntroActivity: (Int) -> Unit,
     onNavigateToActivity: (Int) -> Unit
 ) {
     composable(
@@ -24,6 +25,7 @@ fun NavGraphBuilder.activitiesScreen(
     ) {
         ActivitiesScreen(
             activities = vm.activitiesState,
+            onNavigateToIntroActivity = onNavigateToIntroActivity,
             onNavigateToActivity = onNavigateToActivity
         )
     }

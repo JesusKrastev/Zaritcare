@@ -20,7 +20,8 @@ fun NavController.navigateToIntroActivity(
 }
 
 fun NavGraphBuilder.introActivityScreen(
-    vm : IntroActivityViewModel
+    vm : IntroActivityViewModel,
+    onNavigateToActivity: (Int) -> Unit
 ) {
     composable(
         route = "$IntroActivityGraphRoute/{$IntroActivityParameterName}",
@@ -37,7 +38,8 @@ fun NavGraphBuilder.introActivityScreen(
         }
 
         IntroActivityScreen(
-            activityQuote = vm.activityQuoteState
+            activityQuote = vm.activityQuoteState,
+            onNavigateToActivity = onNavigateToActivity
         )
     }
 }

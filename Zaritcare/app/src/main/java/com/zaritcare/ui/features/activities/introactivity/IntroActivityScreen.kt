@@ -43,7 +43,8 @@ fun StartButton(
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
-    activityQuote: ActivityQuoteUiState
+    activityQuote: ActivityQuoteUiState,
+    onClickStartButton: () -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -64,7 +65,7 @@ fun Content(
         )
         Spacer(modifier = Modifier.size(16.dp))
         StartButton(
-            onClick = { }
+            onClick = onClickStartButton
         )
     }
 }
@@ -72,7 +73,8 @@ fun Content(
 @Composable
 fun IntroActivityScreen(
     modifier: Modifier = Modifier,
-    activityQuote: ActivityQuoteUiState
+    activityQuote: ActivityQuoteUiState,
+    onNavigateToActivity: (Int) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -81,7 +83,12 @@ fun IntroActivityScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Content(activityQuote = activityQuote)
+        Content(
+            activityQuote = activityQuote,
+            onClickStartButton = {
+                onNavigateToActivity(activityQuote.id)
+            }
+        )
     }
 }
 
@@ -104,7 +111,10 @@ fun IntroActivityScreenTest() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            IntroActivityScreen(activityQuote = activityQuote)
+            IntroActivityScreen(
+                activityQuote = activityQuote,
+                onNavigateToActivity = {}
+            )
         }
     }
 }

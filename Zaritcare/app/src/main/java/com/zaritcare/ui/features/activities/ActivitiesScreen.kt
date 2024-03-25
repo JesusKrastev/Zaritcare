@@ -107,6 +107,7 @@ fun ActivityCard(
 fun ActivitiesScreen(
     modifier: Modifier = Modifier,
     activities: List<ActivityCoverUiState>,
+    onNavigateToIntroActivity: (Int) -> Unit,
     onNavigateToActivity: (Int) -> Unit
 ) {
     LazyVerticalGrid(
@@ -119,7 +120,13 @@ fun ActivitiesScreen(
             ActivityCard(
                 image = activity.image,
                 title = activity.title,
-                onClick = { onNavigateToActivity(activity.id) },
+                onClick = {
+                    if(activity.authorQuote != null && activity.quote != null) {
+                        onNavigateToIntroActivity(activity.id)
+                    } else {
+                        onNavigateToActivity(activity.id)
+                    }
+                },
                 isCompletedToday = activity.isCompletedToday
             )
         }

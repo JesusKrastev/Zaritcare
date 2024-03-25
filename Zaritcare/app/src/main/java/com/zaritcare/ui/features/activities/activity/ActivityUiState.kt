@@ -7,7 +7,7 @@ import com.zaritcare.utilities.images.Images
 
 data class ActivityUiState(
     val id: Int = -1,
-    val frontPage: ImageBitmap = ImageBitmap(1, 1),
+    val banner: ImageBitmap = ImageBitmap(1, 1),
     val title: String = "",
     val description: String = "",
     val action: String = "",
@@ -17,7 +17,7 @@ data class ActivityUiState(
 fun Activity.toActivityUiState(): ActivityUiState =
     ActivityUiState(
         id = id,
-        frontPage = Images.base64ToBitmap(frontPage),
+        banner = Images.base64ToBitmap(banner),
         title = title,
         description = description,
         action = action,

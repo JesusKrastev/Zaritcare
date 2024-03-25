@@ -68,11 +68,17 @@ fun ZaritcareNavHost(
         activitiesScreen(
             vm = activitiesVm,
             onNavigateToActivity = {
+                navController.navigateToActivity(it)
+            },
+            onNavigateToIntroActivity = {
                 navController.navigateToIntroActivity(it)
             }
         )
         introActivityScreen(
-            vm = introActivitiesVm
+            vm = introActivitiesVm,
+            onNavigateToActivity = {
+                navController.navigateToActivity(it)
+            }
         )
         activityScreen(
             vm = activityVm,
