@@ -33,7 +33,7 @@ import kotlin.math.roundToInt
 @Composable
 fun CircularProgressIndicator(
     modifier: Modifier = Modifier,
-    initialValue:Int,
+    initialValue:Int = 0,
     primaryColor: Color = MaterialTheme.colorScheme.primary,
     secondaryColor:Color = MaterialTheme.colorScheme.secondary,
     textColor: Color = MaterialTheme.colorScheme.onBackground,
