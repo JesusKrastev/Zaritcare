@@ -2,6 +2,7 @@ package com.zaritcare.ui.features.activities.activity
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -23,9 +26,11 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.zaritcare.models.Action
 import com.zaritcare.ui.composables.GradientBrush
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.ui.features.activities.components.Chronometer
 
 @Composable
 fun HeaderImage(
@@ -96,6 +101,15 @@ fun Body(
             text = activity.action,
             color = MaterialTheme.colorScheme.onSecondary
         )
+        when {
+            Action.CONTADOR in activity.actions -> {
+                Chronometer()
+            }
+            else -> {
+                // La lista de acciones no contiene Action.Cronometro
+                // Realiza alguna otra acción en este caso
+            }
+        }
         Spacer(modifier = Modifier.size(16.dp))
         FinishedButton(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -116,7 +130,7 @@ fun Content(
     )
 
     Column(
-        modifier = modifier,
+        modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         HeaderImage(
