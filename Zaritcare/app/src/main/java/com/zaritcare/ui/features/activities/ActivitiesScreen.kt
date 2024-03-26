@@ -86,7 +86,7 @@ fun ActivityCard(
     ) {
         Image(
             modifier = Modifier
-                .size(width = 200.dp, height = 250.dp)
+                .size(width = 170.dp, height = 220.dp)
                 .clip(RoundedCornerShape(8.dp)),
             bitmap = image,
             contentScale = ContentScale.Crop,
