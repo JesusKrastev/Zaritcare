@@ -2,9 +2,15 @@ package com.zaritcare.ui.composables
 
 import android.graphics.Paint
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -14,6 +20,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -25,6 +32,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.theme.ZaritcareTheme
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -51,11 +59,11 @@ fun CircularProgressIndicator(
     var oldPositionValue: Int by remember { mutableIntStateOf(initialValue) }
 
     Box(
-        modifier = modifier
+        modifier = modifier.wrapContentSize()
     ){
         Canvas(
             modifier = Modifier
-                .fillMaxSize()
+                .size((circleRadius).dp)
                 .pointerInput(true){
                     detectDragGestures(
                         onDragStart = {offset ->
@@ -80,8 +88,8 @@ fun CircularProgressIndicator(
                             val lowerThreshold: Float = currentAngle - (360f / (maxValue-minValue) * 5)
                             val higherThreshold: Float = currentAngle + (360f / (maxValue-minValue) * 5)
 
-                            if(dragStartedAngle in lowerThreshold .. higherThreshold){
-                                positionValue = (oldPositionValue + (changeAngle/(360f/(maxValue-minValue))).roundToInt())
+                            if(dragStartedAngle in lowerThreshold .. higherThreshold) {
+                                positionValue = (oldPositionValue + (changeAngle / (360f / (maxValue - minValue))).roundToInt())
                             }
                         },
                         onDragEnd = {
@@ -93,8 +101,8 @@ fun CircularProgressIndicator(
         ){
             val width: Float = size.width
             val height: Float = size.height
-            val circleThickness: Float = width / 25f
-            circleCenter = Offset(x = width/2f, y = height/2f)
+            val circleThickness: Float = width / 20f
+            circleCenter = Offset(x = width / 2f, y = height / 2f)
 
             drawCircle(
                 style = Stroke(
@@ -118,8 +126,8 @@ fun CircularProgressIndicator(
                     height = circleRadius * 2f
                 ),
                 topLeft = Offset(
-                    (width - circleRadius * 2f)/2f,
-                    (height - circleRadius * 2f)/2f
+                    (width - circleRadius * 2f) / 2f,
+                    (height - circleRadius * 2f) / 2f
                 )
 
             )
@@ -163,13 +171,24 @@ fun TimerPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            CircularProgressIndicator(
-                initialValue = 30,
-                primaryColor = MaterialTheme.colorScheme.primary,
-                circleRadius = 250f,
-                onPositionChange = {},
-                text = "segundos"
-            )
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator(
+                    text = "minutos",
+                    circleRadius = 150f,
+                    onPositionChange = {
+                    }
+                )
+                CircularProgressIndicator(
+                    text = "minutos",
+                    circleRadius = 150f,
+                    onPositionChange = {
+                    }
+                )
+            }
         }
     }
 }
