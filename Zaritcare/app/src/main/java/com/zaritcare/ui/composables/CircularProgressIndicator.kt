@@ -126,7 +126,7 @@ fun CircularProgressIndicator(
             drawContext.canvas.nativeCanvas.apply {
                 drawIntoCanvas {
                     drawText(
-                        "$positionValue",
+                        "$positionValue".padStart(2, '0'),
                         circleCenter.x,
                         circleCenter.y,
                         Paint().apply {
