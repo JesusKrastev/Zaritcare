@@ -90,11 +90,13 @@ private fun EditableProgressField(
         BasicTextField(
             value = currentProgress.toString(),
             onValueChange = {
+                val numberFormat = Regex("\\d{0,${maxProgress.toString().length}}")
+
                 if(it.isEmpty()) {
                     onChangeValue(0)
-                } else if(currentProgress == 0) {
+                } else if(currentProgress == 0 && numberFormat.matches(it)) {
                     onChangeValue(it.replace("0", "").toInt())
-                } else if(it.length <= maxProgress.toString().length && it.toInt() <= maxProgress) {
+                } else if(numberFormat.matches(it) && it.toInt() <= maxProgress) {
                     onChangeValue(it.toInt())
                 }
             },
