@@ -104,7 +104,7 @@ private fun EditableProgressField(
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = textColor,
                 fontSize = (radius * 0.5f).value.sp
             ),
             enabled = isEditable,
