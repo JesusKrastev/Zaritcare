@@ -95,40 +95,60 @@ fun BallonTextField(
 }
 
 @Composable
-fun BurstBallon(
+private fun Ballon(
     modifier: Modifier = Modifier,
     size: Size,
     stressText: String,
+    onLongPress: () -> Unit,
     onValueChange: (String) -> Unit
 ) {
+    Box(
+        modifier = modifier
+            .size(width = size.width.dp, height = size.height.dp)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onLongPress = {
+                        onLongPress()
+                    }
+                )
+            },
+        contentAlignment = Alignment.Center
+    ) {
+        BallonImage(
+            modifier = Modifier.matchParentSize(),
+            image = painterResource(id = R.drawable.ballon)
+        )
+        BallonTextField(
+            stressText = stressText,
+            textSize = (size.width * 0.17 / 2).sp,
+            onValueChange = onValueChange
+        )
+    }
+}
+
+@Composable
+fun BurstBallon(
+    modifier: Modifier = Modifier,
+    size: Size
+) {
+    var stressText: String by remember { mutableStateOf("") }
     var isBurst: Boolean by remember { mutableStateOf(false) }
     val composition: LottieComposition? by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.burst_ballon_animation)
     )
 
     if (!isBurst) {
-        Box(
-            modifier = modifier
-                .size(width = size.width.dp, height = size.height.dp)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onLongPress = {
-                            isBurst = true
-                        }
-                    )
-                },
-            contentAlignment = Alignment.Center
-        ) {
-            BallonImage(
-                modifier = Modifier.matchParentSize(),
-                image = painterResource(id = R.drawable.ballon)
-            )
-            BallonTextField(
-                stressText = stressText,
-                textSize = (size.width * 0.17 / 2).sp,
-                onValueChange = onValueChange
-            )
-        }
+        Ballon(
+            modifier = modifier,
+            size = size,
+            stressText = stressText,
+            onLongPress = {
+                isBurst = true
+            },
+            onValueChange = {
+                stressText = it
+            }
+        )
     } else {
         LottieAnimation(
             modifier = Modifier.size(width = size.width.dp, height = size.height.dp),
@@ -140,8 +160,6 @@ fun BurstBallon(
 @Preview
 @Composable
 fun BallonPreview() {
-    var stressText: String by remember { mutableStateOf("") }
-
     ZaritcareTheme(
         darkTheme = true
     ) {
@@ -154,11 +172,7 @@ fun BallonPreview() {
                 contentAlignment = Alignment.Center
             ) {
                 BurstBallon(
-                    size = Size(200f, 300f),
-                    stressText = stressText,
-                    onValueChange = {
-                        stressText = it
-                    }
+                    size = Size(200f, 300f)
                 )
             }
         }
