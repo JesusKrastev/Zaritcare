@@ -1,5 +1,6 @@
 package com.zaritcare.ui.features.activities.components
 
+import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +46,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.zaritcare.R
+import com.zaritcare.ui.features.activities.AudioPlayer
 import com.zaritcare.ui.theme.ZaritcareTheme
 
 @Composable
@@ -133,16 +137,21 @@ fun BurstBallon(
 ) {
     var stressText: String by remember { mutableStateOf("") }
     var isBurst: Boolean by remember { mutableStateOf(false) }
+    var audioPlayed: Boolean by remember { mutableStateOf(false) }
     val composition: LottieComposition? by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.burst_ballon_animation)
     )
+    val context: Context = LocalContext.current
     val progress: Float by animateLottieCompositionAsState(
         composition = composition,
         isPlaying = isBurst
     )
 
     LaunchedEffect(key1 = progress) {
-        if (progress == 1f) isBurst = false
+        if (progress == 1f) {
+            isBurst = false
+            audioPlayed = false
+        }
     }
 
     if (!isBurst) {
@@ -163,6 +172,10 @@ fun BurstBallon(
             composition = composition,
             progress = { progress }
         )
+        if(!audioPlayed) {
+            audioPlayed = true
+            AudioPlayer(context).play(R.raw.burst_ballon_audio)
+        }
     }
 }
 
