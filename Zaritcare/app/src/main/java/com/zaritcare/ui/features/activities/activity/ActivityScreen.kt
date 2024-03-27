@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
@@ -30,6 +31,7 @@ import com.zaritcare.models.Action
 import com.zaritcare.ui.composables.GradientBrush
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.ui.features.activities.components.BurstBallon
 import com.zaritcare.ui.features.activities.components.Chronometer
 
 @Composable
@@ -104,6 +106,11 @@ fun Body(
         when {
             Action.CONTADOR in activity.actions -> {
                 Chronometer()
+            }
+            Action.ESTALLAR_GLOBO in activity.actions -> {
+                BurstBallon(
+                    size = Size(200f, 300f)
+                )
             }
             else -> {
                 // La lista de acciones no contiene Action.Cronometro

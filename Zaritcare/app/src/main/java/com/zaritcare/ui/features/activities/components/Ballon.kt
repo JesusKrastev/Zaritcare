@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,6 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.LottieComposition
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.zaritcare.R
 import com.zaritcare.ui.theme.ZaritcareTheme
@@ -72,7 +74,6 @@ fun BallonTextField(
             modifier = modifier,
             value = stressText,
             onValueChange = onValueChange,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             textStyle = TextStyle(
                 textAlign = TextAlign.Center,
                 color = Color.White,
@@ -104,7 +105,6 @@ private fun Ballon(
 ) {
     Box(
         modifier = modifier
-            .size(width = size.width.dp, height = size.height.dp)
             .pointerInput(Unit) {
                 detectTapGestures(
                     onLongPress = {
@@ -136,10 +136,18 @@ fun BurstBallon(
     val composition: LottieComposition? by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.burst_ballon_animation)
     )
+    val progress: Float by animateLottieCompositionAsState(
+        composition = composition,
+        isPlaying = isBurst
+    )
+
+    LaunchedEffect(key1 = progress) {
+        if (progress == 1f) isBurst = false
+    }
 
     if (!isBurst) {
         Ballon(
-            modifier = modifier,
+            modifier = modifier.size(width = size.width.dp, height = size.height.dp),
             size = size,
             stressText = stressText,
             onLongPress = {
@@ -152,7 +160,8 @@ fun BurstBallon(
     } else {
         LottieAnimation(
             modifier = Modifier.size(width = size.width.dp, height = size.height.dp),
-            composition = composition
+            composition = composition,
+            progress = { progress }
         )
     }
 }
