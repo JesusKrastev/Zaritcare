@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,12 +31,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+private enum class ChronometerState {
+    RUNNING,
+    PAUSED,
+    STOPPED
+}
+
 @Composable
 private fun ChronometerIndicator(
     modifier: Modifier = Modifier,
     minutes: Int,
     seconds: Int,
-    isEditable: Boolean = true,
+    isEditable: Boolean,
     onChangeMinutes: (Int) -> Unit,
     onChangeSeconds: (Int) -> Unit
 ) {
@@ -86,10 +91,10 @@ private fun ChronometerButton(
 @Composable
 private fun ChronometerControls(
     modifier: Modifier = Modifier,
-    isRunning: Boolean,
+    state: ChronometerState,
     onStart: () -> Unit,
     onPause: () -> Unit,
-    onReset: () -> Unit
+    onStop: () -> Unit
 ) {
     Row(
         modifier = modifier,
@@ -97,11 +102,11 @@ private fun ChronometerControls(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ChronometerButton(
-            onClick = onReset,
+            onClick = onStop,
             icon = Icons.Filled.Stop,
             contentDescription = "stop"
         )
-        if(!isRunning) {
+        if(state != ChronometerState.RUNNING) {
             ChronometerButton(
                 onClick = onStart,
                 icon = Icons.Filled.PlayArrow,
@@ -126,8 +131,7 @@ fun Chronometer(
     var seconds: Int by remember { mutableIntStateOf(0) }
     var initialMinutes: Int by remember { mutableIntStateOf(0) }
     var initialSeconds: Int by remember { mutableIntStateOf(0) }
-    var isEditable: Boolean by remember { mutableStateOf(true) }
-    var isRunning: Boolean by remember { mutableStateOf(false) }
+    var state: ChronometerState by remember { mutableStateOf(ChronometerState.STOPPED) }
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
     Column(
@@ -139,20 +143,21 @@ fun Chronometer(
             modifier = modifier,
             minutes = minutes,
             seconds = seconds,
-            isEditable = isEditable,
+            isEditable = (state != ChronometerState.RUNNING) && (state != ChronometerState.PAUSED),
             onChangeMinutes = { minutes = it },
             onChangeSeconds = { seconds = it }
         )
         ChronometerControls(
             modifier = modifier,
-            isRunning = isRunning,
+            state = state,
             onStart = {
-                initialMinutes = minutes
-                initialSeconds = seconds
+                if(state == ChronometerState.STOPPED) {
+                    initialMinutes = minutes
+                    initialSeconds = seconds
+                }
                 job = coroutineScope.launch {
-                    isEditable = false
-                    isRunning = true
-                    while (isRunning) {
+                    state = ChronometerState.RUNNING
+                    while (state == ChronometerState.RUNNING) {
                         delay(1000)
                         if (seconds > 0) {
                             seconds--
@@ -160,22 +165,21 @@ fun Chronometer(
                             minutes--
                             seconds = 59
                         } else {
-                            isRunning = false
+                            state = ChronometerState.STOPPED
                             job?.cancel()
                         }
                     }
                 }
             },
             onPause = {
-                isRunning = false
+                state = ChronometerState.PAUSED
                 job?.cancel()
             },
-            onReset = {
-                if(isRunning) {
+            onStop = {
+                if(state != ChronometerState.STOPPED) {
                     minutes = initialMinutes
                     seconds = initialSeconds
-                    isRunning = false
-                    isEditable = true
+                    state = ChronometerState.STOPPED
                     job?.cancel()
                 }
             }
