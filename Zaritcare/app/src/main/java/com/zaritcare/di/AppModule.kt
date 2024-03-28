@@ -11,6 +11,7 @@ import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.answer.AnswerDao
 import com.zaritcare.data.room.emotion.EmotionDao
 import com.zaritcare.data.room.question.QuestionDao
+import com.zaritcare.data.room.song.SongDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +39,7 @@ class AppModule {
     @Singleton
     fun provideSongDao(
         db: ZaritcareDb
-    ) : ActivityDao = db.activityDao()
+    ) : SongDao = db.songDao()
 
     @Provides
     @Singleton
