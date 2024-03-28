@@ -1,6 +1,7 @@
 package com.zaritcare.ui.features.activities.components
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -137,7 +138,6 @@ fun BurstBallon(
 ) {
     var stressText: String by remember { mutableStateOf("") }
     var isBurst: Boolean by remember { mutableStateOf(false) }
-    var audioPlayed: Boolean by remember { mutableStateOf(false) }
     val composition: LottieComposition? by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.burst_ballon_animation)
     )
@@ -148,10 +148,14 @@ fun BurstBallon(
     )
 
     LaunchedEffect(key1 = progress) {
-        if (progress == 1f) {
-            isBurst = false
-            audioPlayed = false
+        if (progress == 1f) isBurst = false
+    }
+
+    DisposableEffect(isBurst) {
+        if (isBurst) {
+            AudioPlayer(context).play(R.raw.burst_ballon_audio)
         }
+        onDispose { }
     }
 
     if (!isBurst) {
@@ -172,10 +176,6 @@ fun BurstBallon(
             composition = composition,
             progress = { progress }
         )
-        if(!audioPlayed) {
-            audioPlayed = true
-            AudioPlayer(context).play(R.raw.burst_ballon_audio)
-        }
     }
 }
 
