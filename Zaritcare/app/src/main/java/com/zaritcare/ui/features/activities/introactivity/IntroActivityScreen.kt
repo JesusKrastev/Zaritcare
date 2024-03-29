@@ -59,7 +59,6 @@ fun Content(
             bitmap = activityQuote.quoteImage,
             contentDescription = "ilustration"
         )
-        Log.d("IntroActivityScreen", "Content: ${activityQuote.quote}")
         TextBody(
             text = "${activityQuote.quote} - ${activityQuote.authorQuote}"
         )

@@ -1,8 +1,8 @@
 package com.zaritcare.ui.features.activities.activity
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -25,14 +27,17 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.zaritcare.models.Action
 import com.zaritcare.ui.composables.GradientBrush
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.ui.features.activities.AudioPlayer
 import com.zaritcare.ui.features.activities.components.BurstBallon
 import com.zaritcare.ui.features.activities.components.Chronometer
+import com.zaritcare.ui.features.activities.components.MusicCard
 
 @Composable
 fun HeaderImage(
@@ -63,6 +68,59 @@ fun HeaderImage(
 }
 
 @Composable
+fun ListSongs(
+    modifier: Modifier = Modifier,
+    songs: List<SongUiState>,
+    onClickSong: (SongUiState) -> Unit
+) {
+    LazyRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(songs) { song ->
+            MusicCard(
+                image = song.image,
+                isPlaying = song.state == SongUiState.SongState.PLAYING,
+                onClick = { onClickSong(song) }
+            )
+        }
+    }
+}
+
+@Composable
+fun Actions(
+    modifier: Modifier = Modifier,
+    actions: List<Action>,
+    songs: List<SongUiState>,
+    onClickSong: (SongUiState) -> Unit
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        actions.forEach { action ->
+            when(action) {
+                Action.CONTADOR -> {
+                    Chronometer()
+                }
+                Action.ESTALLAR_GLOBO -> {
+                    BurstBallon(
+                        size = Size(200f, 300f)
+                    )
+                }
+                Action.MUSICA -> {
+                    ListSongs(
+                        songs = songs,
+                        onClickSong = onClickSong
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun FinishedButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
@@ -83,7 +141,9 @@ fun FinishedButton(
 fun Body(
     modifier: Modifier = Modifier,
     activity: ActivityUiState,
-    onClickFinishedButton: () -> Unit
+    songs: List<SongUiState>,
+    onClickFinishedButton: () -> Unit,
+    onClickSong: (SongUiState) -> Unit
 ) {
     Column(
         modifier = modifier.padding(16.dp),
@@ -103,20 +163,11 @@ fun Body(
             text = activity.action,
             color = MaterialTheme.colorScheme.onSecondary
         )
-        when {
-            Action.CONTADOR in activity.actions -> {
-                Chronometer()
-            }
-            Action.ESTALLAR_GLOBO in activity.actions -> {
-                BurstBallon(
-                    size = Size(200f, 300f)
-                )
-            }
-            else -> {
-                // La lista de acciones no contiene Action.Cronometro
-                // Realiza alguna otra acción en este caso
-            }
-        }
+        Actions(
+            actions = activity.actions,
+            songs = songs,
+            onClickSong = onClickSong
+        )
         Spacer(modifier = Modifier.size(16.dp))
         FinishedButton(
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -129,7 +180,9 @@ fun Body(
 fun Content(
     modifier: Modifier = Modifier,
     activity: ActivityUiState,
-    onClickFinishedButton: () -> Unit
+    songs: List<SongUiState>,
+    onClickFinishedButton: () -> Unit,
+    onActivityEvent: (ActivityEvent) -> Unit
 ) {
     val gradientColors: List<Color> = listOf(
         Color.Transparent,
@@ -149,7 +202,9 @@ fun Content(
         )
         Body(
             activity = activity,
-            onClickFinishedButton = onClickFinishedButton
+            onClickFinishedButton = onClickFinishedButton,
+            songs = songs,
+            onClickSong = { onActivityEvent(ActivityEvent.OnClickSong(it)) }
         )
     }
 }
@@ -158,14 +213,18 @@ fun Content(
 fun ActivityScreen(
     modifier: Modifier = Modifier,
     activity: ActivityUiState,
-    onNavigateToActivities: () -> Unit
+    songs: List<SongUiState>,
+    onNavigateToActivities: () -> Unit,
+    onActivityEvent: (ActivityEvent) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
         Content(
             activity = activity,
-            onClickFinishedButton = onNavigateToActivities
+            onClickFinishedButton = onNavigateToActivities,
+            songs = songs,
+            onActivityEvent = onActivityEvent
         )
     }
 }

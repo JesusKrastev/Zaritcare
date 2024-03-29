@@ -9,9 +9,13 @@ class AudioPlayer(
     private var player: MediaPlayer? = null
 
     fun play(auidoId: Int) {
-        MediaPlayer.create(context, auidoId).apply {
-            player = this
-            start()
+        if(player == null) {
+            MediaPlayer.create(context, auidoId).apply {
+                player = this
+                start()
+            }
+        } else {
+            player?.start()
         }
     }
 
@@ -20,4 +24,10 @@ class AudioPlayer(
         player?.release()
         player = null
     }
+
+    fun pause() {
+        player?.pause()
+    }
+
+    fun isPlaying(): Boolean = player != null
 }

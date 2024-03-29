@@ -6,7 +6,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.zaritcare.ui.features.activities.ActivitiesScreen
 import com.zaritcare.ui.features.activities.activity.ActivityScreen
 import com.zaritcare.ui.features.activities.activity.ActivityViewModel
 
@@ -42,7 +41,9 @@ fun NavGraphBuilder.activityScreen(
 
         ActivityScreen(
             activity = vm.activityState,
-            onNavigateToActivities = onNavigateToActivities
+            onNavigateToActivities = onNavigateToActivities,
+            onActivityEvent = vm::onActivityEvent,
+            songs = vm.songsState
         )
     }
 }
