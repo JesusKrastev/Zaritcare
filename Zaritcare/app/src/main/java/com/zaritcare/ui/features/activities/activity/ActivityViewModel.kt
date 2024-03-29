@@ -3,12 +3,11 @@ package com.zaritcare.ui.features.activities.activity
 import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.zaritcare.R
 import com.zaritcare.data.ActivityRepository
 import com.zaritcare.data.SongRepository
 import com.zaritcare.models.Activity
@@ -30,7 +29,8 @@ class ActivityViewModel @Inject constructor(
     var songsState: List<SongUiState> by  mutableStateOf(emptyList())
         private set
     private val context = application.applicationContext
-    private val audioPlayer: AudioPlayer = AudioPlayer(context)
+    private val songsAudioPlayer: AudioPlayer = AudioPlayer(context)
+    private val soundsAudioPlayer: AudioPlayer = AudioPlayer(context)
 
     private suspend fun getSongs(): List<SongUiState> = songRepository.get().map { it.toSongUiState() }
 
@@ -68,8 +68,8 @@ class ActivityViewModel @Inject constructor(
     private fun onClickSong(clickedSong: SongUiState) {
         when(clickedSong.state) {
             SongUiState.SongState.STOP -> {
-                audioPlayer.stop() // If other music is playing, need to stop it
-                audioPlayer.play(clickedSong.audio)
+                songsAudioPlayer.stop() // If other music is playing, need to stop it
+                songsAudioPlayer.play(clickedSong.audio)
                 songsState = songsState.map { song ->
                     if (song.id == clickedSong.id) {
                         song.copy(state = SongUiState.SongState.PLAYING)
@@ -79,11 +79,11 @@ class ActivityViewModel @Inject constructor(
                 }
             }
             SongUiState.SongState.PLAYING -> {
-                audioPlayer.pause()
+                songsAudioPlayer.pause()
                 updateSongState(clickedSong, SongUiState.SongState.PAUSE)
             }
             SongUiState.SongState.PAUSE -> {
-                audioPlayer.play(clickedSong.audio)
+                songsAudioPlayer.play(clickedSong.audio)
                 updateSongState(clickedSong, SongUiState.SongState.PLAYING)
             }
         }
@@ -91,13 +91,17 @@ class ActivityViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        audioPlayer.stop()
+        songsAudioPlayer.stop()
     }
 
     fun onActivityEvent(event: ActivityEvent) {
         when(event) {
             is ActivityEvent.OnClickSong -> {
                 onClickSong(event.song)
+            }
+            is ActivityEvent.OnFinishTime -> {
+                soundsAudioPlayer.stop()
+                soundsAudioPlayer.play(R.raw.finish_time_audio)
             }
         }
     }

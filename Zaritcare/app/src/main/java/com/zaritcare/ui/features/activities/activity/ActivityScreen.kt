@@ -96,11 +96,9 @@ fun Actions(
     modifier: Modifier = Modifier,
     actions: List<Action>,
     songs: List<SongUiState>,
-    onClickSong: (SongUiState) -> Unit
+    onClickSong: (SongUiState) -> Unit,
+    onFinishTime: () -> Unit
 ) {
-    val context: Context = LocalContext.current
-    val audioPlayer: AudioPlayer by remember { mutableStateOf(AudioPlayer(context)) }
-
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -110,7 +108,7 @@ fun Actions(
             when(action) {
                 Action.CONTADOR -> {
                     Chronometer(
-                        onFinishTime = { audioPlayer.play(R.raw.finish_time_audio) }
+                        onFinishTime = onFinishTime
                     )
                 }
                 Action.ESTALLAR_GLOBO -> {
@@ -152,6 +150,7 @@ fun Body(
     activity: ActivityUiState,
     songs: List<SongUiState>,
     onClickFinishedButton: () -> Unit,
+    onFinishTime: () -> Unit,
     onClickSong: (SongUiState) -> Unit
 ) {
     Column(
@@ -175,7 +174,8 @@ fun Body(
         Actions(
             actions = activity.actions,
             songs = songs,
-            onClickSong = onClickSong
+            onClickSong = onClickSong,
+            onFinishTime = onFinishTime
         )
         Spacer(modifier = Modifier.size(16.dp))
         FinishedButton(
@@ -213,7 +213,8 @@ fun Content(
             activity = activity,
             onClickFinishedButton = onClickFinishedButton,
             songs = songs,
-            onClickSong = { onActivityEvent(ActivityEvent.OnClickSong(it)) }
+            onClickSong = { onActivityEvent(ActivityEvent.OnClickSong(it)) },
+            onFinishTime = { onActivityEvent(ActivityEvent.OnFinishTime) }
         )
     }
 }
@@ -226,6 +227,9 @@ fun ActivityScreen(
     onNavigateToActivities: () -> Unit,
     onActivityEvent: (ActivityEvent) -> Unit
 ) {
+    val context: Context = LocalContext.current
+    val audioPlayer: AudioPlayer by remember { mutableStateOf(AudioPlayer(context)) }
+
     Column(
         modifier = modifier.fillMaxSize()
     ) {
