@@ -124,7 +124,8 @@ private fun ChronometerControls(
 
 @Composable
 fun Chronometer(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFinishTime: () -> Unit
 ) {
     var job: Job? by remember { mutableStateOf<Job?>(null) }
     var minutes: Int by remember { mutableIntStateOf(0) }
@@ -166,6 +167,7 @@ fun Chronometer(
                             seconds = 59
                         } else {
                             state = ChronometerState.STOPPED
+                            onFinishTime()
                             job?.cancel()
                         }
                     }
@@ -202,7 +204,9 @@ fun ChronometerPreview() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Chronometer()
+                Chronometer(
+                    onFinishTime = { }
+                )
             }
         }
     }

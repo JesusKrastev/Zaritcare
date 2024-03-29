@@ -21,6 +21,9 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -30,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.zaritcare.R
 import com.zaritcare.models.Action
 import com.zaritcare.ui.composables.GradientBrush
 import com.zaritcare.ui.composables.TextBody
@@ -94,6 +98,9 @@ fun Actions(
     songs: List<SongUiState>,
     onClickSong: (SongUiState) -> Unit
 ) {
+    val context: Context = LocalContext.current
+    val audioPlayer: AudioPlayer by remember { mutableStateOf(AudioPlayer(context)) }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -102,7 +109,9 @@ fun Actions(
         actions.forEach { action ->
             when(action) {
                 Action.CONTADOR -> {
-                    Chronometer()
+                    Chronometer(
+                        onFinishTime = { audioPlayer.play(R.raw.finish_time_audio) }
+                    )
                 }
                 Action.ESTALLAR_GLOBO -> {
                     BurstBallon(
