@@ -7,6 +7,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.zaritcare.data.EmotionRepository
 import com.zaritcare.data.room.ZaritcareDb
 import com.zaritcare.data.room.activity.ActivityDao
+import com.zaritcare.data.room.activitylog.ActivityLogDao
 import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.answer.AnswerDao
 import com.zaritcare.data.room.emotion.EmotionDao
@@ -40,6 +41,12 @@ class AppModule {
     fun provideSongDao(
         db: ZaritcareDb
     ) : SongDao = db.songDao()
+
+    @Provides
+    @Singleton
+    fun provideActivityLogDao(
+        db: ZaritcareDb
+    ) : ActivityLogDao = db.activityLogDao()
 
     @Provides
     @Singleton

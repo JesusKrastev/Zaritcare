@@ -6,12 +6,14 @@ import com.zaritcare.data.mocks.emotion.EmotionMock
 import com.zaritcare.data.mocks.question.QuestionMock
 import com.zaritcare.data.mocks.song.SongMock
 import com.zaritcare.data.room.activity.ActivityEntity
+import com.zaritcare.data.room.activitylog.ActivityLogEntity
 import com.zaritcare.data.room.advice.AdviceEntity
 import com.zaritcare.data.room.answer.AnswerEntity
 import com.zaritcare.data.room.emotion.EmotionEntity
 import com.zaritcare.data.room.question.QuestionEntity
 import com.zaritcare.data.room.song.SongEntity
 import com.zaritcare.models.Activity
+import com.zaritcare.models.ActivityLog
 import com.zaritcare.models.Advice
 import com.zaritcare.models.Answer
 import com.zaritcare.models.Emotion
@@ -152,4 +154,18 @@ fun SongEntity.toSong() = Song(
     id = id,
     image = image,
     audio = audio
+)
+
+fun ActivityLogEntity.toActivityLog() = ActivityLog(
+    id = id,
+    activity = activity,
+    date = date,
+    user = user
+)
+
+fun ActivityLog.toActivityLogEntity() = ActivityLogEntity(
+    id = id,
+    activity = activity,
+    date = date,
+    user = user
 )

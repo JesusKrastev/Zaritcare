@@ -7,6 +7,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.zaritcare.data.room.activity.ActivityDao
 import com.zaritcare.data.room.activity.ActivityEntity
+import com.zaritcare.data.room.activitylog.ActivityLogDao
+import com.zaritcare.data.room.activitylog.ActivityLogEntity
 import com.zaritcare.data.room.advice.AdviceDao
 import com.zaritcare.data.room.advice.AdviceEntity
 import com.zaritcare.data.room.answer.AnswerDao
@@ -19,7 +21,7 @@ import com.zaritcare.data.room.song.SongDao
 import com.zaritcare.data.room.song.SongEntity
 
 @Database(
-    entities = [ActivityEntity::class, AdviceEntity::class, AnswerEntity::class, EmotionEntity::class, QuestionEntity::class, SongEntity::class],
+    entities = [ActivityEntity::class, AdviceEntity::class, AnswerEntity::class, EmotionEntity::class, QuestionEntity::class, SongEntity::class, ActivityLogEntity::class],
     exportSchema = false,
     version = 1
 )
@@ -31,6 +33,7 @@ abstract class ZaritcareDb: RoomDatabase() {
     abstract fun questionDao(): QuestionDao
     abstract fun adviceDao(): AdviceDao
     abstract fun songDao(): SongDao
+    abstract fun activityLogDao(): ActivityLogDao
 
     companion object {
         fun getDatabase(context: Context) = Room.databaseBuilder(
