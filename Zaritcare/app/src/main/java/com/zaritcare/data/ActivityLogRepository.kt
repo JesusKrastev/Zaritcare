@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 import javax.inject.Inject
 
 class ActivityLogRepository @Inject constructor(
@@ -27,13 +28,13 @@ class ActivityLogRepository @Inject constructor(
         dao.delete(activityLog.toActivityLogEntity())
     }
 
-    suspend fun get(): Flow<List<ActivityLog>> = withContext(Dispatchers.IO) {
-        dao.get().map { activityLogs ->
-            activityLogs.map { it.toActivityLog() }
-        }
+    suspend fun get(): List<ActivityLog> = withContext(Dispatchers.IO) {
+        dao.get().map { it.toActivityLog() }
     }
 
     suspend fun get(id: Int) = withContext(Dispatchers.IO) {
         dao.get(id)?.toActivityLog()
     }
+
+    fun get(date: LocalDate): Flow<List<ActivityLog>> = dao.get(date).map { it.map { it.toActivityLog() } }
 }

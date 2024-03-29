@@ -6,8 +6,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaritcare.R
+import com.zaritcare.data.ActivityLogRepository
 import com.zaritcare.data.ActivityRepository
 import com.zaritcare.data.SongRepository
 import com.zaritcare.models.Activity
@@ -20,17 +22,16 @@ import javax.inject.Inject
 class ActivityViewModel @Inject constructor(
     private val activityRepository: ActivityRepository,
     private val songRepository: SongRepository,
-    application: Application
-): AndroidViewModel(application) {
+    private val songsAudioPlayer: AudioPlayer,
+    private val soundsAudioPlayer: AudioPlayer,
+    private val activityLogRepository: ActivityLogRepository
+): ViewModel() {
     class ActivityViewModelException(message: String) : Exception(message)
 
     var activityState: ActivityUiState by mutableStateOf(ActivityUiState())
         private set
     var songsState: List<SongUiState> by  mutableStateOf(emptyList())
         private set
-    private val context = application.applicationContext
-    private val songsAudioPlayer: AudioPlayer = AudioPlayer(context)
-    private val soundsAudioPlayer: AudioPlayer = AudioPlayer(context)
 
     private suspend fun getSongs(): List<SongUiState> = songRepository.get().map { it.toSongUiState() }
 
@@ -102,6 +103,12 @@ class ActivityViewModel @Inject constructor(
             is ActivityEvent.OnFinishTime -> {
                 soundsAudioPlayer.stop()
                 soundsAudioPlayer.play(R.raw.finish_time_audio)
+            }
+            is ActivityEvent.OnClickFinished -> {
+                viewModelScope.launch {
+                    activityLogRepository.insert(activityState.toActivityLog())
+                }
+                event.onNavigateToActivities()
             }
         }
     }

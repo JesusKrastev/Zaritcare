@@ -13,6 +13,7 @@ import com.zaritcare.data.room.answer.AnswerDao
 import com.zaritcare.data.room.emotion.EmotionDao
 import com.zaritcare.data.room.question.QuestionDao
 import com.zaritcare.data.room.song.SongDao
+import com.zaritcare.ui.features.activities.AudioPlayer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -84,4 +85,9 @@ class AppModule {
         emotionDao: EmotionDao
     ) : EmotionRepository = EmotionRepository(emotionDao)
 
+    @Provides
+    @Singleton
+    fun provideAudioPlayer(
+        @ApplicationContext context: Context
+    ) : AudioPlayer = AudioPlayer(context)
 }

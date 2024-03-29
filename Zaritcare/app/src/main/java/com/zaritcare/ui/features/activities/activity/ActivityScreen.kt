@@ -235,7 +235,7 @@ fun ActivityScreen(
     ) {
         Content(
             activity = activity,
-            onClickFinishedButton = onNavigateToActivities,
+            onClickFinishedButton = { onActivityEvent(ActivityEvent.OnClickFinished(onNavigateToActivities)) },
             songs = songs,
             onActivityEvent = onActivityEvent
         )

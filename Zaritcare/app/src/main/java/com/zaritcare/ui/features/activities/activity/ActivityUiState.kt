@@ -3,7 +3,9 @@ package com.zaritcare.ui.features.activities.activity
 import androidx.compose.ui.graphics.ImageBitmap
 import com.zaritcare.models.Action
 import com.zaritcare.models.Activity
+import com.zaritcare.models.ActivityLog
 import com.zaritcare.utilities.images.Images
+import java.time.LocalDate
 
 data class ActivityUiState(
     val id: Int = -1,
@@ -22,4 +24,12 @@ fun Activity.toActivityUiState(): ActivityUiState =
         description = description,
         action = action,
         actions = actions
+    )
+
+fun ActivityUiState.toActivityLog(): ActivityLog =
+    ActivityLog(
+        id = 0,
+        activity = id,
+        date = LocalDate.now(),
+        user = 1
     )

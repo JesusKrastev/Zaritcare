@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface ActivityLogDao {
@@ -19,7 +20,9 @@ interface ActivityLogDao {
     @Delete
     suspend fun delete(activityLog: ActivityLogEntity)
     @Query("SELECT * FROM activity_logs")
-    suspend fun get(): Flow<List<ActivityLogEntity>>
+    suspend fun get():  List<ActivityLogEntity>
     @Query("SELECT * FROM activity_logs WHERE id = :id")
     suspend fun get(id: Int): ActivityLogEntity?
+    @Query("SELECT * FROM activity_logs WHERE date = :date")
+    fun get(date: LocalDate): Flow<List<ActivityLogEntity>>
 }
