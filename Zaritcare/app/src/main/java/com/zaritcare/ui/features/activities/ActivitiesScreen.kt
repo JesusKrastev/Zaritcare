@@ -26,6 +26,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
@@ -81,7 +83,9 @@ fun ActivityCard(
     isCompletedToday: Boolean
 ) {
     Column(
-        modifier = modifier.clickable { onClick() },
+        modifier = modifier.clickable {
+            if(!isCompletedToday) onClick()
+        },
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Image(
@@ -90,7 +94,8 @@ fun ActivityCard(
                 .clip(RoundedCornerShape(8.dp)),
             bitmap = image,
             contentScale = ContentScale.Crop,
-            contentDescription = "cover"
+            contentDescription = "cover",
+            colorFilter = if(isCompletedToday) ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) }) else null
         )
         TextTile(
             title = title,
