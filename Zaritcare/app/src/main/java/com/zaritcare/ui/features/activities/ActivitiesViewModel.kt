@@ -22,7 +22,7 @@ class ActivitiesViewModel @Inject constructor(
     var activitiesState: List<ActivityCoverUiState> by mutableStateOf(emptyList())
 
     suspend fun getActivities() = activityRepository.get().map { activity -> activity.toActivityCoverUiState() }
-    suspend fun getCompletedActivities() = activityLogRepository.get(LocalDate.now())
+    fun getCompletedActivities() = activityLogRepository.get(LocalDate.now(), 1)
 
     fun loadActivities() {
         viewModelScope.launch {

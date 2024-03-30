@@ -36,5 +36,5 @@ class ActivityLogRepository @Inject constructor(
         dao.get(id)?.toActivityLog()
     }
 
-    fun get(date: LocalDate): Flow<List<ActivityLog>> = dao.get(date).map { it.map { it.toActivityLog() } }
+    fun get(date: LocalDate, user: Int): Flow<List<ActivityLog>> = dao.get(date, user).map { it.map { it.toActivityLog() } }
 }
