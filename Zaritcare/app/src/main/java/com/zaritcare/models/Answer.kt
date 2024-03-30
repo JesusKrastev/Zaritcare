@@ -8,5 +8,6 @@ data class Answer(
     val answer: String,
     val date: LocalDate,
     val category: String,
+    val type: String,
     val user: Int
 )

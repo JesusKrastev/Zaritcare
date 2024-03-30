@@ -18,6 +18,8 @@ data class AnswerEntity(
     val date: LocalDate,
     @ColumnInfo(name = "category")
     val category: String,
+    @ColumnInfo(name = "type")
+    val type: String,
     @ColumnInfo(name = "user")
     val user: Int
 )

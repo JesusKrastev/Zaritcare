@@ -6,6 +6,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.zaritcare.data.room.activitylog.ActivityLogEntity
+import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface AnswerDao {
@@ -19,6 +22,8 @@ interface AnswerDao {
     suspend fun delete(answerEntity: AnswerEntity)
     @Query("SELECT * FROM answers")
     suspend fun get(): List<AnswerEntity>
+    @Query("SELECT * FROM answers WHERE date = :date AND user = :user")
+    fun get(date: LocalDate, user: Int): Flow<List<AnswerEntity>>
     @Query("SELECT * FROM answers WHERE id = :id")
     suspend fun get(id: Int): AnswerEntity
 }

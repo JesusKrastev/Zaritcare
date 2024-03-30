@@ -2,9 +2,13 @@ package com.zaritcare.data
 
 import com.zaritcare.data.room.answer.AnswerDao
 import com.zaritcare.data.room.answer.AnswerEntity
+import com.zaritcare.models.ActivityLog
 import com.zaritcare.models.Answer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import java.time.LocalDate
 import javax.inject.Inject
 
 class AnswerRepository @Inject constructor(
@@ -33,4 +37,6 @@ class AnswerRepository @Inject constructor(
     suspend fun get(id: Int) = withContext(Dispatchers.IO) {
         dao.get(id).toAnswer()
     }
+
+    fun get(date: LocalDate, user: Int): Flow<List<Answer>> = dao.get(date, user).map { it.map { it.toAnswer() } }
 }

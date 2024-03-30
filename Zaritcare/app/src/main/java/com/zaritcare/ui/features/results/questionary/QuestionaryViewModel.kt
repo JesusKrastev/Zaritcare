@@ -39,7 +39,7 @@ class QuestionaryViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val emotions: List<EmotionUiState> = getEmotions()
-                questionsState = getQuestions().map { it.copy(answer = if(it.type == Type.EMOTION) emotions.first().name else "0") }
+                questionsState = getQuestions().map { it.copy(answer = if(it.type == Type.EMOCION) emotions.first().id.toString() else "0") }
             } catch (e: Exception) {
                 Log.d("QuestionaryViewModel", "Error loading questions", e)
             }
@@ -75,7 +75,6 @@ class QuestionaryViewModel @Inject constructor(
                 viewModelScope.launch {
                     val todaysDate: LocalDate = LocalDate.now()
                     questionsState.map { answerRepository.insert(it.toAnswer().copy(date = todaysDate)) }
-                    Log.d("QuestionaryViewModel", "${answerRepository.count()}")
                 }
                 clearQuestionaryState()
                 event.onNavigateToResults()

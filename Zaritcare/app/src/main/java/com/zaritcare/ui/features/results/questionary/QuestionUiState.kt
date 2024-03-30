@@ -34,6 +34,7 @@ fun QuestionUiState.toAnswer(): Answer =
         question = id,
         answer = answer,
         category = category.name,
+        type = type.name,
         date = LocalDate.now(),
         user = 1
     )

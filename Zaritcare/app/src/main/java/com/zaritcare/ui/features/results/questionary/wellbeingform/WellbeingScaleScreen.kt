@@ -77,9 +77,9 @@ fun QuestionText(
 fun EmotionQuestion(
     modifier: Modifier = Modifier,
     emotions: List<EmotionUiState>,
-    selectedEmotion: String,
+    selectedEmotion: Int,
     question: String,
-    onEmotionSelected: (String) -> Unit
+    onEmotionSelected: (Int) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -95,9 +95,9 @@ fun EmotionQuestion(
             items(emotions) { emotion ->
                 Emotion(
                     image = emotion.image,
-                    isSelected = emotion.name == selectedEmotion,
+                    isSelected = emotion.id == selectedEmotion,
                     emotion = emotion.name,
-                    onClick = { onEmotionSelected(emotion.name) }
+                    onClick = { onEmotionSelected(emotion.id) }
                 )
             }
         }
@@ -116,12 +116,12 @@ fun Form(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         questions.forEach { question ->
-            if(question.type == Type.EMOTION) {
+            if(question.type == Type.EMOCION) {
                 EmotionQuestion(
                     emotions = emotions,
-                    selectedEmotion = question.answer,
+                    selectedEmotion = question.answer.toInt(),
                     question = question.question,
-                    onEmotionSelected = { onChangeAnswer(question.copy(answer = it)) }
+                    onEmotionSelected = { onChangeAnswer(question.copy(answer = it.toString())) }
                 )
             } else {
                 SelectRangeQuestion(

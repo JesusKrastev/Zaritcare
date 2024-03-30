@@ -10,6 +10,7 @@ import com.kinoyamboladmin.ui.features.settings.SettingsViewModel
 import com.zaritcare.ui.features.activities.ActivitiesViewModel
 import com.zaritcare.ui.features.activities.activity.ActivityViewModel
 import com.zaritcare.ui.features.activities.introactivity.IntroActivityViewModel
+import com.zaritcare.ui.features.results.ResultsViewModel
 import com.zaritcare.ui.features.results.questionary.QuestionaryViewModel
 import com.zaritcare.ui.features.tips.TipsViewModel
 
@@ -24,6 +25,7 @@ fun ZaritcareNavHost(
     val activitiesVm: ActivitiesViewModel = hiltViewModel<ActivitiesViewModel>()
     val introActivitiesVm: IntroActivityViewModel = hiltViewModel<IntroActivityViewModel>()
     val activityVm: ActivityViewModel = hiltViewModel<ActivityViewModel>()
+    val resultsVm: ResultsViewModel = hiltViewModel<ResultsViewModel>()
 
     NavHost(
         modifier = modifier,
@@ -58,6 +60,7 @@ fun ZaritcareNavHost(
             }
         )
         resultsScreen(
+            vm = resultsVm,
             onNavigateToQuestionary = {
                 navController.navigateToQuestionary()
             }

@@ -86,6 +86,7 @@ fun AnswerEntity.toAnswer() = Answer(
     answer = answer,
     date = date,
     category = category,
+    type = type,
     user = user
 )
 
@@ -95,6 +96,7 @@ fun Answer.toAnswerEntity() = AnswerEntity(
     answer = answer,
     date = date,
     category = category,
+    type = type,
     user = user
 )
 
