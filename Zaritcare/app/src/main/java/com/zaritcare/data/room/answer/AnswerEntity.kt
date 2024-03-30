@@ -16,6 +16,8 @@ data class AnswerEntity(
     val answer: String,
     @ColumnInfo(name = "date")
     val date: LocalDate,
+    @ColumnInfo(name = "category")
+    val category: String,
     @ColumnInfo(name = "user")
     val user: Int
 )

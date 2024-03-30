@@ -52,7 +52,10 @@ fun ZaritcareNavHost(
             }
         )
         questionaryScreen(
-            vm = questionaryVm
+            vm = questionaryVm,
+            onNavigateToResults = {
+                navController.navigateToResults()
+            }
         )
         resultsScreen(
             onNavigateToQuestionary = {

@@ -88,6 +88,7 @@ dependencies {
 
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
 
+    implementation ("co.yml:ycharts:2.1.0")
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")

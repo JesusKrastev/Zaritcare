@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zaritcare.data.AnswerRepository
 import com.zaritcare.data.EmotionRepository
 import com.zaritcare.data.QuestionRepository
 import com.zaritcare.models.Category
@@ -16,12 +17,14 @@ import com.zaritcare.ui.features.results.questionary.wellbeingform.EmotionUiStat
 import com.zaritcare.ui.features.results.questionary.wellbeingform.toEmotionUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class QuestionaryViewModel @Inject constructor(
     private val questionRepository: QuestionRepository,
-    private val emotionRepository: EmotionRepository
+    private val emotionRepository: EmotionRepository,
+    private val answerRepository: AnswerRepository
 ): ViewModel() {
     private var questionsState: List<QuestionUiState> by mutableStateOf(emptyList())
     var emotionsState: List<EmotionUiState> by mutableStateOf(emptyList())
@@ -53,6 +56,11 @@ class QuestionaryViewModel @Inject constructor(
         }
     }
 
+    fun clearQuestionaryState() {
+        loadQuestions()
+        loadEmotions()
+    }
+
     init {
         loadQuestions()
         loadEmotions()
@@ -64,7 +72,12 @@ class QuestionaryViewModel @Inject constructor(
                 selectedTab = event.index
             }
             is QuestionaryEvent.OnClickSave -> {
-                // TODO: Save answers
+                viewModelScope.launch {
+                    val todaysDate: LocalDate = LocalDate.now()
+                    questionsState.map { answerRepository.insert(it.toAnswer().copy(date = todaysDate)) }
+                    Log.d("QuestionaryViewModel", "${answerRepository.count()}")
+                }
+                clearQuestionaryState()
                 event.onNavigateToResults()
             }
             is QuestionaryEvent.OnChangeAnswer -> {

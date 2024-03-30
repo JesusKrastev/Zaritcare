@@ -105,10 +105,9 @@ fun Content(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
     questions: List<QuestionUiState>,
-    onChangeAnswer: (QuestionUiState) -> Unit,
+    onNavigateToResults: () -> Unit,
     emotions: List<EmotionUiState>,
-    onClickSave: () -> Unit,
-    onSelectionChange: (Int) -> Unit,
+    onQuestionaryEvent: (QuestionaryEvent) -> Unit,
     categories: List<String>,
 ) {
     CollapsingLayout(
@@ -123,14 +122,14 @@ fun Content(
                 TextSwitch(
                     selectedIndex = selectedIndex,
                     items = categories.map { it.lowercase().replaceFirstChar { it.uppercase() } },
-                    onSelectionChange = onSelectionChange
+                    onSelectionChange = { onQuestionaryEvent(QuestionaryEvent.OnSelectionChange(it))  }
                 )
                 Form(
                     selectedIndex = selectedIndex,
                     questions = questions,
-                    onChangeAnswer = onChangeAnswer,
+                    onChangeAnswer = { onQuestionaryEvent(QuestionaryEvent.OnChangeAnswer(it)) },
                     emotions = emotions,
-                    onClickSave = onClickSave
+                    onClickSave = { onQuestionaryEvent(QuestionaryEvent.OnClickSave(onNavigateToResults)) }
                 )
             }
         }
@@ -142,6 +141,7 @@ fun QuestionaryScreen(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
     onQuestionaryEvent: (QuestionaryEvent) -> Unit,
+    onNavigateToResults: () -> Unit,
     questions: List<QuestionUiState>,
     emotions: List<EmotionUiState>,
     categories: List<String>
@@ -152,12 +152,11 @@ fun QuestionaryScreen(
     ) {
         Content(
             selectedIndex = selectedIndex,
-            onSelectionChange = { onQuestionaryEvent(QuestionaryEvent.OnSelectionChange(it))  },
             categories = categories,
             emotions = emotions,
-            onChangeAnswer = { onQuestionaryEvent(QuestionaryEvent.OnChangeAnswer(it)) },
             questions = questions,
-            onClickSave = { onQuestionaryEvent(QuestionaryEvent.OnClickSave({})) }
+            onQuestionaryEvent = onQuestionaryEvent,
+            onNavigateToResults = onNavigateToResults
         )
     }
 }

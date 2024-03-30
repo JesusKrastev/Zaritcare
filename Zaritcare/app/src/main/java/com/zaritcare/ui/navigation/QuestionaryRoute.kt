@@ -14,7 +14,8 @@ fun NavController.navigateToQuestionary(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.questionaryScreen(
-    vm: QuestionaryViewModel
+    vm: QuestionaryViewModel,
+    onNavigateToResults: () -> Unit
 ) {
     composable(
         route = QuestionaryGraphRoute,
@@ -25,7 +26,8 @@ fun NavGraphBuilder.questionaryScreen(
             onQuestionaryEvent = vm::onQuestionaryEvent,
             questions = vm.questionsByCategoryState,
             emotions = vm.emotionsState,
-            categories = vm.categoriesState
+            categories = vm.categoriesState,
+            onNavigateToResults = onNavigateToResults
         )
     }
 }

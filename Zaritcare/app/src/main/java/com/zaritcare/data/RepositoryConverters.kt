@@ -84,6 +84,17 @@ fun AnswerEntity.toAnswer() = Answer(
     id = id,
     question = question,
     answer = answer,
+    date = date,
+    category = category,
+    user = user
+)
+
+fun Answer.toAnswerEntity() = AnswerEntity(
+    id = id,
+    question = question,
+    answer = answer,
+    date = date,
+    category = category,
     user = user
 )
 
