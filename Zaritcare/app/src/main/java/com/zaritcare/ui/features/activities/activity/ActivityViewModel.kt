@@ -1,11 +1,9 @@
 package com.zaritcare.ui.features.activities.activity
 
-import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaritcare.R
@@ -25,15 +23,18 @@ class ActivityViewModel @Inject constructor(
     private val songsAudioPlayer: AudioPlayer,
     private val soundsAudioPlayer: AudioPlayer,
     private val activityLogRepository: ActivityLogRepository
-): ViewModel() {
+) : ViewModel() {
     class ActivityViewModelException(message: String) : Exception(message)
 
     var activityState: ActivityUiState by mutableStateOf(ActivityUiState())
         private set
-    var songsState: List<SongUiState> by  mutableStateOf(emptyList())
+    var songsState: List<SongUiState> by mutableStateOf(emptyList())
+        private set
+    var playingSongState: SongUiState? by mutableStateOf(null)
         private set
 
-    private suspend fun getSongs(): List<SongUiState> = songRepository.get().map { it.toSongUiState() }
+    private suspend fun getSongs(): List<SongUiState> =
+        songRepository.get().map { it.toSongUiState() }
 
     fun loadSongs() {
         viewModelScope.launch {
@@ -51,64 +52,46 @@ class ActivityViewModel @Inject constructor(
 
     fun setActivityState(activityId: Int) {
         viewModelScope.launch {
-            val activity: Activity = activityRepository.get(activityId) ?: throw ActivityViewModelException("Activity not found with id $activityId")
+            val activity: Activity = activityRepository.get(activityId)
+                ?: throw ActivityViewModelException("Activity not found with id $activityId")
             activityState = activity.toActivityUiState()
         }
     }
 
-    private fun updateSongState(clickedSong: SongUiState, newState: SongUiState.SongState) {
-        val mutableSongsState: MutableList<SongUiState> = songsState.toMutableList()
-        val index = mutableSongsState.indexOfFirst { it.id == clickedSong.id }
-        if (index != -1) {
-            val updatedSong: SongUiState = mutableSongsState[index].copy(state = newState)
-            mutableSongsState[index] = updatedSong
-            songsState = mutableSongsState
-        }
-    }
-
-    private fun onClickSong(clickedSong: SongUiState) {
-        when(clickedSong.state) {
-            SongUiState.SongState.STOP -> {
-                songsAudioPlayer.stop() // If other music is playing, need to stop it
-                songsAudioPlayer.play(clickedSong.audio)
-                songsState = songsState.map { song ->
-                    if (song.id == clickedSong.id) {
-                        song.copy(state = SongUiState.SongState.PLAYING)
-                    } else {
-                        song.copy(state = SongUiState.SongState.STOP)
-                    }
-                }
-            }
-            SongUiState.SongState.PLAYING -> {
-                songsAudioPlayer.pause()
-                updateSongState(clickedSong, SongUiState.SongState.PAUSE)
-            }
-            SongUiState.SongState.PAUSE -> {
-                songsAudioPlayer.play(clickedSong.audio)
-                updateSongState(clickedSong, SongUiState.SongState.PLAYING)
-            }
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
+    fun clearActivityState() {
         songsAudioPlayer.stop()
+        soundsAudioPlayer.stop()
+        playingSongState = null
     }
 
     fun onActivityEvent(event: ActivityEvent) {
-        when(event) {
+        when (event) {
             is ActivityEvent.OnClickSong -> {
-                onClickSong(event.song)
-            }
-            is ActivityEvent.OnFinishTime -> {
-                soundsAudioPlayer.stop()
-                soundsAudioPlayer.play(R.raw.finish_time_audio)
+                val clickedSong: SongUiState = event.song
+
+                if (playingSongState?.id != clickedSong.id) {
+                    playingSongState = clickedSong.copy(state = SongUiState.State.PLAYING)
+                    songsAudioPlayer.stop()
+                    songsAudioPlayer.play(clickedSong.audio)
+                } else {
+                    if(playingSongState?.state == SongUiState.State.PLAYING) {
+                        playingSongState = playingSongState!!.copy(state = SongUiState.State.PAUSED)
+                        songsAudioPlayer.pause()
+                    } else {
+                        playingSongState = playingSongState!!.copy(state = SongUiState.State.PLAYING)
+                        songsAudioPlayer.play(playingSongState!!.audio)
+                    }
+                }
             }
             is ActivityEvent.OnClickFinished -> {
                 viewModelScope.launch {
                     activityLogRepository.insert(activityState.toActivityLog())
                 }
                 event.onNavigateToActivities()
+            }
+            is ActivityEvent.OnFinishTime -> {
+                soundsAudioPlayer.stop()
+                soundsAudioPlayer.play(R.raw.finish_time_audio)
             }
         }
     }

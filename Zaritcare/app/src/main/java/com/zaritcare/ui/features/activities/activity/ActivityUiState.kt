@@ -15,7 +15,6 @@ data class ActivityUiState(
     val action: String = "",
     val actions: List<Action> = emptyList()
 )
-
 fun Activity.toActivityUiState(): ActivityUiState =
     ActivityUiState(
         id = id,

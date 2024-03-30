@@ -43,7 +43,9 @@ fun NavGraphBuilder.activityScreen(
             activity = vm.activityState,
             onNavigateToActivities = onNavigateToActivities,
             onActivityEvent = vm::onActivityEvent,
-            songs = vm.songsState
+            songs = vm.songsState,
+            playingSong = vm.playingSongState,
+            clearActivityState = vm::clearActivityState
         )
     }
 }

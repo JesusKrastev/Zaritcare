@@ -8,10 +8,12 @@ data class SongUiState(
     val id: Int,
     val image: ImageBitmap,
     val audio: Int,
-    val state: SongState = SongState.STOP
+    var state: State = State.STOPPED
 ) {
-    enum class SongState {
-        PLAYING, PAUSE, STOP
+    enum class State {
+        PLAYING,
+        PAUSED,
+        STOPPED
     }
 }
 

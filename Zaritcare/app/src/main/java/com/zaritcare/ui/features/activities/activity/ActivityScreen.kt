@@ -1,6 +1,5 @@
 package com.zaritcare.ui.features.activities.activity
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,24 +20,19 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.zaritcare.R
 import com.zaritcare.models.Action
 import com.zaritcare.ui.composables.GradientBrush
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
-import com.zaritcare.ui.features.activities.AudioPlayer
 import com.zaritcare.ui.features.activities.components.BurstBallon
 import com.zaritcare.ui.features.activities.components.Chronometer
 import com.zaritcare.ui.features.activities.components.MusicCard
@@ -75,6 +69,7 @@ fun HeaderImage(
 fun ListSongs(
     modifier: Modifier = Modifier,
     songs: List<SongUiState>,
+    playingSong: SongUiState?,
     onClickSong: (SongUiState) -> Unit
 ) {
     LazyRow(
@@ -84,8 +79,10 @@ fun ListSongs(
         items(songs) { song ->
             MusicCard(
                 image = song.image,
-                isPlaying = song.state == SongUiState.SongState.PLAYING,
-                onClick = { onClickSong(song) }
+                isPlaying = (playingSong?.id == song.id && playingSong?.state == SongUiState.State.PLAYING),
+                onClick = {
+                    onClickSong(song)
+                }
             )
         }
     }
@@ -96,6 +93,7 @@ fun Actions(
     modifier: Modifier = Modifier,
     actions: List<Action>,
     songs: List<SongUiState>,
+    playingSong: SongUiState?,
     onClickSong: (SongUiState) -> Unit,
     onFinishTime: () -> Unit
 ) {
@@ -119,7 +117,8 @@ fun Actions(
                 Action.MUSICA -> {
                     ListSongs(
                         songs = songs,
-                        onClickSong = onClickSong
+                        onClickSong = onClickSong,
+                        playingSong = playingSong
                     )
                 }
             }
@@ -149,6 +148,7 @@ fun Body(
     modifier: Modifier = Modifier,
     activity: ActivityUiState,
     songs: List<SongUiState>,
+    playingSong: SongUiState?,
     onClickFinishedButton: () -> Unit,
     onFinishTime: () -> Unit,
     onClickSong: (SongUiState) -> Unit
@@ -175,7 +175,8 @@ fun Body(
             actions = activity.actions,
             songs = songs,
             onClickSong = onClickSong,
-            onFinishTime = onFinishTime
+            onFinishTime = onFinishTime,
+            playingSong = playingSong
         )
         Spacer(modifier = Modifier.size(16.dp))
         FinishedButton(
@@ -190,7 +191,8 @@ fun Content(
     modifier: Modifier = Modifier,
     activity: ActivityUiState,
     songs: List<SongUiState>,
-    onClickFinishedButton: () -> Unit,
+    playingSong: SongUiState?,
+    onNavigateToActivities: () -> Unit,
     onActivityEvent: (ActivityEvent) -> Unit
 ) {
     val gradientColors: List<Color> = listOf(
@@ -211,8 +213,11 @@ fun Content(
         )
         Body(
             activity = activity,
-            onClickFinishedButton = onClickFinishedButton,
+            onClickFinishedButton = {
+                onActivityEvent(ActivityEvent.OnClickFinished(onNavigateToActivities))
+            },
             songs = songs,
+            playingSong = playingSong,
             onClickSong = { onActivityEvent(ActivityEvent.OnClickSong(it)) },
             onFinishTime = { onActivityEvent(ActivityEvent.OnFinishTime) }
         )
@@ -224,20 +229,26 @@ fun ActivityScreen(
     modifier: Modifier = Modifier,
     activity: ActivityUiState,
     songs: List<SongUiState>,
+    playingSong: SongUiState?,
+    clearActivityState: () -> Unit,
     onNavigateToActivities: () -> Unit,
     onActivityEvent: (ActivityEvent) -> Unit
 ) {
-    val context: Context = LocalContext.current
-    val audioPlayer: AudioPlayer by remember { mutableStateOf(AudioPlayer(context)) }
+    DisposableEffect(key1 = Unit) {
+        onDispose {
+            clearActivityState()
+        }
+    }
 
     Column(
         modifier = modifier.fillMaxSize()
     ) {
         Content(
             activity = activity,
-            onClickFinishedButton = { onActivityEvent(ActivityEvent.OnClickFinished(onNavigateToActivities)) },
             songs = songs,
-            onActivityEvent = onActivityEvent
+            onActivityEvent = onActivityEvent,
+            onNavigateToActivities = onNavigateToActivities,
+            playingSong = playingSong
         )
     }
 }
