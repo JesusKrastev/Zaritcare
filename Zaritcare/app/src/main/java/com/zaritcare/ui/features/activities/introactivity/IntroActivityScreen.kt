@@ -51,7 +51,7 @@ fun Content(
     onClickStartButton: () -> Unit
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
