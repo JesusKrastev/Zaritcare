@@ -14,6 +14,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +31,9 @@ import com.zaritcare.models.Category
 import com.zaritcare.models.Type
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.ui.features.components.ZaritcareNavBar
 import com.zaritcare.ui.features.results.components.LineChartWidget
+import com.zaritcare.ui.features.tips.Content
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.images.Images
 
@@ -154,7 +157,7 @@ fun ResultsByCategory(
 }
 
 @Composable
-fun ResultsScreen(
+fun Content(
     modifier: Modifier = Modifier,
     answersByCategory: Map<Category, List<AnswerUiState>>,
     onClickStart: () -> Unit
@@ -178,6 +181,37 @@ fun ResultsScreen(
             )
         }
     }
+}
+
+@Composable
+fun ResultsScreen(
+    modifier: Modifier = Modifier,
+    answersByCategory: Map<Category, List<AnswerUiState>>,
+    onClickStart: () -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
+) {
+    Scaffold(
+        modifier = modifier,
+        content = { paddingValues ->
+            Content(
+                modifier = Modifier.padding(paddingValues = paddingValues),
+                answersByCategory = answersByCategory,
+                onClickStart = onClickStart
+            )
+        },
+        bottomBar = {
+            ZaritcareNavBar(
+                onNavigateToForms = onNavigateToResults,
+                onNavigateToActivities = onNavigateToActivities,
+                onNavigateToTips = onNavigateToTips,
+                onNavigateToSettings = onNavigateToSettings,
+                selectedPage = 0
+            )
+        }
+    )
 }
 
 @Preview
@@ -218,7 +252,11 @@ fun ResultsFormScreenPreview() {
         ) {
             ResultsScreen(
                 answersByCategory = hashMapOf(),
-                onClickStart = {}
+                onClickStart = {},
+                onNavigateToResults = {},
+                onNavigateToActivities = {},
+                onNavigateToSettings = {},
+                onNavigateToTips = {}
             )
         }
     }

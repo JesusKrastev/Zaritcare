@@ -14,14 +14,22 @@ fun NavController.navigateToTips(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.tipsScreen(
-    vm: TipsViewModel
+    vm: TipsViewModel,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
 ) {
     composable(
         route = TipsGraphRoute,
         arguments = emptyList()
     ) {
         TipsScreen(
-            tipsState = vm.tipsState
+            tipsState = vm.tipsState,
+            onNavigateToResults = onNavigateToResults,
+            onNavigateToActivities = onNavigateToActivities,
+            onNavigateToSettings = onNavigateToSettings,
+            onNavigateToTips = onNavigateToTips
         )
     }
 }

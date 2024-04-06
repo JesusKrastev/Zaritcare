@@ -14,11 +14,13 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.composables.CollapsingLayout
+import com.zaritcare.ui.features.components.ZaritcareNavBar
 import com.zaritcare.ui.features.results.questionary.wellbeingform.EmotionUiState
 import com.zaritcare.ui.features.results.questionary.wellbeingform.WellbeingScaleScreen
 import com.zaritcare.ui.features.results.questionary.zaritform.ZaritScaleScreen
@@ -130,22 +132,41 @@ fun QuestionaryScreen(
     modifier: Modifier = Modifier,
     selectedIndex: Int,
     onQuestionaryEvent: (QuestionaryEvent) -> Unit,
-    onNavigateToResults: () -> Unit,
     questions: List<QuestionUiState>,
     emotions: List<EmotionUiState>,
-    categories: List<String>
+    categories: List<String>,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
 ) {
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Content(
-            selectedIndex = selectedIndex,
-            categories = categories,
-            emotions = emotions,
-            questions = questions,
-            onQuestionaryEvent = onQuestionaryEvent,
-            onNavigateToResults = onNavigateToResults
-        )
-    }
+    Scaffold(
+        modifier = modifier,
+        content = { paddingValues ->
+            Column(
+                modifier = modifier
+                    .padding(paddingValues = paddingValues)
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Content(
+                    selectedIndex = selectedIndex,
+                    categories = categories,
+                    emotions = emotions,
+                    questions = questions,
+                    onQuestionaryEvent = onQuestionaryEvent,
+                    onNavigateToResults = onNavigateToResults
+                )
+            }
+        },
+        bottomBar = {
+            ZaritcareNavBar(
+                onNavigateToForms = onNavigateToResults,
+                onNavigateToActivities = onNavigateToActivities,
+                onNavigateToTips = onNavigateToTips,
+                onNavigateToSettings = onNavigateToSettings,
+                selectedPage = 0
+            )
+        }
+    )
 }

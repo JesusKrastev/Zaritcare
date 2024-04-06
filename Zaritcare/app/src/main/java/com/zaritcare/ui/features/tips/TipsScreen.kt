@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,6 +26,12 @@ import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.composables.GradientBrush
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.ui.features.components.ZaritcareNavBar
+import com.zaritcare.ui.navigation.ZaritcareNavHost
+import com.zaritcare.ui.navigation.navigateToActivities
+import com.zaritcare.ui.navigation.navigateToResults
+import com.zaritcare.ui.navigation.navigateToSettings
+import com.zaritcare.ui.navigation.navigateToTips
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.images.Images
 
@@ -103,12 +110,14 @@ fun AdviceCard(
 }
 
 @Composable
-fun TipsScreen(
+fun Content(
     modifier: Modifier = Modifier,
     tipsState: List<AdviceUiState>
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(tipsState) { advice ->
@@ -120,6 +129,35 @@ fun TipsScreen(
             )
         }
     }
+}
+
+@Composable
+fun TipsScreen(
+    modifier: Modifier = Modifier,
+    tipsState: List<AdviceUiState>,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
+) {
+    Scaffold(
+        modifier = modifier,
+        content = { paddingValues ->
+            Content(
+                modifier = Modifier.padding(paddingValues = paddingValues),
+                tipsState = tipsState
+            )
+        },
+        bottomBar = {
+            ZaritcareNavBar(
+                onNavigateToForms = onNavigateToResults,
+                onNavigateToActivities = onNavigateToActivities,
+                onNavigateToTips = onNavigateToTips,
+                onNavigateToSettings = onNavigateToSettings,
+                selectedPage = 2
+            )
+        }
+    )
 }
 
 @Preview

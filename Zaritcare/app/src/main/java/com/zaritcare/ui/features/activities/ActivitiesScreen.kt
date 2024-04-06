@@ -20,6 +20,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.ui.features.components.ZaritcareNavBar
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.images.Images
 import kotlin.random.Random
@@ -109,7 +111,7 @@ fun ActivityCard(
 }
 
 @Composable
-fun ActivitiesScreen(
+fun Content(
     modifier: Modifier = Modifier,
     activities: List<ActivityCoverUiState>,
     onNavigateToIntroActivity: (Int) -> Unit,
@@ -136,6 +138,39 @@ fun ActivitiesScreen(
             )
         }
     }
+}
+
+@Composable
+fun ActivitiesScreen(
+    modifier: Modifier = Modifier,
+    activities: List<ActivityCoverUiState>,
+    onNavigateToIntroActivity: (Int) -> Unit,
+    onNavigateToActivity: (Int) -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
+) {
+    Scaffold(
+        modifier = modifier,
+        content = { paddingValues ->
+            Content(
+                modifier = Modifier.padding(paddingValues = paddingValues),
+                activities = activities,
+                onNavigateToIntroActivity = onNavigateToIntroActivity,
+                onNavigateToActivity = onNavigateToActivity
+            )
+        },
+        bottomBar = {
+            ZaritcareNavBar(
+                onNavigateToForms = onNavigateToResults,
+                onNavigateToActivities = onNavigateToActivities,
+                onNavigateToTips = onNavigateToTips,
+                onNavigateToSettings = onNavigateToSettings,
+                selectedPage = 1
+            )
+        }
+    )
 }
 
 @Preview

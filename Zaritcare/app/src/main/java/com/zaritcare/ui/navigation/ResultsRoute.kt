@@ -15,7 +15,11 @@ fun NavController.navigateToResults(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.resultsScreen(
     vm: ResultsViewModel,
-    onNavigateToQuestionary: () -> Unit
+    onNavigateToQuestionary: () -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
 ) {
     composable(
         route = ResultsGraphRoute,
@@ -23,7 +27,11 @@ fun NavGraphBuilder.resultsScreen(
     ) {
         ResultsScreen(
             answersByCategory = vm.answersByCategory,
-            onClickStart = onNavigateToQuestionary
+            onClickStart = onNavigateToQuestionary,
+            onNavigateToResults = onNavigateToResults,
+            onNavigateToActivities = onNavigateToActivities,
+            onNavigateToSettings = onNavigateToSettings,
+            onNavigateToTips = onNavigateToTips
         )
     }
 }

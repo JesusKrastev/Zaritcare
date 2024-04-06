@@ -29,6 +29,7 @@ import com.kinoyamboladmin.ui.features.settings.SettingsUiState
 import com.zaritcare.ui.composables.OutlinedDropdownMenu
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.features.components.ZaritcareNavBar
+import com.zaritcare.ui.features.results.Content
 
 @Composable
 fun TextProperty(
@@ -188,14 +189,32 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     themes: List<String>,
     settingsUiState: SettingsUiState,
-    onSettingsEvent: (SettingsEvent) -> Unit
+    onSettingsEvent: (SettingsEvent) -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
 ) {
-    MainContent(
+    Scaffold(
         modifier = modifier,
-        themes = themes,
-        settingsUiState = settingsUiState,
-        onChangeTheme = { onSettingsEvent(SettingsEvent.OnChangeTheme(it)) },
-        onClickPrivacyPolicies = { onSettingsEvent(SettingsEvent.OnClickPrivacyPolicies) },
-        onClickTermsAndConditions = { onSettingsEvent(SettingsEvent.OnClickTermsAndConditions) }
+        content = { paddingValues ->
+            MainContent(
+                modifier = modifier.padding(paddingValues = paddingValues),
+                themes = themes,
+                settingsUiState = settingsUiState,
+                onChangeTheme = { onSettingsEvent(SettingsEvent.OnChangeTheme(it)) },
+                onClickPrivacyPolicies = { onSettingsEvent(SettingsEvent.OnClickPrivacyPolicies) },
+                onClickTermsAndConditions = { onSettingsEvent(SettingsEvent.OnClickTermsAndConditions) }
+            )
+        },
+        bottomBar = {
+            ZaritcareNavBar(
+                onNavigateToForms = onNavigateToResults,
+                onNavigateToActivities = onNavigateToActivities,
+                onNavigateToTips = onNavigateToTips,
+                onNavigateToSettings = onNavigateToSettings,
+                selectedPage = 3
+            )
+        }
     )
 }

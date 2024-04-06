@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -36,6 +37,7 @@ import com.zaritcare.ui.composables.TextTile
 import com.zaritcare.ui.features.activities.components.BurstBallon
 import com.zaritcare.ui.features.activities.components.Chronometer
 import com.zaritcare.ui.features.activities.components.MusicCard
+import com.zaritcare.ui.features.components.ZaritcareNavBar
 
 @Composable
 fun HeaderImage(
@@ -231,7 +233,10 @@ fun ActivityScreen(
     songs: List<SongUiState>,
     playingSong: SongUiState?,
     clearActivityState: () -> Unit,
+    onNavigateToResults: () -> Unit,
     onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit,
     onActivityEvent: (ActivityEvent) -> Unit
 ) {
     DisposableEffect(key1 = Unit) {
@@ -240,15 +245,31 @@ fun ActivityScreen(
         }
     }
 
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
-        Content(
-            activity = activity,
-            songs = songs,
-            onActivityEvent = onActivityEvent,
-            onNavigateToActivities = onNavigateToActivities,
-            playingSong = playingSong
-        )
-    }
+    Scaffold(
+        modifier = modifier,
+        content = { paddingValues ->
+            Column(
+                modifier = modifier
+                    .padding(paddingValues = paddingValues)
+                    .fillMaxSize()
+            ) {
+                Content(
+                    activity = activity,
+                    songs = songs,
+                    onActivityEvent = onActivityEvent,
+                    onNavigateToActivities = onNavigateToActivities,
+                    playingSong = playingSong
+                )
+            }
+        },
+        bottomBar = {
+            ZaritcareNavBar(
+                onNavigateToForms = onNavigateToResults,
+                onNavigateToActivities = onNavigateToActivities,
+                onNavigateToTips = onNavigateToTips,
+                onNavigateToSettings = onNavigateToSettings,
+                selectedPage = 1
+            )
+        }
+    )
 }

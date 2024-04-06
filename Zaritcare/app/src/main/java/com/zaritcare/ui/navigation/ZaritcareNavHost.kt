@@ -16,9 +16,9 @@ import com.zaritcare.ui.features.tips.TipsViewModel
 
 @Composable
 fun ZaritcareNavHost(
-    modifier: Modifier = Modifier,
-    navController: NavHostController
+    modifier: Modifier = Modifier
 ) {
+    val navController: NavHostController = rememberNavController()
     val questionaryVm: QuestionaryViewModel = hiltViewModel<QuestionaryViewModel>()
     val settingsVm: SettingsViewModel = hiltViewModel<SettingsViewModel>()
     val tipsVm: TipsViewModel = hiltViewModel<TipsViewModel>()
@@ -57,19 +57,64 @@ fun ZaritcareNavHost(
             vm = questionaryVm,
             onNavigateToResults = {
                 navController.navigateToResults()
+            },
+            onNavigateToTips = {
+                navController.navigateToTips()
+            },
+            onNavigateToSettings = {
+                navController.navigateToSettings()
+            },
+            onNavigateToActivities = {
+                navController.navigateToActivities()
             }
         )
         resultsScreen(
             vm = resultsVm,
             onNavigateToQuestionary = {
                 navController.navigateToQuestionary()
+            },
+            onNavigateToResults = {
+                navController.navigateToResults()
+            },
+            onNavigateToTips = {
+                navController.navigateToTips()
+            },
+            onNavigateToSettings = {
+                navController.navigateToSettings()
+            },
+            onNavigateToActivities = {
+                navController.navigateToActivities()
             }
         )
         settingsScreen(
-            vm = settingsVm
+            vm = settingsVm,
+            onNavigateToResults = {
+                navController.navigateToResults()
+            },
+            onNavigateToTips = {
+                navController.navigateToTips()
+            },
+            onNavigateToSettings = {
+                navController.navigateToSettings()
+            },
+            onNavigateToActivities = {
+                navController.navigateToActivities()
+            }
         )
         tipsScreen(
-            vm = tipsVm
+            vm = tipsVm,
+            onNavigateToResults = {
+                navController.navigateToResults()
+            },
+            onNavigateToTips = {
+                navController.navigateToTips()
+            },
+            onNavigateToSettings = {
+                navController.navigateToSettings()
+            },
+            onNavigateToActivities = {
+                navController.navigateToActivities()
+            }
         )
         activitiesScreen(
             vm = activitiesVm,
@@ -78,18 +123,51 @@ fun ZaritcareNavHost(
             },
             onNavigateToIntroActivity = {
                 navController.navigateToIntroActivity(it)
+            },
+            onNavigateToResults = {
+                navController.navigateToResults()
+            },
+            onNavigateToTips = {
+                navController.navigateToTips()
+            },
+            onNavigateToSettings = {
+                navController.navigateToSettings()
+            },
+            onNavigateToActivities = {
+                navController.navigateToActivities()
             }
         )
         introActivityScreen(
             vm = introActivitiesVm,
             onNavigateToActivity = {
                 navController.navigateToActivity(it)
+            },
+            onNavigateToResults = {
+                navController.navigateToResults()
+            },
+            onNavigateToTips = {
+                navController.navigateToTips()
+            },
+            onNavigateToSettings = {
+                navController.navigateToSettings()
+            },
+            onNavigateToActivities = {
+                navController.navigateToActivities()
             }
         )
         activityScreen(
             vm = activityVm,
             onNavigateToActivities = {
                 navController.navigateToActivities()
+            },
+            onNavigateToResults = {
+                navController.navigateToResults()
+            },
+            onNavigateToTips = {
+                navController.navigateToTips()
+            },
+            onNavigateToSettings = {
+                navController.navigateToSettings()
             }
         )
     }

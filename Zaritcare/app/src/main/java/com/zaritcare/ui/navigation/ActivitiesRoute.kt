@@ -17,7 +17,11 @@ fun NavController.navigateToActivities(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.activitiesScreen(
     vm: ActivitiesViewModel,
     onNavigateToIntroActivity: (Int) -> Unit,
-    onNavigateToActivity: (Int) -> Unit
+    onNavigateToActivity: (Int) -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
 ) {
     composable(
         route = ActivitiesGraphRoute,
@@ -26,7 +30,11 @@ fun NavGraphBuilder.activitiesScreen(
         ActivitiesScreen(
             activities = vm.activitiesState,
             onNavigateToIntroActivity = onNavigateToIntroActivity,
-            onNavigateToActivity = onNavigateToActivity
+            onNavigateToActivity = onNavigateToActivity,
+            onNavigateToResults = onNavigateToResults,
+            onNavigateToActivities = onNavigateToActivities,
+            onNavigateToSettings = onNavigateToSettings,
+            onNavigateToTips = onNavigateToTips
         )
     }
 }

@@ -22,7 +22,10 @@ fun NavController.navigateToActivity(
 
 fun NavGraphBuilder.activityScreen(
     vm: ActivityViewModel,
-    onNavigateToActivities: () -> Unit
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
 ) {
     composable(
         route = "$ActivityGraphRoute/{$ActivityParameterName}",
@@ -45,7 +48,10 @@ fun NavGraphBuilder.activityScreen(
             onActivityEvent = vm::onActivityEvent,
             songs = vm.songsState,
             playingSong = vm.playingSongState,
-            clearActivityState = vm::clearActivityState
+            clearActivityState = vm::clearActivityState,
+            onNavigateToResults = onNavigateToResults,
+            onNavigateToSettings = onNavigateToSettings,
+            onNavigateToTips = onNavigateToTips
         )
     }
 }

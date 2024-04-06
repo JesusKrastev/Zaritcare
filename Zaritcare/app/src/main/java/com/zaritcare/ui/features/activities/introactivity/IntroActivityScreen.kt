@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.ui.features.components.ZaritcareNavBar
+import com.zaritcare.ui.features.settings.MainContent
+import com.zaritcare.ui.features.settings.SettingsEvent
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.images.Images
 
@@ -73,22 +77,40 @@ fun Content(
 fun IntroActivityScreen(
     modifier: Modifier = Modifier,
     activityQuote: ActivityQuoteUiState,
-    onNavigateToActivity: (Int) -> Unit
+    onNavigateToActivity: (Int) -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToActivities: () -> Unit,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToTips: () -> Unit
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Content(
-            activityQuote = activityQuote,
-            onClickStartButton = {
-                onNavigateToActivity(activityQuote.id)
+    Scaffold(
+        modifier = modifier,
+        content = { paddingValues ->
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(paddingValues = paddingValues),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Content(
+                    activityQuote = activityQuote,
+                    onClickStartButton = {
+                        onNavigateToActivity(activityQuote.id)
+                    }
+                )
             }
-        )
-    }
+        },
+        bottomBar = {
+            ZaritcareNavBar(
+                onNavigateToForms = onNavigateToResults,
+                onNavigateToActivities = onNavigateToActivities,
+                onNavigateToTips = onNavigateToTips,
+                onNavigateToSettings = onNavigateToSettings,
+                selectedPage = 1
+            )
+        }
+    )
 }
 
 @Preview
@@ -112,7 +134,11 @@ fun IntroActivityScreenTest() {
         ) {
             IntroActivityScreen(
                 activityQuote = activityQuote,
-                onNavigateToActivity = {}
+                onNavigateToActivity = {},
+                onNavigateToResults = {},
+                onNavigateToActivities = {},
+                onNavigateToSettings = {},
+                onNavigateToTips = {}
             )
         }
     }
