@@ -90,7 +90,7 @@ class ActivityViewModel @Inject constructor(
                 event.onNavigateToActivities()
             }
             is ActivityEvent.OnFinishTime -> {
-                soundsAudioPlayer.stop()
+                clearActivityState()
                 soundsAudioPlayer.play(R.raw.finish_time_audio)
             }
         }
