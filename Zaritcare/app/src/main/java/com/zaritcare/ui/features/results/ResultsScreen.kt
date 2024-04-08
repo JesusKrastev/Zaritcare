@@ -139,7 +139,8 @@ fun ResultsByCategory(
                         val title: String = category.name.lowercase().replaceFirstChar { it.uppercase() }
                         LineChartWidget(
                             data = answers,
-                            title = "Escala de $title"
+                            title = "Escala de $title",
+                            range = category.range
                         )
                     }
                     Type.EMOCION -> {

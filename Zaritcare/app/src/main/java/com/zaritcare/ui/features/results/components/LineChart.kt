@@ -1,5 +1,6 @@
 package com.zaritcare.ui.features.results.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,7 +44,7 @@ fun LineChartWidget(
     val pointsData: List<Point> = data.mapIndexed { index, answerUiState ->
         val x: Float = (index + 1).toFloat()
         val y: Float = answerUiState.answer.toFloat()
-        Point(x, y)
+        Point(x = x, y = y)
     }
 
     val xAxisData: AxisData = AxisData.Builder()
@@ -57,12 +58,14 @@ fun LineChartWidget(
         .build()
 
     val yAxisData: AxisData = AxisData.Builder()
-        .steps(data.size)
+        .steps(range.endInclusive.toInt())
         .backgroundColor(Color.Transparent)
         .labelAndAxisLinePadding(20.dp)
         .labelData { i ->
-            val yScale: Float = range.endInclusive / data.size
-            (i * yScale).toInt().toString()
+            val minY: Float = range.start
+            val yScale: Float = (range.endInclusive - range.start) / range.endInclusive
+            val labelValue: Float = minY + (i * yScale)
+            labelValue.toInt().toString()
         }
         .axisLineColor(MaterialTheme.colorScheme.primary)
         .axisLabelColor(MaterialTheme.colorScheme.primary)

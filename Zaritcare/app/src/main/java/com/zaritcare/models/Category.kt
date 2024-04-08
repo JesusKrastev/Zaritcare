@@ -1,6 +1,8 @@
 package com.zaritcare.models
 
-enum class Category {
+enum class Category(
+    val range: ClosedFloatingPointRange<Float> = 0f..10f
+) {
     BIENESTAR,
-    ZARIT
+    ZARIT(0f..4f)
 }

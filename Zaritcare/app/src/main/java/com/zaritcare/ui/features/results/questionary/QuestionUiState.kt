@@ -12,7 +12,7 @@ data class QuestionUiState(
     val category: Category,
     val type: Type,
     val range: ClosedFloatingPointRange<Float> = 0f..10f,
-    val steps: Int = 9,
+    val steps: Int = range.endInclusive.toInt() - 1,
     val answer: String = "0",
     val minimumValueIndicator: String = "",
     val maximumValueIndicator: String = ""
@@ -23,6 +23,7 @@ fun Question.toQuestionUiState(): QuestionUiState =
         id = id,
         question = question,
         category = Category.valueOf(category),
+        range = Category.valueOf(category).range,
         type = Type.valueOf(type),
         minimumValueIndicator = minimumValueIndicator,
         maximumValueIndicator = maximumValueIndicator
