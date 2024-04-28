@@ -8,21 +8,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaritcare.data.ActivityLogRepository
 import com.zaritcare.data.ActivityRepository
+import com.zaritcare.data.services.authentication.AuthServiceImplementation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 class ActivitiesViewModel @Inject constructor(
     private val activityRepository: ActivityRepository,
-    private val activityLogRepository: ActivityLogRepository
+    private val activityLogRepository: ActivityLogRepository,
+    private val authService: AuthServiceImplementation
 ): ViewModel() {
     var activitiesState: List<ActivityCoverUiState> by mutableStateOf(emptyList())
+    private var user: String by mutableStateOf("")
 
     suspend fun getActivities() = activityRepository.get().map { activity -> activity.toActivityCoverUiState() }
-    fun getCompletedActivities() = activityLogRepository.get(LocalDate.now(), 1)
+    fun getCompletedActivities() = activityLogRepository.get(LocalDate.now(), user)
 
     fun loadActivities() {
         viewModelScope.launch {
@@ -40,7 +44,14 @@ class ActivitiesViewModel @Inject constructor(
         }
     }
 
+    fun loadUser() {
+        runBlocking {
+            user = authService.getCurrentUser()?.uid ?: ""
+        }
+    }
+
     init {
+        loadUser()
         loadActivities()
     }
 }

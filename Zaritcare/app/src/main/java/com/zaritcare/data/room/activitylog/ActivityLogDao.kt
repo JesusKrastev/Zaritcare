@@ -24,5 +24,5 @@ interface ActivityLogDao {
     @Query("SELECT * FROM activity_logs WHERE id = :id")
     suspend fun get(id: Int): ActivityLogEntity?
     @Query("SELECT * FROM activity_logs WHERE date = :date AND user = :user")
-    fun get(date: LocalDate, user: Int): Flow<List<ActivityLogEntity>>
+    fun get(date: LocalDate, user: String): Flow<List<ActivityLogEntity>>
 }

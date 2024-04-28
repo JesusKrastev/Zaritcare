@@ -12,7 +12,12 @@
           "package_name": "com.zaritcare"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "408263182255-626el5nmrm5vf24ttpbjdrv9hjlh150d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBLwn4vxJY1dx4tTgrveIrzNpNn5otuhyo"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "408263182255-626el5nmrm5vf24ttpbjdrv9hjlh150d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

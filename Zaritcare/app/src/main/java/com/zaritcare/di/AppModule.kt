@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.google.firebase.auth.FirebaseAuth
 import com.zaritcare.data.EmotionRepository
 import com.zaritcare.data.room.ZaritcareDb
 import com.zaritcare.data.room.activity.ActivityDao
@@ -27,6 +28,10 @@ private val Context.dataStore by preferencesDataStore(name = USER_PREFERENCES_NA
 @Module
 @InstallIn(SingletonComponent::class)
 class AppModule {
+    @Singleton
+    @Provides
+    fun provideFirebaseAuth() = FirebaseAuth.getInstance()
+
     @Provides
     @Singleton
     fun provideAppSettingsDataStore(@ApplicationContext context: Context): DataStore<Preferences> = context.dataStore

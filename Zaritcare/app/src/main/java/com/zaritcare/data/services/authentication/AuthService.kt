@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.zaritcare.R
 import com.zaritcare.data.services.authentication.methods.AuthProviderStrategy
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -17,9 +18,12 @@ class AuthService @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     @ApplicationContext private val context: Context
 ) {
-    fun checkUserLoggedIn(): Boolean = firebaseAuth.currentUser != null
+    fun isUserLoggedIn(): Boolean = firebaseAuth.currentUser != null
+
+    fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
 
     fun logOut() {
+        firebaseAuth.signOut()
         getGoogleAccount().signOut()
     }
 

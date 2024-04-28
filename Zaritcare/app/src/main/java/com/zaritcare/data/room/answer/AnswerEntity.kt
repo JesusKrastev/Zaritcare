@@ -21,5 +21,5 @@ data class AnswerEntity(
     @ColumnInfo(name = "type")
     val type: String,
     @ColumnInfo(name = "user")
-    val user: Int
+    val user: String
 )

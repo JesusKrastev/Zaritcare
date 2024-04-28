@@ -23,7 +23,7 @@ interface AnswerDao {
     @Query("SELECT * FROM answers")
     suspend fun get(): List<AnswerEntity>
     @Query("SELECT * FROM answers WHERE date = :date AND user = :user")
-    fun get(date: LocalDate, user: Int): Flow<List<AnswerEntity>>
+    fun get(date: LocalDate, user: String): Flow<List<AnswerEntity>>
     @Query("SELECT * FROM answers WHERE id = :id")
     suspend fun get(id: Int): AnswerEntity
 }

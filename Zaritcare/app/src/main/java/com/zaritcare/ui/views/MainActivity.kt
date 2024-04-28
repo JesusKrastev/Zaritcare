@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import com.zaritcare.data.SettingsRepository
 import com.zaritcare.ui.features.login.LoginScreen
-import com.zaritcare.ui.features.register.RegisterScreen
 import com.zaritcare.ui.features.splashscreen.SplashScreen
 import com.zaritcare.ui.navigation.ZaritcareNavHost
 import com.zaritcare.ui.theme.ZaritcareTheme

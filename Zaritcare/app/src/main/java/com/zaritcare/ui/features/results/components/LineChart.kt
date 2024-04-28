@@ -128,35 +128,35 @@ fun LineChartPreview() {
             question = 1,
             answer = "5",
             category = Category.BIENESTAR,
-            user = 1
+            user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 2,
             question = 2,
             answer = "7",
             category = Category.BIENESTAR,
-            user = 1
+            user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 3,
             question = 3,
             answer = "3",
             category = Category.BIENESTAR,
-            user = 1
+            user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 4,
             question = 4,
             answer = "8",
             category = Category.BIENESTAR,
-            user = 1
+            user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 5,
             question = 5,
             answer = "2",
             category = Category.BIENESTAR,
-            user = 1
+            user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         )
     )
 

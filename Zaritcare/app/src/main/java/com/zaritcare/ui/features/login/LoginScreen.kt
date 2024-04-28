@@ -15,8 +15,12 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,8 +33,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.zaritcare.R
+import com.zaritcare.ui.composables.CoroutineManagementSnackBar
+import com.zaritcare.ui.composables.SnackbarCommon
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
+import com.zaritcare.utilities.device.registerGoogleLauncher
+import com.zaritcare.utilities.error_handling.InformationStateUiState
+import kotlinx.coroutines.delay
 
 @Composable
 fun ImageLogo(
@@ -77,68 +86,20 @@ fun LoginButton(
 }
 
 @Composable
-fun Header(
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        ImageLogo(
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-                .size(width = 200.dp, height = 150.dp),
-            image = painterResource(id = R.drawable.logo)
-        )
-        TextTile(
-            title = "Iniciar sesión"
-        )
-        Text(
-            text = "Bienvenid@ de nuevo, te echábamos de menos.",
-            fontSize = MaterialTheme.typography.bodyMedium.fontSize,
-            color = Color(0xFF979797)
-        )
-    }
-}
-
-@Composable
-fun Content(
-    modifier: Modifier = Modifier,
-    onClickLogin: () -> Unit,
-    onClickRegister: () -> Unit
-) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        LoginButton(
-            onClick = onClickLogin
-        )
-        TextBody(
-            modifier = Modifier.clickable { onClickRegister() },
-            text = buildAnnotatedString {
-                append("¿No tienes una cuenta? ")
-                withStyle(
-                    style = SpanStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    )
-                ) {
-                    append("Regístrarse")
-                }
-            }
-        )
-    }
-}
-
-@Composable
 fun MainContent(
     modifier: Modifier = Modifier,
-    onClickLogin: () -> Unit,
-    onClickRegister: () -> Unit
+    onLoginEvent: (LoginEvent) -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToSplash: () -> Unit
 ) {
+    val googleLauncher = registerGoogleLauncher(
+        signInWithGoogle = { idToken, onNavigateToResultsScreen, onNavigateToSplashScreen ->
+            onLoginEvent(LoginEvent.OnSignInWithGoogle(idToken, onNavigateToResultsScreen, onNavigateToSplashScreen))
+        },
+        onNavigateToResults = onNavigateToResults,
+        onNavigateToSplash = onNavigateToSplash
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -146,27 +107,52 @@ fun MainContent(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Header()
-        Spacer(modifier = Modifier.size(16.dp))
-        Content(
-            onClickLogin = onClickLogin,
-            onClickRegister = onClickRegister
+        ImageLogo(
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .size(width = 200.dp, height = 150.dp),
+            image = painterResource(id = R.drawable.logo)
+        )
+        Spacer(modifier = Modifier.size(48.dp))
+        LoginButton(
+            onClick = {
+                onLoginEvent(LoginEvent.OnClickSignInWithGoogle(googleLauncher))
+            }
         )
     }
 }
 
 @Composable
 fun LoginScreen(
-    onClickLogin: () -> Unit,
-    onClickRegister: () -> Unit
+    informationState: InformationStateUiState,
+    onLoginEvent: (LoginEvent) -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToSplash: () -> Unit
 ) {
+    LaunchedEffect(key1 = Unit) {
+        onLoginEvent(LoginEvent.OnCheckUserLoggedIn(onNavigateToResults))
+    }
+
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+
+    CoroutineManagementSnackBar(
+        snackbarHostState = snackbarHostState,
+        informationState = informationState
+    )
+
     Scaffold(
         content = { paddingValues ->
             MainContent(
                 modifier = Modifier.padding(paddingValues),
-                onClickLogin = onClickLogin,
-                onClickRegister = onClickRegister
+                onLoginEvent = onLoginEvent,
+                onNavigateToResults = onNavigateToResults,
+                onNavigateToSplash = onNavigateToSplash
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) {
+                SnackbarCommon(informationState = informationState)
+            }
         }
     )
 }

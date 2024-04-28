@@ -3,16 +3,36 @@ package com.zaritcare.utilities.images
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Canvas
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Base64
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import java.io.ByteArrayOutputStream
 
 class Images {
     companion object {
+        @Composable
+        fun composeToBitmap(composable: @Composable () -> Unit): ImageBitmap {
+            val context = LocalContext.current
+            val view = ComposeView(context).apply {
+                setContent {
+                    composable()
+                }
+            }
+
+            val bitmap = Bitmap.createBitmap(500, 1000, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(bitmap)
+            view.draw(canvas)
+
+            return bitmap.asImageBitmap()
+        }
+
         fun base64ToAndroidBitmap(base64ImageString: String): Bitmap =
         Base64.decode(base64ImageString, Base64.DEFAULT).let { decodedString ->
             BitmapFactory.decodeByteArray(decodedString, 0, decodedString!!.size)

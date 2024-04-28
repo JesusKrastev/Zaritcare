@@ -38,5 +38,5 @@ class AnswerRepository @Inject constructor(
         dao.get(id).toAnswer()
     }
 
-    fun get(date: LocalDate, user: Int): Flow<List<Answer>> = dao.get(date, user).map { it.map { it.toAnswer() } }
+    fun get(date: LocalDate, user: String): Flow<List<Answer>> = dao.get(date, user).map { it.map { it.toAnswer() } }
 }

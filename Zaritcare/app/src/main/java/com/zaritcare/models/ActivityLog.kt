@@ -6,5 +6,5 @@ data class ActivityLog(
     val id: Int,
     val activity: Int,
     val date: LocalDate,
-    val user: Int
+    val user: String
 )

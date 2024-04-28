@@ -16,5 +16,5 @@ data class ActivityLogEntity(
     @ColumnInfo(name = "date")
     val date: LocalDate,
     @ColumnInfo(name = "user")
-    val user: Int
+    val user: String
 )

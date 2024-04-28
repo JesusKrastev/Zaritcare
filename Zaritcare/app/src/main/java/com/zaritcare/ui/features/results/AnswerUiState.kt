@@ -14,7 +14,7 @@ data class AnswerUiState(
     val date: LocalDate = LocalDate.now(),
     val category: Category,
     val type: Type = Type.RANGO,
-    val user: Int
+    val user: String
 )
 
 fun Answer.toAnswerUiState(): AnswerUiState =

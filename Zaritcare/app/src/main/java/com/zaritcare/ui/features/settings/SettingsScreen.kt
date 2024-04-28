@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Contrast
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -37,6 +39,7 @@ fun TextProperty(
     icon: ImageVector,
     description: String?,
     text: String,
+    color: Color,
     onClick: () -> Unit
 ) {
     Row(
@@ -45,11 +48,14 @@ fun TextProperty(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            tint = MaterialTheme.colorScheme.onBackground,
+            tint = color,
             imageVector = icon,
             contentDescription = description
         )
-        TextBody(text = text)
+        TextBody(
+            text = text,
+            color = color
+        )
     }
 }
 
@@ -89,9 +95,11 @@ fun Properties(
     settingsUiState: SettingsUiState,
     onChangeTheme: (String) -> Unit,
     onClickPrivacyPolicies: () -> Unit,
-    onClickTermsAndConditions: () -> Unit
+    onClickTermsAndConditions: () -> Unit,
+    onClickLogout: () -> Unit
 ) {
     val context: Context = LocalContext.current
+    val textColor: Color = MaterialTheme.colorScheme.onBackground
     @Immutable
     data class DropdownMenuPropertyUiState(
         val label: String = "",
@@ -104,6 +112,7 @@ fun Properties(
     @Immutable
     data class TextPropertyUiState(
         val icon: ImageVector = Icons.Filled.Settings,
+        val color: Color = textColor,
         val text: String = "",
         val description: String? = null,
         val onClick: () -> Unit
@@ -131,6 +140,13 @@ fun Properties(
             icon = Icons.Filled.Info,
             description = "terms",
             onClick = onClickTermsAndConditions
+        ),
+        TextPropertyUiState(
+            text = "Cerrar sesión",
+            color = Color(0xFFDC3C3C),
+            icon = Icons.Filled.Logout,
+            description = "logout",
+            onClick = onClickLogout
         )
     )
 
@@ -156,7 +172,8 @@ fun Properties(
                 icon = iconWithText.icon,
                 description = iconWithText.description,
                 text = iconWithText.text,
-                onClick = iconWithText.onClick
+                onClick = iconWithText.onClick,
+                color = iconWithText.color
             )
         }
     }
@@ -167,9 +184,8 @@ fun MainContent(
     modifier: Modifier = Modifier,
     themes: List<String>,
     settingsUiState: SettingsUiState,
-    onChangeTheme: (String) -> Unit,
-    onClickPrivacyPolicies: () -> Unit,
-    onClickTermsAndConditions: () -> Unit
+    onSettingsEvent: (SettingsEvent) -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
     Column(
         modifier = modifier.padding(16.dp)
@@ -177,9 +193,10 @@ fun MainContent(
         Properties(
             themes = themes,
             settingsUiState = settingsUiState,
-            onChangeTheme = onChangeTheme,
-            onClickPrivacyPolicies = onClickPrivacyPolicies,
-            onClickTermsAndConditions = onClickTermsAndConditions
+            onChangeTheme = { onSettingsEvent(SettingsEvent.OnChangeTheme(it)) },
+            onClickPrivacyPolicies = { onSettingsEvent(SettingsEvent.OnClickPrivacyPolicies) },
+            onClickTermsAndConditions = { onSettingsEvent(SettingsEvent.OnClickTermsAndConditions) },
+            onClickLogout = { onSettingsEvent(SettingsEvent.OnClickLogout(onNavigateToLogin)) }
         )
     }
 }
@@ -193,7 +210,8 @@ fun SettingsScreen(
     onNavigateToResults: () -> Unit,
     onNavigateToActivities: () -> Unit,
     onNavigateToSettings: () -> Unit,
-    onNavigateToTips: () -> Unit
+    onNavigateToTips: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -202,9 +220,8 @@ fun SettingsScreen(
                 modifier = modifier.padding(paddingValues = paddingValues),
                 themes = themes,
                 settingsUiState = settingsUiState,
-                onChangeTheme = { onSettingsEvent(SettingsEvent.OnChangeTheme(it)) },
-                onClickPrivacyPolicies = { onSettingsEvent(SettingsEvent.OnClickPrivacyPolicies) },
-                onClickTermsAndConditions = { onSettingsEvent(SettingsEvent.OnClickTermsAndConditions) }
+                onSettingsEvent = onSettingsEvent,
+                onNavigateToLogin = onNavigateToLogin
             )
         },
         bottomBar = {

@@ -9,5 +9,5 @@ data class Answer(
     val date: LocalDate,
     val category: String,
     val type: String,
-    val user: Int
+    val user: String
 )

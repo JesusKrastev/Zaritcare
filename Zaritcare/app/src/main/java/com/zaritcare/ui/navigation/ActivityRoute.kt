@@ -1,5 +1,6 @@
 package com.zaritcare.ui.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -21,7 +22,6 @@ fun NavController.navigateToActivity(
 }
 
 fun NavGraphBuilder.activityScreen(
-    vm: ActivityViewModel,
     onNavigateToResults: () -> Unit,
     onNavigateToActivities: () -> Unit,
     onNavigateToSettings: () -> Unit,
@@ -35,7 +35,9 @@ fun NavGraphBuilder.activityScreen(
             }
         )
     ) { backStackEntry ->
+        val vm: ActivityViewModel = hiltViewModel<ActivityViewModel>()
         val activityId: Int? = backStackEntry.arguments?.getInt(ActivityParameterName, -1)
+
         if (activityId != null
             && activityId != -1
         ) {

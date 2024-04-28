@@ -4,4 +4,5 @@ sealed interface SettingsEvent {
     data class OnChangeTheme(val theme: String): SettingsEvent
     data object OnClickPrivacyPolicies : SettingsEvent
     data object OnClickTermsAndConditions : SettingsEvent
+    data class OnClickLogout(val onNavigateToLogin: () -> Unit) : SettingsEvent
 }

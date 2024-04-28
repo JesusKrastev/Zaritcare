@@ -1,5 +1,6 @@
 package com.zaritcare.ui.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -14,7 +15,6 @@ fun NavController.navigateToQuestionary(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.questionaryScreen(
-    vm: QuestionaryViewModel,
     onNavigateToResults: () -> Unit,
     onNavigateToActivities: () -> Unit,
     onNavigateToSettings: () -> Unit,
@@ -24,6 +24,8 @@ fun NavGraphBuilder.questionaryScreen(
         route = QuestionaryGraphRoute,
         arguments = emptyList()
     ) {
+        val vm: QuestionaryViewModel = hiltViewModel<QuestionaryViewModel>()
+
         QuestionaryScreen(
             selectedIndex = vm.selectedTab,
             onQuestionaryEvent = vm::onQuestionaryEvent,

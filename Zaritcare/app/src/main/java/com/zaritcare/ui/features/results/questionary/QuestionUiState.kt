@@ -37,5 +37,5 @@ fun QuestionUiState.toAnswer(): Answer =
         category = category.name,
         type = type.name,
         date = LocalDate.now(),
-        user = 1
+        user = ""
     )

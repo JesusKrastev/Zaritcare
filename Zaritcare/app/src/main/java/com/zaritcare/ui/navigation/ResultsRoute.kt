@@ -1,5 +1,6 @@
 package com.zaritcare.ui.navigation
 
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -14,7 +15,6 @@ fun NavController.navigateToResults(navOptions: NavOptions? = null) {
 }
 
 fun NavGraphBuilder.resultsScreen(
-    vm: ResultsViewModel,
     onNavigateToQuestionary: () -> Unit,
     onNavigateToResults: () -> Unit,
     onNavigateToActivities: () -> Unit,
@@ -25,6 +25,8 @@ fun NavGraphBuilder.resultsScreen(
         route = ResultsGraphRoute,
         arguments = emptyList()
     ) {
+        val vm: ResultsViewModel = hiltViewModel<ResultsViewModel>()
+
         ResultsScreen(
             answersByCategory = vm.answersByCategory,
             onClickStart = onNavigateToQuestionary,

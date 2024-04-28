@@ -18,7 +18,8 @@ fun NavGraphBuilder.settingsScreen(
     onNavigateToResults: () -> Unit,
     onNavigateToActivities: () -> Unit,
     onNavigateToSettings: () -> Unit,
-    onNavigateToTips: () -> Unit
+    onNavigateToTips: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
     composable(
         route = SettingsGraphRoute,
@@ -31,7 +32,8 @@ fun NavGraphBuilder.settingsScreen(
             onNavigateToResults = onNavigateToResults,
             onNavigateToActivities = onNavigateToActivities,
             onNavigateToSettings = onNavigateToSettings,
-            onNavigateToTips = onNavigateToTips
+            onNavigateToTips = onNavigateToTips,
+            onNavigateToLogin = onNavigateToLogin
         )
     }
 }

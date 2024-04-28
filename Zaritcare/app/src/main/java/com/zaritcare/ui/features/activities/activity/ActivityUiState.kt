@@ -30,5 +30,5 @@ fun ActivityUiState.toActivityLog(): ActivityLog =
         id = 0,
         activity = id,
         date = LocalDate.now(),
-        user = 1
+        user = ""
     )

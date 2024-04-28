@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zaritcare.data.SettingsRepository
+import com.zaritcare.data.services.authentication.AuthServiceImplementation
 import com.zaritcare.models.SettingsValues
 import com.zaritcare.ui.features.settings.SettingsEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val settingsRepository: SettingsRepository
+    private val settingsRepository: SettingsRepository,
+    private val authService: AuthServiceImplementation
 ): ViewModel() {
     var themes by mutableStateOf(SettingsValues.themes)
     var userSettingsState: SettingsUiState? by mutableStateOf(SettingsUiState())
@@ -49,6 +51,10 @@ class SettingsViewModel @Inject constructor(
             }
             is SettingsEvent.OnClickTermsAndConditions -> {
 
+            }
+            is SettingsEvent.OnClickLogout -> {
+                authService.logOut()
+                event.onNavigateToLogin()
             }
         }
     }

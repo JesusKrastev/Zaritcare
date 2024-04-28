@@ -4,6 +4,7 @@ import android.util.Log
 import com.zaritcare.data.services.authentication.methods.AuthProviderStrategy
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthServiceImplementation @Inject constructor(
@@ -11,7 +12,9 @@ class AuthServiceImplementation @Inject constructor(
 ) {
     private val logTag: String = "AuthServiceImplementation"
 
-    fun checkUserLoggedIn(): Boolean = authService.checkUserLoggedIn()
+    fun isUserLoggedIn(): Boolean = authService.isUserLoggedIn()
+
+    fun getCurrentUser(): FirebaseUser? = authService.getCurrentUser()
 
     fun logOut() = authService.logOut()
 
@@ -30,5 +33,11 @@ class AuthServiceImplementation @Inject constructor(
         val credential = authService.getCredential(idToken, authProvider)
 
         return authProvider.signIn(credential = credential)
+    }
+
+    suspend fun isNewUser(idToken: String, authProvider: AuthProviderStrategy): Boolean {
+        val credential = authService.getCredential(idToken, authProvider)
+
+        return credential.await().additionalUserInfo?.isNewUser ?: false
     }
 }

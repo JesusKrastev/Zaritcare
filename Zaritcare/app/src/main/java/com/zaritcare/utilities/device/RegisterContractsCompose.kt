@@ -8,14 +8,21 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.provider.ContactsContract
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
@@ -68,6 +75,28 @@ fun registerImageSelectorWithGetContent(
     return rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
             onChangePhoto(context.toImageBitmap(uri))
+        }
+    }
+}
+
+@Composable
+fun registerGoogleLauncher(
+    signInWithGoogle: (idToken: String, onNavigateToResults: () -> Unit, onNavigateToSplash: () -> Unit) -> Unit,
+    onNavigateToResults: () -> Unit,
+    onNavigateToSplash: () -> Unit
+): ManagedActivityResultLauncher<Intent, ActivityResult> {
+    return rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)!!
+                signInWithGoogle(account.idToken!!, onNavigateToResults, onNavigateToSplash)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.d("GoogleLauncher", "Error: ${e.message}")
+            }
+        } else {
+            Log.d("GoogleLauncher", "Error: ${result.resultCode}")
         }
     }
 }

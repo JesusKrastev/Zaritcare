@@ -11,12 +11,14 @@ import androidx.lifecycle.viewModelScope
 import com.zaritcare.data.AnswerRepository
 import com.zaritcare.data.EmotionRepository
 import com.zaritcare.data.QuestionRepository
+import com.zaritcare.data.services.authentication.AuthServiceImplementation
 import com.zaritcare.models.Category
 import com.zaritcare.models.Type
 import com.zaritcare.ui.features.results.questionary.wellbeingform.EmotionUiState
 import com.zaritcare.ui.features.results.questionary.wellbeingform.toEmotionUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -24,13 +26,15 @@ import javax.inject.Inject
 class QuestionaryViewModel @Inject constructor(
     private val questionRepository: QuestionRepository,
     private val emotionRepository: EmotionRepository,
-    private val answerRepository: AnswerRepository
+    private val answerRepository: AnswerRepository,
+    private val authService: AuthServiceImplementation
 ): ViewModel() {
     private var questionsState: List<QuestionUiState> by mutableStateOf(emptyList())
     var emotionsState: List<EmotionUiState> by mutableStateOf(emptyList())
     var categoriesState: List<String> by mutableStateOf(Category.values().map { it.name })
     val questionsByCategoryState: List<QuestionUiState> by derivedStateOf { questionsState.filter { it.category.name == categoriesState[selectedTab] } }
     var selectedTab by mutableIntStateOf(0)
+    private var user by mutableStateOf("")
 
     suspend fun getQuestions() = questionRepository.get().map { question -> question.toQuestionUiState() }
     suspend fun getEmotions() = emotionRepository.get().map { emotion -> emotion.toEmotionUiState() }
@@ -56,14 +60,16 @@ class QuestionaryViewModel @Inject constructor(
         }
     }
 
-    fun clearQuestionaryState() {
-        loadQuestions()
-        loadEmotions()
+    fun loadUser() {
+        runBlocking {
+            user = authService.getCurrentUser()?.uid ?: ""
+        }
     }
 
     init {
         loadQuestions()
         loadEmotions()
+        loadUser()
     }
 
     fun onQuestionaryEvent(event: QuestionaryEvent) {
@@ -74,9 +80,8 @@ class QuestionaryViewModel @Inject constructor(
             is QuestionaryEvent.OnClickSave -> {
                 viewModelScope.launch {
                     val todaysDate: LocalDate = LocalDate.now()
-                    questionsState.map { answerRepository.insert(it.toAnswer().copy(date = todaysDate)) }
+                    questionsState.map { answerRepository.insert(it.toAnswer().copy(date = todaysDate, user = user)) }
                 }
-                clearQuestionaryState()
                 event.onNavigateToResults()
             }
             is QuestionaryEvent.OnChangeAnswer -> {

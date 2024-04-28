@@ -7,25 +7,25 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.kinoyamboladmin.ui.features.settings.SettingsViewModel
+import com.zaritcare.data.services.authentication.AuthServiceImplementation
 import com.zaritcare.ui.features.activities.ActivitiesViewModel
 import com.zaritcare.ui.features.activities.activity.ActivityViewModel
 import com.zaritcare.ui.features.activities.introactivity.IntroActivityViewModel
+import com.zaritcare.ui.features.login.LoginViewModel
 import com.zaritcare.ui.features.results.ResultsViewModel
 import com.zaritcare.ui.features.results.questionary.QuestionaryViewModel
 import com.zaritcare.ui.features.tips.TipsViewModel
+import javax.inject.Inject
 
 @Composable
 fun ZaritcareNavHost(
     modifier: Modifier = Modifier
 ) {
     val navController: NavHostController = rememberNavController()
-    val questionaryVm: QuestionaryViewModel = hiltViewModel<QuestionaryViewModel>()
     val settingsVm: SettingsViewModel = hiltViewModel<SettingsViewModel>()
     val tipsVm: TipsViewModel = hiltViewModel<TipsViewModel>()
-    val activitiesVm: ActivitiesViewModel = hiltViewModel<ActivitiesViewModel>()
     val introActivitiesVm: IntroActivityViewModel = hiltViewModel<IntroActivityViewModel>()
-    val activityVm: ActivityViewModel = hiltViewModel<ActivityViewModel>()
-    val resultsVm: ResultsViewModel = hiltViewModel<ResultsViewModel>()
+    val loginVm: LoginViewModel = hiltViewModel<LoginViewModel>()
 
     NavHost(
         modifier = modifier,
@@ -33,19 +33,12 @@ fun ZaritcareNavHost(
         startDestination = LoginGraphRoute
     ) {
         loginScreen(
-            onClickLogin = {
+            vm = loginVm,
+            onNavigateToResults = {
                 navController.navigateToResults()
             },
-            onClickRegister = {
-                navController.navigateToRegister()
-            }
-        )
-        registerScreen(
-            onRegisterClick = {
+            onNavigateToSplash = {
                 navController.navigateToSplash()
-            },
-            onLoginClick = {
-                navController.navigateToLogin()
             }
         )
         splashScreen(
@@ -54,7 +47,6 @@ fun ZaritcareNavHost(
             }
         )
         questionaryScreen(
-            vm = questionaryVm,
             onNavigateToResults = {
                 navController.navigateToResults()
             },
@@ -69,7 +61,6 @@ fun ZaritcareNavHost(
             }
         )
         resultsScreen(
-            vm = resultsVm,
             onNavigateToQuestionary = {
                 navController.navigateToQuestionary()
             },
@@ -99,6 +90,9 @@ fun ZaritcareNavHost(
             },
             onNavigateToActivities = {
                 navController.navigateToActivities()
+            },
+            onNavigateToLogin = {
+                navController.navigateToLogin()
             }
         )
         tipsScreen(
@@ -117,7 +111,6 @@ fun ZaritcareNavHost(
             }
         )
         activitiesScreen(
-            vm = activitiesVm,
             onNavigateToActivity = {
                 navController.navigateToActivity(it)
             },
@@ -156,7 +149,6 @@ fun ZaritcareNavHost(
             }
         )
         activityScreen(
-            vm = activityVm,
             onNavigateToActivities = {
                 navController.navigateToActivities()
             },

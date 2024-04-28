@@ -5,24 +5,29 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.zaritcare.ui.features.login.LoginScreen
+import com.zaritcare.ui.features.login.LoginViewModel
 
 const val LoginGraphRoute = "login"
 
 fun NavController.navigateToLogin(navOptions: NavOptions? = null) {
+    this.popBackStack()
     this.navigate(LoginGraphRoute, navOptions)
 }
 
 fun NavGraphBuilder.loginScreen(
-    onClickLogin: () -> Unit,
-    onClickRegister: () -> Unit
+    vm: LoginViewModel,
+    onNavigateToResults: () -> Unit,
+    onNavigateToSplash: () -> Unit
 ) {
     composable(
         route = LoginGraphRoute,
         arguments = emptyList()
     ) {
         LoginScreen(
-            onClickLogin = onClickLogin,
-            onClickRegister = onClickRegister
+            onLoginEvent = vm::onLoginEvent,
+            informationState = vm.informationState,
+            onNavigateToResults = onNavigateToResults,
+            onNavigateToSplash = onNavigateToSplash
         )
     }
 }

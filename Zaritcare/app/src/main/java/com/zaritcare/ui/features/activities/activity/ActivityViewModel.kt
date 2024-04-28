@@ -10,10 +10,14 @@ import com.zaritcare.R
 import com.zaritcare.data.ActivityLogRepository
 import com.zaritcare.data.ActivityRepository
 import com.zaritcare.data.SongRepository
+import com.zaritcare.data.services.authentication.AuthServiceImplementation
 import com.zaritcare.models.Activity
 import com.zaritcare.ui.features.activities.AudioPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +26,8 @@ class ActivityViewModel @Inject constructor(
     private val songRepository: SongRepository,
     private val songsAudioPlayer: AudioPlayer,
     private val soundsAudioPlayer: AudioPlayer,
-    private val activityLogRepository: ActivityLogRepository
+    private val activityLogRepository: ActivityLogRepository,
+    private val authService: AuthServiceImplementation
 ) : ViewModel() {
     class ActivityViewModelException(message: String) : Exception(message)
 
@@ -32,7 +37,7 @@ class ActivityViewModel @Inject constructor(
         private set
     var playingSongState: SongUiState? by mutableStateOf(null)
         private set
-
+    private var user: String by mutableStateOf("")
     private suspend fun getSongs(): List<SongUiState> =
         songRepository.get().map { it.toSongUiState() }
 
@@ -46,8 +51,15 @@ class ActivityViewModel @Inject constructor(
         }
     }
 
+    private fun loadUser() {
+        runBlocking {
+            user = authService.getCurrentUser()?.uid ?: ""
+        }
+    }
+
     init {
         loadSongs()
+        loadUser()
     }
 
     fun setActivityState(activityId: Int) {
@@ -85,7 +97,7 @@ class ActivityViewModel @Inject constructor(
             }
             is ActivityEvent.OnClickFinished -> {
                 viewModelScope.launch {
-                    activityLogRepository.insert(activityState.toActivityLog())
+                    activityLogRepository.insert(activityState.toActivityLog().copy(user = user))
                 }
                 event.onNavigateToActivities()
             }
