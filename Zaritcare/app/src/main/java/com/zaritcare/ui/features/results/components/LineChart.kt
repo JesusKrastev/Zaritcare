@@ -37,6 +37,7 @@ import com.zaritcare.ui.theme.ZaritcareTheme
 
 @Composable
 fun LineChartWidget(
+    modifier: Modifier = Modifier,
     data: List<AnswerUiState>,
     title: String,
     range: ClosedFloatingPointRange<Float> = 0f..10f
@@ -106,6 +107,7 @@ fun LineChartWidget(
     )
 
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {

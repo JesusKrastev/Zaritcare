@@ -5,18 +5,41 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.ImageDecoder
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.util.Base64
+import android.os.Environment
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import android.graphics.pdf.PdfDocument
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.util.Date
 
 class Images {
     companion object {
+        fun convertHardwareBitmapToSoftwareBitmap(imageBitmap: ImageBitmap?): ImageBitmap? {
+            return try {
+                val androidBitmap = imageBitmap!!.asAndroidBitmap()
+
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                androidBitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+                val byteArray = byteArrayOutputStream.toByteArray()
+
+                BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size).asImageBitmap()
+            } catch (e: Exception) {
+                Log.e("Images", "Error converting ImageBitmap to Bitmap: $e")
+                null
+            }
+        }
+
         @Composable
         fun composeToBitmap(composable: @Composable () -> Unit): ImageBitmap {
             val context = LocalContext.current

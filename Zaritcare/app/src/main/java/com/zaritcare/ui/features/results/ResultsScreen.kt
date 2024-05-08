@@ -3,29 +3,40 @@ package com.zaritcare.ui.features.results
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Picture
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithCache
@@ -38,15 +49,25 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.zaritcare.R
+import com.zaritcare.models.Answer
 import com.zaritcare.models.Category
 import com.zaritcare.models.Type
+import com.zaritcare.ui.composables.CoroutineManagementSnackBar
+import com.zaritcare.ui.composables.SnackbarCommon
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
 import com.zaritcare.ui.features.components.ZaritcareNavBar
 import com.zaritcare.ui.features.results.components.LineChartWidget
 import com.zaritcare.ui.features.tips.Content
 import com.zaritcare.ui.theme.ZaritcareTheme
+import com.zaritcare.utilities.error_handling.InformationStateUiState
 import com.zaritcare.utilities.images.Images
+import com.zaritcare.utilities.images.Images.Companion.convertHardwareBitmapToSoftwareBitmap
+import com.zaritcare.utilities.images.saveAsPdf
+import dev.shreyaspatil.capturable.capturable
+import dev.shreyaspatil.capturable.controller.CaptureController
+import dev.shreyaspatil.capturable.controller.rememberCaptureController
+import kotlinx.coroutines.launch
 
 @Composable
 fun EmptyResultsMessage(
@@ -134,28 +155,76 @@ fun SelectedEmotionResult(
 }
 
 @Composable
+fun ButtonDownloadPDF(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    ExtendedFloatingActionButton(
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        onClick = onClick
+    ) {
+        Text(text ="Descargar PDF")
+        Icon(
+            imageVector = Icons.Filled.Download,
+            contentDescription = "download"
+        )
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalComposeApi::class)
+@Composable
+fun LineChartWidgetResult(
+    modifier: Modifier = Modifier,
+    onClickDownloadPDF: (CaptureController) -> Unit,
+    category: Category,
+    answers: List<AnswerUiState>
+) {
+    val captureController: CaptureController = rememberCaptureController()
+    val title: String = category.name.lowercase().replaceFirstChar { it.uppercase() }
+    val coroutineScope = rememberCoroutineScope()
+
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        LineChartWidget(
+            modifier = Modifier.capturable(captureController),
+            data = answers,
+            title = "Escala de $title",
+            range = category.range
+        )
+        ButtonDownloadPDF(
+            onClick = {
+                onClickDownloadPDF(captureController)
+            }
+        )
+    }
+}
+
+@Composable
 fun ResultsByCategory(
     modifier: Modifier = Modifier,
-    answersByCategory: Map<Category, List<AnswerUiState>>
+    answersByCategory: Map<Category, List<AnswerUiState>>,
+    onClickDownloadPDF: (CaptureController) -> Unit
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(64.dp)
     ) {
         answersByCategory.forEach { (category, answers) ->
             answers.groupBy { it.type }.forEach { (type, answers) ->
                 when (type) {
                     Type.RANGO -> {
-                        val title: String =
-                            category.name.lowercase().replaceFirstChar { it.uppercase() }
-                        LineChartWidget(
-                            data = answers,
-                            title = "Escala de $title",
-                            range = category.range
+                        LineChartWidgetResult(
+                            category = category,
+                            answers = answers,
+                            onClickDownloadPDF = onClickDownloadPDF
                         )
                     }
-
                     Type.EMOCION -> {
                         answers.forEach { answer ->
                             SelectedEmotionResult(
@@ -174,7 +243,8 @@ fun ResultsByCategory(
 fun Content(
     modifier: Modifier = Modifier,
     answersByCategory: Map<Category, List<AnswerUiState>>,
-    onClickStart: () -> Unit
+    onClickStart: () -> Unit,
+    onResultsEvent: (ResultsEvent) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -191,7 +261,10 @@ fun Content(
         } else {
             ResultsByCategory(
                 modifier = Modifier.padding(16.dp),
-                answersByCategory = answersByCategory
+                answersByCategory = answersByCategory,
+                onClickDownloadPDF = { captureController ->
+                    onResultsEvent(ResultsEvent.OnClickDownloadPDF(captureController))
+                }
             )
         }
     }
@@ -202,18 +275,28 @@ fun ResultsScreen(
     modifier: Modifier = Modifier,
     answersByCategory: Map<Category, List<AnswerUiState>>,
     onClickStart: () -> Unit,
+    informationState: InformationStateUiState,
+    onResultsEvent: (ResultsEvent) -> Unit,
     onNavigateToResults: () -> Unit,
     onNavigateToActivities: () -> Unit,
     onNavigateToSettings: () -> Unit,
     onNavigateToTips: () -> Unit
 ) {
+    val snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+
+    CoroutineManagementSnackBar(
+        snackbarHostState = snackbarHostState,
+        informationState = informationState
+    )
+
     Scaffold(
         modifier = modifier,
         content = { paddingValues ->
             Content(
                 modifier = Modifier.padding(paddingValues = paddingValues),
                 answersByCategory = answersByCategory,
-                onClickStart = onClickStart
+                onClickStart = onClickStart,
+                onResultsEvent = onResultsEvent
             )
         },
         bottomBar = {
@@ -224,6 +307,11 @@ fun ResultsScreen(
                 onNavigateToSettings = onNavigateToSettings,
                 selectedPage = 0
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState) {
+                SnackbarCommon(informationState = informationState)
+            }
         }
     )
 }
@@ -271,7 +359,9 @@ fun ResultsFormScreenPreview() {
                 onNavigateToResults = {},
                 onNavigateToActivities = {},
                 onNavigateToSettings = {},
-                onNavigateToTips = {}
+                onNavigateToTips = {},
+                onResultsEvent = { },
+                informationState = InformationStateUiState.Hidden()
             )
         }
     }

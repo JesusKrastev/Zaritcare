@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ButtonDefaults
@@ -24,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,6 +51,10 @@ fun CoroutineManagementSnackBar(
                 duration = SnackbarDuration.Indefinite
             )
             is InformationStateUiState.Hidden -> snackbarHostState.currentSnackbarData?.dismiss()
+            is InformationStateUiState.Success -> snackbarHostState.showSnackbar(
+                message = informationState.message,
+                duration = SnackbarDuration.Short
+            )
         }
     }
 }
@@ -91,7 +97,7 @@ fun SnackbarError(
 @Composable
 fun SnackbarInfo(
     informationMessage: String,
-    showProgress: Boolean = false
+    showProgress: Boolean = false,
 ) {
     Snackbar(
         modifier = Modifier.padding(bottom = 16.dp)
@@ -101,7 +107,7 @@ fun SnackbarInfo(
         ){
             Icon(
                 imageVector = Icons.Default.Info,
-                contentDescription = "information",
+                contentDescription = "Información",
                 modifier = Modifier.size(ButtonDefaults.IconSize),
             )
             Spacer(modifier = Modifier.size(8.dp))
@@ -112,11 +118,35 @@ fun SnackbarInfo(
                     contentAlignment = Alignment.CenterEnd
                 ) {
                     CircularProgressIndicator(
+                        modifier = Modifier.size(ButtonDefaults.IconSize),
                         color = MaterialTheme.colorScheme.onSecondary,
                         trackColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun SnackbarSuccess(
+    informationMessage: String,
+) {
+    Snackbar(
+        modifier = Modifier.padding(bottom = 16.dp),
+        containerColor = Color(0xFF57B159),
+        contentColor = Color.White
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Icon(
+                imageVector = Icons.Default.Check,
+                contentDescription = "success",
+                modifier = Modifier.size(ButtonDefaults.IconSize),
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+            Text(text = informationMessage)
         }
     }
 }
@@ -140,6 +170,11 @@ fun SnackbarCommon(
                 onDismissError = informationState.onDismiss
             )
         }
+        is InformationStateUiState.Success -> {
+            SnackbarSuccess(
+                informationMessage = informationState.message
+            )
+        }
         is InformationStateUiState.Hidden -> {
             // Doesn't show Snackbar in the SnackbarHost of the Scaffold
         }
@@ -161,4 +196,12 @@ fun SnackBarErrorPreview() {
 @Composable
 fun SnackBarInfoPreview() {
     SnackbarInfo(informationMessage = "Loading...", showProgress = true)
+}
+
+@Preview(
+    showBackground = true,
+)
+@Composable
+fun SnackBarSuccessPreview() {
+    SnackbarSuccess(informationMessage = "Saved successfully!")
 }

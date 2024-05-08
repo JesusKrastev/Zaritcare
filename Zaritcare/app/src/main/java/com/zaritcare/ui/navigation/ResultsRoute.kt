@@ -33,7 +33,9 @@ fun NavGraphBuilder.resultsScreen(
             onNavigateToResults = onNavigateToResults,
             onNavigateToActivities = onNavigateToActivities,
             onNavigateToSettings = onNavigateToSettings,
-            onNavigateToTips = onNavigateToTips
+            onNavigateToTips = onNavigateToTips,
+            informationState = vm.informationState,
+            onResultsEvent = vm::onResultsEvent
         )
     }
 }

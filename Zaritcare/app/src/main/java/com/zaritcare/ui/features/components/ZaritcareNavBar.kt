@@ -77,10 +77,10 @@ fun ZaritcareNavBar(
                         text = button.title
                     )
                 },
-                colors = NavigationBarItemDefaults.colors(
+                colors = if(selectedItem == index) NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
                     selectedTextColor = MaterialTheme.colorScheme.primary
-                ),
+                ) else NavigationBarItemDefaults.colors(),
                 selected = selectedItem == index,
                 onClick = {
                     button.onClick()

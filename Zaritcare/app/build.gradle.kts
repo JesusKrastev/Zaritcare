@@ -54,6 +54,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:protolite-well-known-types:18.0.0")
     val lottieVersion = "6.0.0"
     implementation ("com.airbnb.android:lottie-compose:$lottieVersion")
 
@@ -102,6 +103,9 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
+    // Compose capture
+    implementation ("dev.shreyaspatil:capturable:2.1.0")
 }
 
 
