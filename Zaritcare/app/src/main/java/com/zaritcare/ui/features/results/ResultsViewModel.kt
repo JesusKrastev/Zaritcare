@@ -12,6 +12,7 @@ import com.zaritcare.data.EmotionRepository
 import com.zaritcare.data.services.authentication.AuthServiceImplementation
 import com.zaritcare.models.Category
 import com.zaritcare.models.Type
+import com.zaritcare.ui.features.results.questionary.CategoryUiState
 import com.zaritcare.ui.features.results.questionary.wellbeingform.toEmotionUiState
 import com.zaritcare.utilities.error_handling.InformationStateUiState
 import com.zaritcare.utilities.images.Images
@@ -29,7 +30,7 @@ class ResultsViewModel @Inject constructor(
     private val emotionRepository: EmotionRepository,
     private val authService: AuthServiceImplementation
 ): ViewModel() {
-    var answersByCategory: Map<Category, List<AnswerUiState>> by mutableStateOf(hashMapOf())
+    var answersByCategory: Map<CategoryUiState, List<AnswerUiState>> by mutableStateOf(hashMapOf())
         private set
     private var user: String by mutableStateOf("")
     var informationState: InformationStateUiState by mutableStateOf(InformationStateUiState.Hidden())

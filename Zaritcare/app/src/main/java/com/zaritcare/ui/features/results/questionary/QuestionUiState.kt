@@ -9,7 +9,7 @@ import java.time.LocalDate
 data class QuestionUiState(
     val id: Int,
     val question: String,
-    val category: Category,
+    val category: CategoryUiState,
     val type: Type,
     val range: ClosedFloatingPointRange<Float> = 0f..10f,
     val steps: Int = range.endInclusive.toInt() - 1,
@@ -22,8 +22,8 @@ fun Question.toQuestionUiState(): QuestionUiState =
     QuestionUiState(
         id = id,
         question = question,
-        category = Category.valueOf(category),
-        range = Category.valueOf(category).range,
+        category = category.toCategoryUiState(),
+        range = category.range,
         type = Type.valueOf(type),
         minimumValueIndicator = minimumValueIndicator,
         maximumValueIndicator = maximumValueIndicator
@@ -34,7 +34,7 @@ fun QuestionUiState.toAnswer(): Answer =
         id = 0,
         question = id,
         answer = answer,
-        category = category.name,
+        category = category.toCategory(),
         type = type.name,
         date = LocalDate.now(),
         user = ""

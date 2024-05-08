@@ -16,6 +16,7 @@ import com.zaritcare.models.Activity
 import com.zaritcare.models.ActivityLog
 import com.zaritcare.models.Advice
 import com.zaritcare.models.Answer
+import com.zaritcare.models.Category
 import com.zaritcare.models.Emotion
 import com.zaritcare.models.Question
 import com.zaritcare.models.Song
@@ -85,7 +86,7 @@ fun AnswerEntity.toAnswer() = Answer(
     question = question,
     answer = answer,
     date = date,
-    category = category,
+    category = Category.valueOf(category),
     type = type,
     user = user
 )
@@ -95,7 +96,7 @@ fun Answer.toAnswerEntity() = AnswerEntity(
     question = question,
     answer = answer,
     date = date,
-    category = category,
+    category = category.name,
     type = type,
     user = user
 )
@@ -121,7 +122,7 @@ fun Emotion.toEmotionEntity() = EmotionEntity(
 fun QuestionEntity.toQuestion() = Question(
     id = id,
     question = question,
-    category = category,
+    category = Category.valueOf(category),
     type = type,
     minimumValueIndicator = minimumValueIndicator,
     maximumValueIndicator = maximumValueIndicator
@@ -130,7 +131,7 @@ fun QuestionEntity.toQuestion() = Question(
 fun Question.toQuestionEntity() = QuestionEntity(
     id = id,
     question = question,
-    category = category,
+    category = category.name,
     type = type,
     minimumValueIndicator = minimumValueIndicator,
     maximumValueIndicator = maximumValueIndicator
@@ -139,7 +140,7 @@ fun Question.toQuestionEntity() = QuestionEntity(
 fun QuestionMock.toQuestion() = Question(
     id = id,
     question = question,
-    category = category,
+    category = Category.valueOf(category),
     type = type,
     minimumValueIndicator = minimumValueIndicator,
     maximumValueIndicator = maximumValueIndicator

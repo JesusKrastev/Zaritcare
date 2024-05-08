@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,16 +19,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.TooltipState
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.getValue
@@ -53,11 +62,13 @@ import com.zaritcare.models.Answer
 import com.zaritcare.models.Category
 import com.zaritcare.models.Type
 import com.zaritcare.ui.composables.CoroutineManagementSnackBar
+import com.zaritcare.ui.composables.RichTooltipWithoutAction
 import com.zaritcare.ui.composables.SnackbarCommon
 import com.zaritcare.ui.composables.TextBody
 import com.zaritcare.ui.composables.TextTile
 import com.zaritcare.ui.features.components.ZaritcareNavBar
 import com.zaritcare.ui.features.results.components.LineChartWidget
+import com.zaritcare.ui.features.results.questionary.CategoryUiState
 import com.zaritcare.ui.features.tips.Content
 import com.zaritcare.ui.theme.ZaritcareTheme
 import com.zaritcare.utilities.error_handling.InformationStateUiState
@@ -67,6 +78,7 @@ import com.zaritcare.utilities.images.saveAsPdf
 import dev.shreyaspatil.capturable.capturable
 import dev.shreyaspatil.capturable.controller.CaptureController
 import dev.shreyaspatil.capturable.controller.rememberCaptureController
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
@@ -173,27 +185,69 @@ fun ButtonDownloadPDF(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TooltipHelp(
+    title: String,
+    text: String
+) {
+    var tooltipState: TooltipState = rememberTooltipState(isPersistent = true)
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+
+    TooltipBox(
+        tooltip = {
+            RichTooltipWithoutAction(
+                text = text,
+                title = title,
+            )
+        },
+        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        state = tooltipState
+    ) {
+        IconButton(
+            colors = IconButtonDefaults.iconButtonColors(
+                contentColor = MaterialTheme.colorScheme.primary
+            ),
+            onClick = { coroutineScope.launch { tooltipState.show() } }
+        ) {
+            Icon(
+                imageVector = Icons.Filled.Info,
+                contentDescription = "information"
+            )
+        }
+    }
+}
+
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalComposeApi::class)
 @Composable
 fun LineChartWidgetResult(
     modifier: Modifier = Modifier,
     onClickDownloadPDF: (CaptureController) -> Unit,
-    category: Category,
+    category: CategoryUiState,
     answers: List<AnswerUiState>
 ) {
     val captureController: CaptureController = rememberCaptureController()
     val title: String = category.name.lowercase().replaceFirstChar { it.uppercase() }
-    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            TextTile(title = "Escala de $title")
+            TooltipHelp(
+                title = "Escala de $title",
+                text = category.description
+            )
+        }
         LineChartWidget(
             modifier = Modifier.capturable(captureController),
             data = answers,
-            title = "Escala de $title",
             range = category.range
         )
         ButtonDownloadPDF(
@@ -207,7 +261,7 @@ fun LineChartWidgetResult(
 @Composable
 fun ResultsByCategory(
     modifier: Modifier = Modifier,
-    answersByCategory: Map<Category, List<AnswerUiState>>,
+    answersByCategory: Map<CategoryUiState, List<AnswerUiState>>,
     onClickDownloadPDF: (CaptureController) -> Unit
 ) {
     Column(
@@ -242,7 +296,7 @@ fun ResultsByCategory(
 @Composable
 fun Content(
     modifier: Modifier = Modifier,
-    answersByCategory: Map<Category, List<AnswerUiState>>,
+    answersByCategory: Map<CategoryUiState, List<AnswerUiState>>,
     onClickStart: () -> Unit,
     onResultsEvent: (ResultsEvent) -> Unit,
 ) {
@@ -273,7 +327,7 @@ fun Content(
 @Composable
 fun ResultsScreen(
     modifier: Modifier = Modifier,
-    answersByCategory: Map<Category, List<AnswerUiState>>,
+    answersByCategory: Map<CategoryUiState, List<AnswerUiState>>,
     onClickStart: () -> Unit,
     informationState: InformationStateUiState,
     onResultsEvent: (ResultsEvent) -> Unit,

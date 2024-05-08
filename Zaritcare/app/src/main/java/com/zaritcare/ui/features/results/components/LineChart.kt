@@ -33,13 +33,13 @@ import co.yml.charts.ui.linechart.model.ShadowUnderLine
 import com.zaritcare.models.Category
 import com.zaritcare.ui.composables.TextTile
 import com.zaritcare.ui.features.results.AnswerUiState
+import com.zaritcare.ui.features.results.questionary.CategoryUiState
 import com.zaritcare.ui.theme.ZaritcareTheme
 
 @Composable
 fun LineChartWidget(
     modifier: Modifier = Modifier,
     data: List<AnswerUiState>,
-    title: String,
     range: ClosedFloatingPointRange<Float> = 0f..10f
 ) {
     val pointsData: List<Point> = data.mapIndexed { index, answerUiState ->
@@ -107,11 +107,8 @@ fun LineChartWidget(
     )
 
     Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        modifier = modifier
     ) {
-        TextTile(title = title)
         LineChart(
             modifier = Modifier
                 .fillMaxWidth()
@@ -129,35 +126,35 @@ fun LineChartPreview() {
             id = 1,
             question = 1,
             answer = "5",
-            category = Category.BIENESTAR,
+            category = CategoryUiState.BIENESTAR,
             user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 2,
             question = 2,
             answer = "7",
-            category = Category.BIENESTAR,
+            category = CategoryUiState.BIENESTAR,
             user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 3,
             question = 3,
             answer = "3",
-            category = Category.BIENESTAR,
+            category = CategoryUiState.BIENESTAR,
             user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 4,
             question = 4,
             answer = "8",
-            category = Category.BIENESTAR,
+            category = CategoryUiState.BIENESTAR,
             user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         ),
         AnswerUiState(
             id = 5,
             question = 5,
             answer = "2",
-            category = Category.BIENESTAR,
+            category = CategoryUiState.BIENESTAR,
             user = "TPiKI6G84gMNZfS1NS7A1NAFeRT2"
         )
     )
@@ -176,8 +173,7 @@ fun LineChartPreview() {
                 contentAlignment = Alignment.Center
             ) {
                 LineChartWidget(
-                    data = data,
-                    title = "Escala de Bienestar"
+                    data = data
                 )
             }
         }

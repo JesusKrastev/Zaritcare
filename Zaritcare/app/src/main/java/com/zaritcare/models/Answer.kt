@@ -7,7 +7,7 @@ data class Answer(
     val question: Int,
     val answer: String,
     val date: LocalDate,
-    val category: String,
+    val category: Category,
     val type: String,
     val user: String
 )
